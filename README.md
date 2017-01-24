@@ -1,1 +1,2 @@
-# deepsight-back-office
+# deepsight-dashboard
+Dashboard client de Deepsight

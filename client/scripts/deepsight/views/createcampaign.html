@@ -1,0 +1,203 @@
+<loader ng-if="vm.loaderon"></loader>
+<div class="category-block" id='block'>
+
+    <div class="information-block-success-campaign" ng-class="vm.showmessage">
+        <div class="information-block-success-campaign-content">Votre campagne a bien été crée</div>
+    </div>
+
+    <div class="category-title">
+        <div id='top'>Créer une campagne</div>
+    </div>
+
+    <div class="category-subtitle"> Choisissez votre audience et créeez une campgne de A à Z
+    </div>
+
+    <form name="createcampaignForm" class="create-campaign-form" ng-submit="vm.submitForm(createcampaignForm.$valid)">
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Nom de la campagne</div>
+            <input type="text" name="name" class="chose-campaign-name-input" ng-model="vm.campaignname"></input>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Choisissez une audience</div>
+            <div class="chose-btn-wrapper-campaign">
+                <div class="chose-btn-campaign" ng-click="vm.showfilter()">
+                    <div class="chose-btn-content-campaign">
+                        <div ng-class=" vm.choicename === 'Choix de la campagne' ? 'choice-to-chose-no-campaign' : 'choice-to-chose-campaign'">
+                            {{vm.choicename}}
+                        </div>
+                        <div class="choice-show-noshow-campaign" ng-class="vm.filterclass"></div>
+                    </div>
+                </div>
+                <div class="chose-list-campaign" ng-class="vm.filtershown">
+                    <div class="chose-spacer-campaign"></div>
+                    <div class="choice-campaign" ng-repeat="choice in vm.audiencetochose" ng-click="vm.selectfilter($index)">
+                        <div class="choice-content-campaign" ng-class="{activefilterclass : vm.activefilter === filter.name}">{{choice.name}}</div>
+                    </div>
+                </div>
+                <div class="chose-list-bottom-campaign" ng-class="vm.filterbottom"></div>
+            </div>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Volume</div>
+            <input type="text" name="reach" class="chose-campaign-name-input disabled" ng-model="vm.reach" ng-disabled="true"></input>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Type de campagne</div>
+            <div class="chose-btn-wrapper-campaign">
+                <div class="chose-btn-campaign" ng-click="vm.showfiltercampaigntype()">
+                    <div class="chose-btn-content-campaign">
+                        <div class="choice-to-chose-campaign">
+                            {{vm.choicecampaignname}}
+                        </div>
+                        <div class="choice-show-noshow-campaign" ng-class="vm.filterclasscampaigntype"></div>
+                    </div>
+                </div>
+                <div class="chose-list-campaign" ng-class="vm.filtershowncampaigntype">
+                    <div class="chose-spacer-campaign"></div>
+                    <div class="choice-campaign" ng-repeat="choice in vm.campaigntype" ng-click="vm.selectfiltercampaigntype($index)">
+                        <div class="choice-content-campaign" ng-class="{activefilterclass : vm.activefilter === filter.name}">{{choice.name}}</div>
+                    </div>
+                </div>
+                <div class="chose-list-bottom-campaign" ng-class="vm.filterbottomcampaigntype"></div>
+            </div>
+        </div>
+
+        <div class="chose-campaign-name" ng-if="vm.ABtestboolean">
+            <div class="chose-campaign-name-title">Volume des segments d'audience</div>
+            <div class="subchoice-wrapper">
+                <div class="subchoice-campaign">
+                    <div class="chose-campaign-name-subtitle">Segment A
+                        <br> En % du volume total de l'audience</div>
+                    <input type="text" name="perreachA" class="chose-campaign-name-input-subchoice" ng-model="vm.perreachA"></input>
+                </div>
+                <div class="subchoice-campaign">
+                    <div class="chose-campaign-name-subtitle">Segment B
+                        <br> En % du volume total de l'audience</div>
+                    <input type="text" name="perreachB" class="chose-campaign-name-input-subchoice disabled" ng-model="vm.perreachB" ng-disabled="true"></input>
+                </div>
+            </div>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Objet</div>
+            <input type="text" name="subject" class="chose-campaign-name-input" ng-model="vm.campaignsubject"></input>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">URL de redirection</div>
+            <input type="text" name="urlredirection" class="chose-campaign-name-input" ng-model="vm.campaignurlredirection"></input>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">URL tracking</div>
+            <input type="text" name="urltracking" class="chose-campaign-name-input" ng-model="vm.campaignurltracking"></input>
+        </div>
+
+        <div class="chose-file-campaign">
+            <div class="chose-file-title-campaign">Choisissez un fichier</div>
+            <div id="dropzone-container-campaign" ng-class="vm.chossefile1" ng-mouseenter="vm.dropin()" ng-mouseleave="vm.dropout()">
+                <div id="select-zone-campaign" ng-class="vm.chossefile2">
+                    <div ng-class="vm.chossefile3">Glissez un fichier ou cliquez </div>
+                    <div id="preview-template-campaign" style="display:none">
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Information complémentaire sur la campagne </div>
+            <textarea type="text" name="urltracking" class="chose-campaign-name-input-large" ng-model="vm.complementaryinformation"></textarea>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Format désiré </div>
+            <!--             <input name="urltracking" class="chose-campaign-name-input" ng-model="vm.campaignurltracking" ></input> -->
+            <div class="format-choice-wrapper">
+                <div class="format-btn-wrapper" ng-repeat="format in vm.format">
+                    <div ng-click="vm.choseformat($index)" ng-class="$index === vm.index ? 'format-btn' : 'format-btn-unselected'">
+                        <div class="format-btn-content">{{format.format}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Rémunération</div>
+
+            <div class="format-choice-wrapper">
+                <div class="format-btn-wrapper" ng-repeat="remuneration in vm.remuneration">
+                    <div ng-click="vm.choseremuneration($index)" ng-class="$index === vm.indexrem ? 'format-btn' : 'format-btn-unselected'">
+                        <div class="format-btn-content">{{remuneration.rem}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subchoice-wrapper">
+                <div class="subchoice-campaign">
+                    <div class="chose-campaign-name-subtitle">Prix</div>
+                    <input type="text" name="price" class="chose-campaign-name-input-subchoice-price" ng-model="vm.price">€</input>
+                </div>
+
+                <div class="subchoice-campaign">
+                    <div class="chose-campaign-name-subtitle">Volume</div>
+                    <input type="text" name="moderemuneration" class="chose-campaign-name-input-subchoice" ng-model="vm.volumeremuneration"></input>
+                </div>
+                <div class="subchoice-campaign">
+                    <div class="chose-campaign-name-subtitle">Budget</div>
+                    <input type="text" name="price" class="chose-campaign-name-input-subchoice-budget" ng-model="vm.budget">€</input>
+                </div>
+            </div>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Paramètres campagne</div>
+            <div class="subchoice-wrapper">
+                <div class="subchoice-campaign">
+                    <div class="chose-campaign-name-subtitle" >utm_source</div>
+                    <input type="text" name="utmsource" class="chose-campaign-name-input-subchoice disabled" ng-model="vm.utmsource" ng-disabled="true"></input>
+                </div>
+                <div class="subchoice-campaign">
+                    <div class="chose-campaign-name-subtitle" >utm_medium</div>
+                    <input type="text" name="utmmedium" class="chose-campaign-name-input-subchoice disabled" ng-model="vm.utmmedium" ng-disabled="true"></input>
+                </div>
+                <div class="subchoice-campaign">
+                    <div class="chose-campaign-name-subtitle">utm_term</div>
+                    <input type="text" name="utmterm" class="chose-campaign-name-input-subchoice" ng-model="vm.utmterm"></input>
+                </div>
+                <div class="subchoice-campaign">
+                    <div class="chose-campaign-name-subtitle">utm_content</div>
+                    <input type="text" name="utmcontent" class="chose-campaign-name-input-subchoice" ng-model="vm.utmcontent"></input>
+                </div>
+                <div class="subchoice-campaign">
+                    <div class="chose-campaign-name-subtitle" ng-click="vm.test()">utm_campaign</div>
+                    <input type="text" name="utmcampaign" class="chose-campaign-name-input-subchoice" ng-model="vm.utmcampaign"></input>
+                </div>
+            </div>
+        </div>
+        <div class="save-btn-wrapper">
+            <button type="submit" class="format-btn" class="submit-save" ng-disabled="">
+                <div class="format-btn-content">SAVE</div>
+            </button>
+        </div>
+
+        <!--                 <div class="bottom-option-cancel-next">
+                    <a ui-sref="home.lookalikeaudience">
+                        <div class="cancel-btn">
+                            <div class="cancel-btn-content">ANNULER</div>
+                        </div>
+                    </a>
+                    <div ng-class="chosecustomForm.name.$invalid || !vm.nofileboolean ? 'next-btn-disabled' : 'next-btn'" ng-click="vm.check(!chosecustomForm.name.$invalid && vm.nofileboolean)">
+
+                        <div class="next-btn-content">SUIVANT</div>
+                    </div>
+                </div> -->
+    </form>
+
+</div>
+<!-- End of more information -->
+
+<ui-view></ui-view>
