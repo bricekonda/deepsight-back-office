@@ -1,0 +1,13 @@
+
+## Customize the test machine
+machine:
+  node:
+    version: 6.1.0
+  environment:
+    FIREBASE_TOKEN: 1/_L_Pi0Ufkc5ZK9_VNCYxXakAYFfROzHuJHJo9a-erYQ
+
+deployment:
+  production:
+    branch: develop
+    commands:
+      - node_modules/.bin/firebase deploy --token $FIREBASE_TOKEN --non-interactive

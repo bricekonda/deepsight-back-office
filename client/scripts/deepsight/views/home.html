@@ -1,0 +1,92 @@
+<loader ng-if="vm.logoutboolean"></loader>
+
+<div class="popup-background" ng-if="vm.closeopenbool">
+    <div class="popup-wrapper">
+        <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
+        <div class="popup-message">Est-tu sûr(e) de vouloir te déconnecter ?</div>
+        <div class="popup-btn" ng-click="vm.logOut()">
+            <div class="popup-btn-content">LOG OUT</div>
+        </div>
+    </div>
+</div>
+
+<header class="top-bar" id='top'>
+    <a ui-sref=".summary">
+        <img class="top-bar-logo-home" ng-click="vm.gotostate()" src="images/home-logo.png">
+    </a>
+    <div class="top-bar-welcome-block" ng-click="vm.brice()">
+        <p class="top-bar-welcome-block-text">
+            <span style="">Bienvenu(e) {{vm.activeusername}}</span>
+        </p>
+    </div>
+    <!--     <div class="logo-logout-wrapper" ng-click="vm.showdetail()">
+        <div class="logo-wrapper">
+            <img class="top-bar-user-logo" src="images/user-logo.png">
+        </div>
+        <div class="top-bar-show-noshow-sub-category" ng-class="vm.topbarshowclass"></div>
+    </div>
+
+        <div ng-if="vm.detailshowync" class="top-bar-detail-block">
+        <div class="detail-triangle-dark"></div>
+        <div class="detail-triangle-light"></div>
+        <div class="detail-content">
+            <div class="detail-content-text">Tu pourras bientôt changer ton icone</div>
+        </div>
+        <div class="log-out-button" ng-click="vm.logOut()">
+            <div class="log-out-button-text">DECONNEXION</div>
+        </div>
+    </div> -->
+
+    <img src="images/bell-logo-no-notification.png" ng-click="vm.shownotif()" class="top-bar-notification">
+
+    <div ng-if="vm.notifshowyn" class="notification-block">
+        <div class="detail-triangle-dark"></div>
+        <div class="detail-triangle-light"></div>
+        <div class="notification-title">
+            <div class="notification-title-text">Notifications</div>
+        </div>
+        <div class="no-notif">
+            <div class="no-notif-content">Notifications bientôt disponibles</div>
+        </div>
+    </div>
+</header>
+
+<aside class="side-bar">
+    <div class="side-bar-top">
+        <img class="side-bar-logo" src="images/logo-deepsight.png" ng-click="vm.gotostate()">
+        <div class="side-bar-title">Deepsight</div>
+        <img class="side-bar-logo-menu" src="images/icon-menu.png">
+    </div>
+
+    <div class="side-bar-category-wrapper">
+        <div class="side-bar-category">
+            <a ui-sref=".summary" ng-class="vm.homeclass">
+                <div class="side-bar-category-title">
+
+                    <p ng-class="vm.homeclass" class="side-bar-category-title-text">Accueil</p>
+
+                </div>
+            </a>
+        </div>
+
+        <div class="side-bar-category" ng-repeat="category in vm.categorybis">
+            <div class="side-bar-category-title" ng-click="vm.showyncategory($index)">
+                <div class="show-noshow-sub-category" ng-class="vm.categorybis[$index].classbis"></div>
+                <p class="side-bar-category-title-text">{{category.name}}</p>
+            </div>
+            <div class="sub-category-wrapper" ng-class="vm.categorybis[$index].class">
+                <div class="side-bar-sub-category-title" ng-repeat="subcategory in category.subcategoryname" ng-click="vm.goto($parent.$index,$index)">
+                    <img src="{{subcategory.picto}}" class="side-bar-category-icon">
+                    <p ng-class="subcategory.class " class="side-bar-sub-category-title-text">{{subcategory.name}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="log-out-side-bar-block">
+        <div class="log-out-side-bar-block-content" ng-click="vm.logOutfirststep()">LOG OUT</div>
+    </div>
+
+</aside>
+
+<ui-view></ui-view>

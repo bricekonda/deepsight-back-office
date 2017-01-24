@@ -1,0 +1,27 @@
+<loader ng-if="vm.signinboolean"></loader>
+<div class="background-signup">
+    <div class="sign-in-block">
+        <img class="logo-deepsight" src="images/logo-deepsight.png" ng-click="vm.logout()">
+        <h1 class="sign-in-title">Réinitialisation du Mot de passe</h1>
+        <h2 class="sign-in-instructions">Entrez un nouveau mot de passe et la confirmation de ce mot de passe</h2>
+        <h2 class="sign-in-instructions" ng-if="vm.signinfailed" style="color:#EF2B2D">L'email n'existe pas ou le mot passe n'est pas le bon.
+            <br>Essayez à nouveau</h2>
+        <form name="resetpwdForm" ng-submit="vm.submitForm(resetpwdForm.$valid)">
+
+            <label class="form-label">Password</label>
+            <input type="password" name="password" ng-model="vm.user.password" ng-change="vm.passwordtest()" ng-class="!vm.passwordboolean && resetpwdForm.password.$touched? 'sign-up-input-not-ok' : 'sign-up-input'" autocomplete="off" ng-minlength="8" required>
+            <p ng-if="!vm.passwordboolean && resetpwdForm.password.$touched" class="help-block">Le mot de passe doit au moins contenir, une majuscule, une minuscule, un nombre ainsi qu'un minimum de 8 caractères</p>
+
+            <label class="form-label">Password confirmation</label>
+            <input type="password" name="passwordconf" ng-model="vm.user.passwordconf" ng-class="(vm.user.password !== vm.user.passwordconf) && resetpwdForm.passwordconf.$touched ? 'sign-up-input-not-ok' : 'sign-up-input'" autocomplete="off" ng-disabled="!vm.passwordboolean" ng-style=" !vm.passwordboolean && {'background-color':'#DDDFE0'}" required>
+            <p ng-if=" (vm.user.password !== vm.user.passwordconf) && resetpwdForm.passwordconf.$touched" class="help-block">Les deux mots de passe ne correspondent pas</p>
+
+            <button type="submit" ng-class="!vm.passwordboolean|| resetpwdForm.$invalid || (vm.user.password !== vm.user.passwordconf) ? 'submit-button-disabled':'submit-button' " ng-disabled="(resetpwdForm.$invalid) || (!vm.passwordboolean)">
+                <div ng-class="resetpwdForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">RÉINITIALISER</div>
+            </button>
+
+        </form>
+        <div class="spacer-styled"></div>
+        <p class="sign-in-another-option">Vous désirez retourner à l'accueil? <a ui-sref="signin" style="color:#1580EF;">Accueil</a></p>
+    </div>
+</div>

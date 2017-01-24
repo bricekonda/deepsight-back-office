@@ -1,0 +1,176 @@
+.general-information-block{
+	position: absolute;
+    top: 130px;
+    height: auto;
+    width: calc(100% - 80px);
+    margin-left: 40px;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.general-information-content-block{
+position: relative;
+height: 300px;
+width: calc(100% - 40px);
+margin-left: 20px;
+margin-right: 20px;
+margin-top: 20px;
+margin-bottom: 20px;
+}
+
+.forgot-password-block{
+    position: absolute;
+    top: 490px;
+    height: auto;
+    width: calc(100% - 80px);
+    margin-left: 40px;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.forgot-password-content-block{
+position: relative;
+height: 120px;
+width: calc(100% - 40px);
+margin-left: 20px;
+margin-right: 20px;
+margin-top: 20px;
+margin-bottom: 20px;
+
+}
+
+.general-information-content-title,.general-information-content-content{
+	font-family: proximanovaregular;
+	font-size: 14px;
+	line-height: 18px;
+}
+
+.general-information-content-title{
+	color : #23231C;
+}
+
+.general-information-content-content{
+	color: #8E8F90;
+}
+
+.general-information-content-sub-block{
+position: relative;
+float: left;
+margin-top: 5px;
+margin-bottom: 5px;
+width: 100%;
+height: auto;
+
+}
+
+.edit-btn{
+	position: relative;
+	width: 80px;
+	height : 26px;
+	border-radius: 30px;
+	border : solid 1px;
+	color: #626466;
+	background-color: #F6F7F8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    float: left;
+    cursor : pointer;
+}
+
+.edit-btn:hover{
+	color: #fff;
+	background-color: #626466;
+ 
+}
+
+.edit-btn{
+	font-family: proximanovaregular;
+	font-size: 14px;
+}
+
+// Modal
+.form-label-gi{
+position: relative;
+font-family: proximanovaregular;
+font-size: 14px;
+float:  left;
+}
+
+.modify-information-wrapper{
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.modify-information-title{
+    position: relative;
+    font-family: proximanovaregular;
+    font-size: 14px;
+    color: #23231C;
+    width: calc(100% - 120px);
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+.modify-information-input, .modify-information-input-not-ok,.modify-information-disabled{
+    height: 40px;
+    width: calc(100% - 120px);
+    margin-left: 60px;
+    margin-right: 60px;
+    border : 1px solid #D8D8D8;
+    font-family: proximanovaregular;
+    font-size: 14px;
+    margin-top: 15px;
+    border-radius: 3px;
+    padding-left: 10px;
+}
+
+.modify-information-input{
+    border : 1px solid #D8D8D8;
+}
+
+.modify-information-input-not-ok{
+	border : 1px solid #EF2B2D;
+
+}
+
+.modify-information-disabled{
+    border : 1px solid #D8D8D8;
+    background-color: #D8D8D8;
+}
+
+
+.help-block-modify,.info-email, {
+    position: relative;
+    font-family: proximanovaregular;
+    font-size: 12px;
+    line-height: 14px;
+    width: calc(100% - 120px);
+    margin: 0 auto;
+    padding-left: 20px
+}
+.help-block-modify{
+	    color: #EF2B2D;
+}
+
+.info-email{
+    color: #23231C;
+}
+
+.close-modal-generalinfo{
+	cursor:pointer
+}
+
+
+.submit-save{
+	border-radius: 20px!important;
+}
+
+::-webkit-input-placeholder{
+}
+
+// End of Modal
+
