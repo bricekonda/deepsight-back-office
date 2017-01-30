@@ -4,7 +4,7 @@
     right: 230px;
     top: 65px;
     width: 210px;
-    z-index: 5;
+    z-index: 30;
     cursor: pointer;
 }
 
@@ -267,10 +267,41 @@
     border-radius: 3px;
 }
 
+.audience-block {
+    position: relative;
+    height: auto;
+    width: 100%;
+}
+
 .audience-container {
+    position: relative;
+    display: block;
+    float: left;
     background-color: white;
-    height: 40px;
+    height: 42px;
     margin-bottom: 5px;
+    border: solid 1px #ffffff;
+    z-index: 0;
+}
+
+.audience-action {
+    position: relative;
+    display: block;
+    float: right;
+    right: 0px;
+    margin-top: -49px;
+    width: 290px;
+    height: 44px;
+    z-index: 20;
+}
+
+.audience-container:hover {
+    border: solid 1px #1580EF;
+    cursor: pointer;
+    -moz-box-shadow: 0px 0px 3px rgba(125, 126, 127, 0.5);
+    -webkit-box-shadow: 0px 0px 3px rgba(125, 126, 127, 0.5);
+    -o-box-shadow: 0px 0px 3px rgba(125, 126, 127, 0.5);
+    box-shadow: 0px 0px 3px rgba(125, 126, 127, 0.5);
 }
 
 .audience-features {
@@ -330,7 +361,6 @@
     background-color: #FFFFBC;
     width: auto;
 }
-
 
 .column-content-features {
     line-height: 30px;
@@ -501,6 +531,17 @@
     width: calc(33.33333333333% - 4px);
     height: 60px;
     display: inline-block;
+    // background-color: green;
+}
+
+.info-sub-block-large {
+    position: relative;
+    float: right;
+    top: 0px;
+    width: calc(33.33333333333% - 4px);
+    height: 124px;
+    // background-color: blue;
+    display: inline-block;
 }
 
 .info-sub-block-title {
@@ -532,10 +573,11 @@
     height: 30px;
     width: 30px;
     margin-left: calc(50% - 15px);
-    margin-top: 15px;
+    margin-top: 0px;
     background-size: 30px 30px;
     background-image: url("../images/delete-icon.png");
-    cursor: pointer
+    cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .delete-icon-info-block:hover {
@@ -548,12 +590,15 @@
 }
 
 .audience-option-info-block-wrapper {
-    position: absolute;
+    position: relative;
     width: 100%;
-    height: 100%;
+    height: 30px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .audience-option-info-block-wait, .audience-option-info-block-set-up, .audience-option-info-block-deal, .audience-option-info-block {
@@ -608,6 +653,10 @@
     font-size: 12px;
 }
 
+.link {
+    text-decoration: none;
+}
+
 //Lookalike
 .audience-option-wait, .audience-option-ready, .audience-option-deal {
     position: absolute;
@@ -618,6 +667,7 @@
     width: 100%;
     border-radius: 20px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .audience-option-wait {
@@ -674,7 +724,7 @@
     justify-content: center;
 }
 
-.information-block-error-done-content{
+.information-block-error-done-content {
     font-family: proximanovaregular;
     font-size: 12px;
     color: white;
@@ -722,9 +772,9 @@
     background-color: white;
     border-radius: 3px;
     right: 10px;
-    top : 78px;
+    top: 78px;
     width: 140px;
     height: auto;
     border: 1px solid #90A4AE;
-    z-index: 10;
+    z-index: 50;
 }

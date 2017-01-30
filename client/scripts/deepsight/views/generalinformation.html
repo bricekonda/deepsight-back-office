@@ -1,9 +1,12 @@
+<loader ng-if="vm.pageloadingboolean"></loader>
+
+
 <div class="popup-background" ng-if="vm.closeopenbool">
     <div class="popup-wrapper">
             <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
-        <div class="popup-message">Es-tu sûr(e) de vouloir te déconnecter ?</div>
+        <div class="popup-message">Es-tu sûr(e) de ne pas vouloir prendre en compte les modifications ?</div>
         <div class="popup-btn" ng-click="vm.cancel()">
-            <div class="popup-btn-content">LOG OUT</div>
+            <div class="popup-btn-content">ANNULER</div>
         </div>
     </div>
 </div>
@@ -110,11 +113,6 @@
         </div>
 
         <form name="passwordupdateForm" ng-submit="vm.submitpwdForm(passwordupdateForm.$valid)" class="formclass" novalidate>
-            <!--             <div class="modify-information-wrapper">
-                <label class="modify-information-title">Ancien mot de passe</label>
-                <input type="password" name="formerpassword" ng-model="vm.pwd.oldpwd" placeholder="" ng-class="modifyForm.formerpassword.$error.minlength && modifyForm.formerpassword.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" required>
-                <p ng-if="passwordupdateForm.formerpassword.$error.required && passwordupdateForm.formerpassword.$touched" class="help-block-modify"> Vous devez entrer votre mot de passe actuel</p>
-            </div> -->
 
             <div class="modify-information-wrapper">
                 <label class="modify-information-title">Nouveau mot de passe</label>
@@ -128,9 +126,6 @@
                 <p ng-if="(vm.pwd.newpwd !== vm.pwd.newpwdconf) && passwordupdateForm.newpasswordconf.$touched" class="help-block-modify">Les deux mot de passe ne correspondent pas</p>
             </div>
 
-            <!--             <button type="submit" ng-class="!vm.passwordboolean || (vm.pwd.newpwd !== vm.pwd.newpwdconf) ||passwordupdateForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled="(passwordupdateForm.$invalid)|| (vm.pwd.newpwd !== vm.pwd.newpwdconf) || (!vm.passwordboolean)">
-                <div ng-class="passwordupdateForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">SAVE</div>
-            </button> -->
             <button type="submit" ng-class="!vm.passwordboolean || (vm.pwd.newpwd !== vm.pwd.newpwdconf) || passwordupdateForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled="(passwordupdateForm.$invalid)|| (vm.pwd.newpwd !== vm.pwd.newpwdconf) || (!vm.passwordboolean)">
                 <div ng-class="passwordupdateForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">SAVE</div>
             </button>

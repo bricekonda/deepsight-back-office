@@ -197,11 +197,15 @@ var run = function($window, $timeout, $kinvey, $state, $rootScope, Deepsightuser
     });
 
     $rootScope.$on('resetpwdSuccess', function() {
-        $state.go('signin');
+        $state.go('signin').then(function(){
+            $rootScope.$broadcast('resetpwdrequestsuccessconfirmation', null);
+        });
     });
 
     $rootScope.$on('resetpwdfinalSuccess', function() {
-        $state.go('signin');
+        $state.go('signin').then(function(){
+            $rootScope.$broadcast('resetpwdsuccessconfirmation', null);
+        });;
     });
 
     // $rootScope.$on('$stateChangeStart', function(e, next) {

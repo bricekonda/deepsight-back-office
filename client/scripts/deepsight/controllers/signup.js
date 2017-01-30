@@ -48,10 +48,8 @@ module.exports = function(app) {
                 authentication.signUp(username, password, firstname, lastname, organization, tva,email).then(function(user) {
                 $rootScope.$broadcast('signupSuccess', null);
                 vm.signupboolean = false; 
-                console.log('le signup fonctionne');
             }).catch(function(error) {
                 $rootScope.$broadcast('signupfailed', null);
-                console.log('le signup ne fonctionne pas');
                 throw error;
             });
             }

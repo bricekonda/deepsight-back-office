@@ -6,9 +6,9 @@ module.exports = function(app) {
     /*jshint validthis: true */
     var authentication = require('../../authentication')(app.name.split('.')[0]).name;
 
-    var deps = ['$rootScope', '$scope', authentication + '.authentication'];
+    var deps = ['$rootScope','$timeout', '$scope', authentication + '.authentication'];
 
-    function controller($rootScope, $scope, authentication) {
+    function controller($rootScope,$timeout, $scope, authentication) {
         var vm = this;
         vm.controllername = fullname;
 
@@ -23,16 +23,23 @@ module.exports = function(app) {
             if (isValid) {
                 var email = vm.user.email;
                 authentication.resetPwdreq(email).then(function(response) {
-                    console.log(response);
                     $rootScope.$broadcast('resetpwdSuccess', null);
-                    console.log("le password va être reset")
                 }).catch(function(error) {
                     $rootScope.$broadcast('resetpwdfailed', null);
-                    console.log("pb dans le reset du password")
                 });
             }
 
         };
+
+        vm.showmessage = 'sign-in-information-block-up';
+
+        $rootScope.$on('resetpwdfailed', function(event, data) {
+            vm.messagetoshow = "L'utilisateur n'existe pas. Essayez avec un nouvel e-mail"
+            vm.showmessage = 'sign-in-information-block-down';
+            $timeout(function() {
+                vm.showmessage = 'sign-in-information-block-up';
+            }, 6000);
+        });
 
         vm.resetpwd === false;
 

@@ -53,7 +53,7 @@
 
 .form-content {}
 
-.form-label,.form-label-disabled {
+.form-label, .form-label-disabled {
     position: relative;
     display: block;
     width: 200px;
@@ -65,13 +65,12 @@
     margin-bottom: 5px;
 }
 
-.form-label{
-     color: #23231C;   
+.form-label {
+    color: #23231C;
 }
 
-.form-label-disabled{
+.form-label-disabled {
     color: #C5CDD1;
-
 }
 
 .sign-up-input, .sign-up-input-not-ok, {
@@ -114,17 +113,16 @@
     margin-top: 20px;
     box-shadow: none;
     border: none;
-    outline:0 none;
+    outline: 0 none;
 }
 
 .submit-button {
     background-color: #1580EF;
     cursor: pointer;
-
 }
 
-.submit-button:hover{
-	    background-color: #0B5BAD;
+.submit-button:hover {
+    background-color: #0B5BAD;
 }
 
 .submit-button-disabled {
@@ -167,7 +165,7 @@
     color: #909191;
 }
 
-.help-block,.reset-pwd {
+.help-block, .reset-pwd {
     position: relative;
     font-family: proximanovaregular;
     font-size: 10px;
@@ -176,13 +174,61 @@
     margin: 0 auto;
     padding-left: 20px
 }
-.help-block{
-	    color: #EF2B2D;
-}
-.reset-pwd{
-        text-decoration : underline;
+
+.help-block {
+    color: #EF2B2D;
 }
 
-.resetpwd-link{
-        color: #7D7E7F;  
+.reset-pwd {
+    text-decoration: underline;
+}
+
+.resetpwd-link {
+    color: #7D7E7F;
+}
+
+///error
+.sign-in-information-block {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    background-color: #22B577;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -30px;
+}
+
+.sign-in-information-error-block {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    background-color: #EF2B2D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -30px;
+}
+
+.sign-in-information-block-content {
+    font-family: proximanovaregular;
+    font-size: 12px;
+    color: white;
+}
+
+.sign-in-information-block-up, .sign-in-information-block-down {
+    overflow-y: hidden;
+    -webkit-transition: max-height 300ms ease-in-out;
+    -moz-transition: max-height 300ms ease-in-out;
+    -o-transition: max-height 300ms ease-in-out;
+    transition: max-height 300ms ease-in-out;
+}
+
+.sign-in-information-block-up {
+    max-height: 0;
+}
+
+.sign-in-information-block-down {
+    max-height: 20px;
+    overflow-y: scroll;
 }

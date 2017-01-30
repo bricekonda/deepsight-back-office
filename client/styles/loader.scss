@@ -9,22 +9,46 @@
     justify-content: center;
     z-index: 100;
     overflow: hidden;
-    z-index : 100;
+    z-index: 100;
 }
 
-.loader {
+.loader-background-analytics {
+    position: absolute;
+    margin-top: 50px;
+    top: 0px;
+    width: 100%;
+    height: calc(100% - 50px);
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    overflow: hidden;
+    z-index: 100;
+    border-radius: 3px;
+}
+
+.loader-background-analytics-small{
+      position: absolute;
+    top: 0px;
+    width: 100%;
+    height: calc(100%);
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    overflow: hidden;
+    z-index: 100;
+    border-radius: 3px;  
+}
+
+.loader, .loader-analytics,.loader-analytics-small {
     font-size: 10px;
     margin: 50px auto;
     text-indent: -9999em;
-    width: 11em;
-    height: 11em;
     border-radius: 50%;
     background: #1580EF;
-    background: -moz-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
-    background: -webkit-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
-    background: -o-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
-    background: -ms-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
-    background: linear-gradient(to right, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
     position: relative;
     -webkit-animation: load3 1.4s infinite linear;
     animation: load3 1.4s infinite linear;
@@ -33,7 +57,33 @@
     transform: translateZ(0);
 }
 
-.loader:before {
+.loader,.loader-analytics{
+     width: 11em;
+    height: 11em;   
+}
+
+.loader-analytics-small {
+    width: 5em;
+    height: 5em;
+}
+
+.loader {
+    background: -moz-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
+    background: -webkit-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
+    background: -o-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
+    background: -ms-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
+    background: linear-gradient(to right, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
+}
+
+.loader-analytics,.loader-analytics-small {
+    background: -moz-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
+    background: -webkit-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
+    background: -o-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
+    background: -ms-linear-gradient(left, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
+    background: linear-gradient(to right, #1580EF 10%, rgba(255, 255, 255, 0) 42%);
+}
+
+.loader:before, .loader-analytics:before,.loader-analytics-small:before {
     width: 50%;
     height: 50%;
     background: #1580EF;
@@ -44,8 +94,7 @@
     content: '';
 }
 
-.loader:after {
-    background: #B4B5B6;
+.loader:after, .loader-analytics:after,.loader-analytics-small:after {
     width: 75%;
     height: 75%;
     border-radius: 50%;
@@ -56,6 +105,14 @@
     left: 0;
     bottom: 0;
     right: 0;
+}
+
+.loader:after {
+    background: #B4B5B6;
+}
+
+.loader-analytics:after,.loader-analytics-small:after {
+    background: white;
 }
 
 @-webkit-keyframes load3 {
@@ -80,44 +137,43 @@
     }
 }
 
-.loader-status-wrapper{
-width: 800px;
-position: relative;
+.loader-status-wrapper {
+    width: 800px;
+    position: relative;
 }
 
-.loader-status{
-	width: 100%;
-	margin-bottom: 20px;
-	text-align: center;
-	position: relative;
-	font-size: 24px;
-	color : white;
-	font-family: proximanovaregular;
-
+.loader-status {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    font-size: 24px;
+    color: white;
+    font-family: proximanovaregular;
 }
 
-.loader-per-background{
-	position: absolute;
-	top: 0px;
-	width: 100%;
-	height: 10px;
-	background-color: white;
-	border-radius : 10px;
+.loader-per-background {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 10px;
+    background-color: white;
+    border-radius: 10px;
 }
 
-.loader-per-current{
-	position: absolute;
-	top: 0px;
-	position: relative;
-	height: 10px;
-	background-color: #1580EF;
-	border-radius : 10px;
+.loader-per-current {
+    position: absolute;
+    top: 0px;
+    position: relative;
+    height: 10px;
+    background-color: #1580EF;
+    border-radius: 10px;
 }
 
-.loader-per-wrapper{
-	position: relative;
-	width: 100%;
-	height: 10px;
-	background-color: white;
-	border-radius : 10px;
+.loader-per-wrapper {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background-color: white;
+    border-radius: 10px;
 }

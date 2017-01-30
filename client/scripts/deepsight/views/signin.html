@@ -1,7 +1,10 @@
 <loader ng-if="vm.signinboolean"></loader>
 <div class="background-signup">
     <div class="sign-in-block">
-        <img class="logo-deepsight" src="images/logo-deepsight.png" ng-click="vm.logout()">
+        <div class="sign-in-information-block" ng-class="vm.showmessage">
+            <div class="sign-in-information-block-content">{{vm.messagetoshow}}</div>
+        </div>
+        <img class="logo-deepsight" src="images/logo-deepsight.png" ng-click="vm.testmessage()">
         <h1 class="sign-in-title">Connexion</h1>
         <h2 class="sign-in-instructions">Connectez-vous au service deepsight et construisez vos segments en un claquement de doigt!</h2>
         <h2 class="sign-in-instructions" ng-if="vm.signinfailed" style="color:#EF2B2D">L'email n'existe pas ou le mot passe n'est pas le bon.

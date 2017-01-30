@@ -125,7 +125,7 @@ module.exports = function(app) {
                 'name': 'Mes tags',
                 'statename': 'home.mytags',
                 'class': 'subcategory-link',
-                'picto': 'images/custom-grey.svg',
+                'picto': 'images/tag-grey.svg',
             }]
         },{
             'name': 'Audience',
@@ -173,12 +173,12 @@ module.exports = function(app) {
                 'name': 'Mes factures',
                 'statename': 'home.billing',
                 'class': 'subcategory-link',
-                'picto': 'images/make-a-deal-grey.svg',
+                'picto': 'images/billing-grey.svg',
             }, {
                 'name': 'Paiement',
                 'statename': 'home.payment',
                 'class': 'subcategory-link',
-                'picto': 'images/lookalike-grey.svg'
+                'picto': 'images/payment-grey.svg'
             }]
         },{
             'name': 'Paramètres',

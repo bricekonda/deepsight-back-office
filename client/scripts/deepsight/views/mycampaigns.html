@@ -38,9 +38,8 @@
         </div>
         <div class="filter-list-bottom" ng-class="vm.filterbottom"></div>
     </div>
-    <a ui-sref=".createlookalikeaudience">
+    <a ui-sref="home.reports">
         <div class="create-audience-btn">
-
             <div class="create-audience-btn-content">
                 <div class="create-audience-text">RAPPORTS</div>
             </div>
@@ -48,10 +47,10 @@
         </div>
     </a>
 
-    <img ng-if="vm.noaudiencebool" src="images/pointer.png" class="pointer pointeranimation">
+<!--     <img ng-if="vm.noaudiencebool" src="images/pointer.png" class="pointer pointeranimation"> -->
 
     <div ng-if="vm.noaudiencebool" class="no-audience">
-        <div class="no-audience-content">Vous n'avez pas encore créé de campagne</div>
+        <div class="no-audience-content">Vous n'avez pas encore de Campagne Deepsight disponible</div>
     </div>
 
     <div class="audience-wrapper" ng-if="!vm.noaudiencebool">
@@ -69,34 +68,38 @@
                 <div class="column-content-features">DATE</div>
             </div>
         </div>
-        <div class="audience-container" ng-repeat="audience in vm.audiencesloaded | orderBy: vm.sortparameter ">
-            <div class="column1">
-                <p class="column-content" ng-click="vm.viewmoreofcolumncontent($event,audience)">{{audience.name}}</p>
-            </div>
-            <div class="column2">
-                <div class="column-content">{{audience.compensation_budget}}</div>
-            </div>
-            <div class="column3">
-                <div class="column-content">{{audience.reach}}</div>
-            </div>
-            <div class="column4">
-                <div class="column-content">{{audience.date}}</div>
-            </div>
-
-            <div class="column7">
-                <div class="more-info-icon" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)"></div>
-            </div>
-            <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
-                <div class="delete-icon"></div>
-            </div>
-
-            <a ui-sref="home.reports" ng-if="true">
-                <div class="column5">
-                    <div class="audience-option-deal">
-                        <p class="audience-option-deal-content">Rapport</p>
-                    </div>
+        <div class="audience-block" ng-repeat="audience in vm.audiencesloaded | orderBy: vm.sortparameter ">
+            <div class="audience-container" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)">
+                <div class="column1">
+                    <p class="column-content" ng-click="vm.viewmoreofcolumncontent($event,audience)">{{audience.name}}</p>
                 </div>
-            </a>
+                <div class="column2">
+                    <div class="column-content">{{audience.compensation_budget}}</div>
+                </div>
+                <div class="column3">
+                    <div class="column-content">{{audience.reach}}</div>
+                </div>
+                <div class="column4">
+                    <div class="column-content">{{audience.date}}</div>
+                </div>
+            </div>
+            <div class="audience-action">
+
+                <div class="column7">
+                    <div class="more-info-icon" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)"></div>
+                </div>
+                <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
+                    <div class="delete-icon"></div>
+                </div>
+
+                <a  ng-if="true" ng-click="vm.gotoreporting($index)">
+                    <div class="column5">
+                        <div class="audience-option-deal">
+                            <p class="audience-option-deal-content">Rapport</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
 
         <div class="load-more" ng-click="vm.loadmore()" ng-if="vm.loadmorebool">
@@ -342,8 +345,6 @@
 
     </div>
 </div>
-<!-- End of more information -->
-
 <!-- End of more information -->
 
 <ui-view></ui-view>

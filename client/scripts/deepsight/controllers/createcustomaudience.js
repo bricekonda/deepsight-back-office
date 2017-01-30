@@ -64,13 +64,10 @@ module.exports = function(app) {
         vm.fileboolean = true;
 
         user.getcurrentUser().then(function(model) {
-            console.log('current user');
             vm.currentUser = model;
-            console.log(model);
         });
 
         $rootScope.$on('progressPercentage', function(event, data) {
-            console.log(data.value);
         });
 
         vm.errormd5head = false;
@@ -82,17 +79,12 @@ module.exports = function(app) {
                 vm.sizeAudience = result.size;
                 vm.loaderonper = true;
                 files.uploadFile(result.file, filename).then(function() {
-                    console.log('on passe a letape suivante');
                     vm.nextstepfunction();
                     vm.filename = filename;
                 }, function(err) {
-                    console.log(err);
-                    console.log('erreur upload');
                 });
             }, function(error) {
-                console.log('le fichier doit contenir lentete md5');
                 vm.errormd5head = true;
-                console.log(error);
             });
         };
 
@@ -100,19 +92,13 @@ module.exports = function(app) {
 
         vm.match = function() {
             vm.loaderon = true;
-            console.log(vm.currentUser.username);
-            console.log(vm.audiencename);
-            customaudience.createAudience(vm.currentUser.username, vm.audiencename).then(function(audience) {
+            customaudience.createAudience(vm.currentUser.id,vm.currentUser.username, vm.audiencename).then(function(audience) {
                 customaudience.match(vm.currentUser.username, vm.filename, audience.id).then(function(result) {
-                    console.log('resultat matching');
-                    console.log(result.data);
-                    console.log(audience.id);
                     vm.audiencetodisplay = result.data;
                     vm.sizetodisplay = 0;
                     for (var i = 0; i < result.data.length; i++) {
                         vm.sizetodisplay = vm.sizetodisplay + result.data[i].count;
                     }
-                    console.log(vm.sizetodisplay)
                     customaudience.updateAudience(audience.id, vm.sizeAudience, result.data);
                     vm.nextstepfunction();
                 }).catch(function(error) {
@@ -260,19 +246,6 @@ module.exports = function(app) {
             // }, 3000);
         };
 
-        // vm.saveaudiencetest = function() {
-        //     vm.id = '';
-        //     var name = vm.audiencename;
-        //     var nbpublisher = 3;
-        //     var size = vm.audiencetest[0].publisher[0].size + vm.audiencetest[0].publisher[1].size + vm.audiencetest[0].publisher[2].size;
-        //     var publisher = vm.audiencetest[0].publisher;
-        //     var publisher1 = vm.audiencetest[0].publisher[0];
-        //     var publisher2 = vm.audiencetest[0].publisher[1];
-        //     var publisher3 = vm.audiencetest[0].publisher[2];
-
-        //     customaudience.addaudiencetest(name, nbpublisher, size, publisher1, publisher2, publisher3).then(function onSuccess(entity) {}).catch(function onError(error) {});
-
-        // };
 
     }
 

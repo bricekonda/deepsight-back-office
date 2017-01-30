@@ -15,7 +15,7 @@
 
 .analytics-block {
     position: relative;
-    height: 500px;
+    height: auto;
     width: calc(100% - 60px);
     min-width: 800px;
     margin-left: 60px;
@@ -93,7 +93,7 @@
     width: 100%;
     // background-color: blue;
     height: auto;
-    width: 100%;
+    width: calc(100%);
     margin-top: 20px;
     margin-bottom: 30px;
 }
@@ -216,9 +216,14 @@
     margin-left: 30px;
 }
 
+.chose-time {
+    position: relative;
+    width: 900px;
+}
+
 .ab-test-comparison-block {
-	position: relative;
-	margin-top: 30px;
+    position: relative;
+    margin-top: 30px;
     height: auto;
     width: calc(100);
     // background-color: purple;
@@ -292,4 +297,34 @@
 
 .blue-style {
     color: #1580EF;
+}
+
+//Period of Time to chose
+.performance {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.list-choice {
+    position: relative;
+    display: inline-block;
+}
+
+.choice-time {
+    position: relative;
+    display: inline-block;
+    margin-left: 40px;
+    // text-decoration: underline;
+    color: #B1B1B1;
+}
+
+.choice-time:hover {
+    color: #1580EF;
+    cursor: pointer;
+}
+
+.blue-time {
+    color: #1580EF;
+    // text-decoration: underline;
 }

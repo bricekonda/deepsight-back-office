@@ -11,7 +11,6 @@ module.exports = function(app) {
     function service($kinvey, $rootScope, $q, $state, $timeout, MarketingCampaign, user, apiConstant) {
 
         var createcampaign = function(idcreator, name, audience, typecampaign, reachA, reachB, subject, date, format, urlfile, information, compensationmode, compensationprice, compensationvolume, compensationbudget, reach, utmsource, utmmedium, utmterm, utmcontent, utmcampaign, redirectionurl, trackingurl) {
-            console.log('kikoo')
             var newcampaign = MarketingCampaign.create({
                 'id_creator': idcreator,
                 'name': name,
@@ -43,13 +42,6 @@ module.exports = function(app) {
         };
 
         var updateutmcampaign = function(id) {
-            console.log("hello");
-            // var campaigntoupdate = MarketingCampaign.prototype$updateAttributes({
-            //     'utm_campaign': id,
-            // }).$promise;
-
-            // return campaigntoupdate
-
         };
 
         var updatecampaign = function() {
@@ -96,8 +88,6 @@ module.exports = function(app) {
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
 
-            console.log("ça passe")
-
             return campaigntoload;
 
         }
@@ -112,7 +102,6 @@ module.exports = function(app) {
         };
 
         return {
-            // createtest:createtest,
             createcampaign: createcampaign,
             updateutmcampaign: updateutmcampaign,
             updatecampaign: updatecampaign,

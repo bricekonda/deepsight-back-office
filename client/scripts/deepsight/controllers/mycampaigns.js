@@ -43,17 +43,14 @@ module.exports = function(app) {
             }
         };
 
-        //End of popup cancel
 
-        // vm.pageloadingboolean = true;
+        vm.gotoreporting = function(index) {
+            vm.audiencetoshow = vm.audiencesloaded[index];
+            $state.go('home.reports').then(function() {
+                $rootScope.$broadcast('loadreport', vm.audiencetoshow);
+            });
+        }
 
-        // $timeout(function() {
-        //     vm.pageloadingboolean = false;
-        // }, 1000);
-
-        // vm.refresh = function() {
-        //     $window.location.reload()
-        // };
 
         // filter lookalike
         vm.customaudience = 'kikoo';
@@ -133,67 +130,54 @@ module.exports = function(app) {
 
         vm.loadmorebool = true;
 
-        user.getcurrentUser().then(function(model) {
-            vm.currentuser = model;
-            console.log(vm.currentuser.username);
+        user.getcurrentUser().then(function(currentuser) {
+            vm.currentuser = currentuser;
+            console.log(currentuser);
 
-            campaign.loadcampaigns(vm.currentuser.id).then(function(model) {
+            campaign.loadcampaigns(vm.currentuser.id).then(function(audience) {
+                console.log(audience);
                 vm.pageloadingboolean = false;
-                vm.audiencesloaded = model;
+                vm.audiencesloaded = audience;
                 vm.audienceshown = vm.audiencesloaded.length;
-                console.log(vm.audiencesloaded);
-                console.log(vm.audiencesloaded.slice().reverse())
                 vm.initialoffset = 5;
                 vm.counter = 0;
                 if (vm.audiencesloaded.length === 0) {
                     vm.noaudiencebool = true;
                 }
-                console.log("ok");
-                campaign.loadmorecampaigns(vm.initialoffset, vm.currentuser.id).then(function(model) {
-                    console.log(model.length);
-                    if (model.length === 0) {
+                campaign.loadmorecampaigns(vm.initialoffset, vm.currentuser.id).then(function(moreaudience) {
+                    console.log(moreaudience);
+                    if (moreaudience.length === 0) {
                         vm.loadmorebool = false;
-                        console.log(vm.loadmorebool)
                     }
 
                 }).catch(function(error) {});
             }).catch(function(error) {
                 vm.pageloadingboolean = false;
-                console.log('On ne parvient pas à charger les audience');
                 throw error;
             });
         }).catch(function(error) {});
 
         $rootScope.$on('reloadcampaigns', function(event, data) {
-            console.log('reloadcampaigns')
             vm.loadmorebool = true;
-            user.getcurrentUser().then(function(model) {
-                vm.currentuser = model;
-                console.log(vm.currentuser.username);
-
-                campaign.loadcampaigns(vm.currentuser.id).then(function(model) {
+            user.getcurrentUser().then(function(currentuser) {
+                vm.currentuser = currentuser;
+                campaign.loadcampaigns(vm.currentuser.id).then(function(audience) {
                     vm.pageloadingboolean = false;
-                    vm.audiencesloaded = model;
+                    vm.audiencesloaded = audience;
                     vm.audienceshown = vm.audiencesloaded.length;
-                    console.log(vm.audiencesloaded);
-                    console.log(vm.audiencesloaded.slice().reverse())
                     vm.initialoffset = 5;
                     vm.counter = 0;
                     if (vm.audiencesloaded.length === 0) {
                         vm.noaudiencebool = true;
                     }
-                    console.log("ok");
-                    campaign.loadmorecampaigns(vm.initialoffset, vm.currentuser.id).then(function(model) {
-                        console.log(model.length);
-                        if (model.length === 0) {
+                    campaign.loadmorecampaigns(vm.initialoffset, vm.currentuser.id).then(function(moreaudience) {
+                        if (moreaudience.length === 0) {
                             vm.loadmorebool = false;
-                            console.log(vm.loadmorebool)
                         }
 
                     }).catch(function(error) {});
                 }).catch(function(error) {
                     vm.pageloadingboolean = false;
-                    console.log('On ne parvient pas à charger les audience');
                     throw error;
                 });
             }).catch(function(error) {});
@@ -207,11 +191,9 @@ module.exports = function(app) {
                 vm.pageloadingboolean = false;
                 vm.audiencetoadd = model;
                 vm.audiencesloaded = vm.audiencesloaded.concat(vm.audiencetoadd);
-                console.log(vm.audiencesloaded);
                 vm.audienceshown = vm.audiencesloaded.length;
 
                 campaign.loadmorecampaigns(vm.counter + 5, vm.currentuser.id).then(function(model) {
-                    console.log(model.length);
                     if (model.length === 0) {
                         vm.loadmorebool = false;
                     }
@@ -228,13 +210,11 @@ module.exports = function(app) {
         vm.loadmoreinfo = function(index) {
             vm.pageloadingboolean = true;
             vm.campaigntodetail = vm.audiencesloaded[index];
-            console.log(vm.campaigntodetail.available)
 
             user.getcurrentUser().then(function(creator) {
                 vm.creatorofthecampaign = creator;
             }).catch(function(error) {});
 
-            console.log('kikoo')
             if (vm.campaigntodetail.available === false) {
                 vm.available = "La campagne n'est pas disponible";
             } else if (vm.campaigntodetail.available === true) {
@@ -242,7 +222,6 @@ module.exports = function(app) {
             }
 
             lookalikeaudience.findaudiencebyID(vm.campaigntodetail.id_audience).then(function(audience) {
-                console.log("voici l'audience trouvée");
                 vm.audienceused = audience;
                 vm.pageloadingboolean = false;
 
@@ -259,11 +238,8 @@ module.exports = function(app) {
                     vm.listorurls.push(urlset);
                 }
                 vm.urlderedirection = vm.campaigntodetail.url_campaign.concat('?').concat('utm_source', '=').concat(vm.campaigntodetail.utm_source).concat('&', 'utm_medium', '=').concat(vm.campaigntodetail.utm_medium).concat('&', 'utm_term', '=').concat(vm.campaigntodetail.utm_term).concat('&', 'utm_content', '=').concat(vm.campaigntodetail.utm_content).concat('&', 'utm_campaign', '=').concat(vm.campaigntodetail.id);
-                console.log(vm.urlderedirection);
-                console.log(vm.listorurls);
             }).catch(function(error) {
                 customaudience.findaudiencebyID(vm.campaigntodetail.id_audience).then(function(customaudience) {
-                    console.log("voici l'audience trouvée");
                     vm.audienceused = customaudience;
                     vm.pageloadingboolean = false;
 
@@ -280,28 +256,12 @@ module.exports = function(app) {
                         vm.listorurls.push(urlset);
                     }
                     vm.urlderedirection = vm.campaigntodetail.url_campaign.concat('?').concat('utm_source', '=').concat(vm.campaigntodetail.utm_source).concat('&', 'utm_medium', '=').concat(vm.campaigntodetail.utm_medium).concat('&', 'utm_term', '=').concat(vm.campaigntodetail.utm_term).concat('&', 'utm_content', '=').concat(vm.campaigntodetail.utm_content).concat('&', 'utm_campaign', '=').concat(vm.campaigntodetail.id);
-                    console.log(vm.urlderedirection);
-                    console.log(vm.listorurls);
                 }).catch(function(error) {});
-                console.log('error');
                 vm.pageloadingboolean = false;
             });
 
         };
 
-        // // vm.deleteaudienceById = function(id) {
-        // //     lookalikeaudience.deleteaudienceLoop(id).then(function(model) {
-        // //         $rootScope.$broadcast('reloadlookalikeaudience', null);
-        // //     }).catch(function(error) {});
-        // // }
-
-        // //Load more info about a Lookalike audience
-
-        // vm.audiencetodetail = {};
-        // vm.loadmoreinfo = function(index) {
-        //     vm.audiencetodetail = vm.audiencesloaded[index];
-
-        // };
     }
 
     controller.$inject = deps;

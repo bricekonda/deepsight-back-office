@@ -137,92 +137,16 @@ module.exports = function(app) {
 
         vm.audiencenotreadyin = function(index) {
             if (vm.audiencesloaded[index].waitboolean === true) {
-                var y = 78 + (index) * 44;
+                var y = 78 + (index) * 50;
                 var ypx = y.toString().concat('px');
                 vm.readyboolean = true;
                 $timeout(function() {
-                    console.log(document.getElementById("notready"));
                     document.getElementById('notready').style.setProperty("top", ypx);
                 });
             } else {
                 vm.readyboolean = false;
             }
         };
-
-        // //Load audience
-
-        // vm.noaudiencebool = false;
-        // vm.audienceshown = 0;
-
-        // var quantityofaudiencestoloadfirst = 5;
-        // var firsttoskipnumber = 0;
-
-        // lookalikeaudience.loadaudience(quantityofaudiencestoloadfirst, firsttoskipnumber).subscribe(function onNext(entities) {
-        //     $scope.$apply(function() {
-        //         vm.audiencesloaded = entities;
-
-        //     });
-        // }, function onError(error) {
-        //     $rootScope.$broadcast('customaudienceloadingfailure', null);
-        //     throw error;
-        // }, function onComplete() {
-        //     if (vm.audiencesloaded.length === 0) {
-        //         vm.noaudiencebool = true;
-        //     }
-
-        //     $scope.$apply(function() {
-        //         vm.audienceshown = vm.audiencesloaded.length
-        //     })
-
-        //     vm.pageloadingboolean = false;
-
-        //     lookalikeaudience.loadaudience(1, vm.counterload + 5).subscribe(function onNext(entities) {
-        //         vm.audiencetest = entities;
-        //     }, function onError(error) {
-        //         throw error;
-        //     }, function onComplete() {
-        //         $scope.$apply(function() {
-        //             if (vm.audiencetest.length === 0) {
-        //                 vm.loadmorebool = false;
-        //             }
-        //         });
-
-        //     });
-        // });
-
-        // //Load more audience
-
-        // vm.counterload = 0;
-        // vm.loadmorebool = true;
-
-        // vm.loadmore = function() {
-        //     vm.counterload = vm.counterload + 5;
-        //     lookalikeaudience.loadaudience(5, vm.counterload).subscribe(function onNext(entities) {
-        //         vm.audiencesbis = entities;
-
-        //     }, function onError(error) {
-        //         throw error;
-        //     }, function onComplete() {
-        //         $scope.$apply(function() {
-        //             vm.audiencesloaded = vm.audiencesloaded.concat(vm.audiencesbis);
-        //             vm.audienceshown = vm.audiencesloaded.length;
-        //             lookalikeaudience.loadaudience(1, vm.counterload + 5).subscribe(function onNext(entities) {
-        //                 vm.audiencetest = entities;
-        //             }, function onError(error) {
-        //                 throw error;
-        //             }, function onComplete() {
-        //                 $scope.$apply(function() {
-        //                     if (vm.audiencetest.length === 0) {
-        //                         vm.loadmorebool = false;
-        //                     }
-        //                 });
-
-        //             });
-        //         });
-
-        //     });
-
-        // };
 
         //Load more audience
 
@@ -256,32 +180,24 @@ module.exports = function(app) {
             }]
 
             lookalikeaudience.addaudienceLoop(creator, name, nb_publishers, size, format, date, publishers_list, waitboolean, readyboolean, makeadealboolean).then(function(model) {
-                console.log('Top AudienceLoop fonctionne');
-                console.log(model)
             }).catch(function(error) {
-                console.log('Bad AudienceLoop ne fonctionne pas');
                 throw error;
             });
         };
 
         user.getcurrentUser().then(function(model) {
             vm.currentuser = model;
-            console.log(vm.currentuser.username);
 
             lookalikeaudience.loadaudienceLoop(vm.currentuser.username).then(function(model) {
                 vm.pageloadingboolean = false;
                 vm.audiencesloaded = model;
                 vm.audienceshown = vm.audiencesloaded.length;
-                console.log(vm.audiencesloaded);
-                console.log(vm.audiencesloaded.slice().reverse())
                 vm.initialoffset = 5;
                 vm.counter = 0;
                 if (vm.audiencesloaded.length === 0) {
                     vm.noaudiencebool = true;
                 }
-                console.log("ok");
                 lookalikeaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.username).then(function(model) {
-                    console.log(model.length);
                     if (model.length === 0) {
                         vm.loadmorebool = false;
                     }
@@ -289,32 +205,25 @@ module.exports = function(app) {
                 }).catch(function(error) {});
             }).catch(function(error) {
                 vm.pageloadingboolean = false;
-                console.log('On ne parvient pas à charger les audience');
                 throw error;
             });
         }).catch(function(error) {});
 
         $rootScope.$on('reloadlookalikeaudience', function(event, data) {
-            console.log('reloadlookalikeaudience')
             vm.loadmorebool = true;
             user.getcurrentUser().then(function(model) {
                 vm.currentuser = model;
-                console.log(vm.currentuser.username);
 
                 lookalikeaudience.loadaudienceLoop(vm.currentuser.username).then(function(model) {
                     vm.pageloadingboolean = false;
                     vm.audiencesloaded = model;
                     vm.audienceshown = vm.audiencesloaded.length;
-                    console.log(vm.audiencesloaded);
-                    console.log(vm.audiencesloaded.slice().reverse())
                     vm.initialoffset = 5;
                     vm.counter = 0;
                     if (vm.audiencesloaded.length === 0) {
                         vm.noaudiencebool = true;
                     }
-                    console.log("ok");
                     lookalikeaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.username).then(function(model) {
-                        console.log(model.length);
                         if (model.length === 0) {
                             vm.loadmorebool = false;
                         }
@@ -322,7 +231,6 @@ module.exports = function(app) {
                     }).catch(function(error) {});
                 }).catch(function(error) {
                     vm.pageloadingboolean = false;
-                    console.log('On ne parvient pas à charger les audience');
                     throw error;
                 });
             }).catch(function(error) {});
@@ -336,11 +244,9 @@ module.exports = function(app) {
                 vm.pageloadingboolean = false;
                 vm.audiencetoadd = model;
                 vm.audiencesloaded = vm.audiencesloaded.concat(vm.audiencetoadd);
-                console.log(vm.audiencesloaded);
                 vm.audienceshown = vm.audiencesloaded.length;
 
                 lookalikeaudience.loadmoreaudienceLoop(vm.counter + 5, vm.currentuser.username).then(function(model) {
-                    console.log(model.length);
                     if (model.length === 0) {
                         vm.loadmorebool = false;
                     }
@@ -351,27 +257,6 @@ module.exports = function(app) {
             });
 
         };
-
-        // vm.deleteaudience = function(index) {
-
-        //     //Attention à vm.audiencesloaded si reverse dans le ng-repeat
-
-        //     var audienceid = vm.audiencesloaded[index].id
-        //     vm.pageloadingboolean = true;
-
-        //     lookalikeaudience.deleteaudienceLoop(audienceid).then(function(model) {
-        //         $rootScope.$broadcast('reloadlookalikeaudience', null);
-        //         vm.pageloadingboolean = false;
-        //     }).catch(function(error) {
-        //         vm.pageloadingboolean = false;
-        //     });
-        // };
-
-        // vm.deleteaudienceById = function(id) {
-        //     lookalikeaudience.deleteaudienceLoop(id).then(function(model) {
-        //         $rootScope.$broadcast('reloadlookalikeaudience', null);
-        //     }).catch(function(error) {});
-        // }
 
         //Load more info about a Lookalike audience
 

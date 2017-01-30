@@ -2,7 +2,7 @@
 
 <div class="popup-background" ng-if="vm.closeopenbool">
     <div class="popup-wrapper">
-            <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
+        <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
         <div class="popup-message">Es-tu sûr de vouloir supprimer l'audience ?</div>
         <div class="popup-btn" ng-click="vm.deleteaudience()">
             <div class="popup-btn-content">SUPPRIMER</div>
@@ -11,7 +11,6 @@
 </div>
 
 <div class="category-block">
-    <!--     <div class="category-title" ng-click="vm.refresh()"><div ng-click="vm.addaudienceLoop()">Audience similaire</div> -->
     <div class="category-title">
         <div ng-click="vm.addaudienceLoop()">Audience similaire</div>
     </div>
@@ -70,7 +69,7 @@
                 <div class="column-content-features">DATE</div>
             </div>
         </div>
-        
+
         <div ng-if="vm.readyboolean" class="audience-not-ready-block" id="notready">
             <div class="detail-triangle-dark"></div>
             <div class="detail-triangle-light"></div>
@@ -78,56 +77,51 @@
                 <div class="audience-not-ready-title-text">L'audience n'est pas encore prête</div>
             </div>
         </div>
+        <div class="audience-block" ng-repeat="audience in vm.audiencesloaded | orderBy: vm.sortparameter ">
 
-        <div class="audience-container" ng-repeat="audience in vm.audiencesloaded | orderBy: vm.sortparameter ">
-            <div class="column1">
-                <p class="column-content" ng-click="vm.viewmoreofcolumncontent($event,audience)">{{audience.name}}</p>
+            <div class="audience-container" ng-click="vm.displaymoreinfo($index); vm.loadmoreinfo($index)" ng-mouseenter="vm.audiencenotreadyin($index)" ng-mouseleave="vm.audiencenotreadyout($index)">
+                <div class="column1">
+                    <p class="column-content" ng-click="vm.viewmoreofcolumncontent($event,audience)">{{audience.name}}</p>
+                </div>
+                <div class="column2">
+                    <div class="column-content">{{audience.size}}</div>
+                </div>
+                <div class="column3">
+                    <div class="column-content">{{audience.nb_publishers}}</div>
+                </div>
+                <div class="column4">
+                    <div class="column-content">{{audience.date}}</div>
+                </div>
             </div>
-            <div class="column2">
-                <div class="column-content">{{audience.size}}</div>
-            </div>
-            <div class="column3">
-                <div class="column-content">{{audience.nb_publishers}}</div>
-            </div>
-            <div class="column4">
-                <div class="column-content">{{audience.date}}</div>
-            </div>
+            <div class="audience-action">
 
-            <div class="column7">
-                <div class="more-info-icon" ng-click="vm.displaymoreinfo($index); vm.loadmoreinfo($index)" ng-mouseenter="vm.audiencenotreadyin($index)" ng-mouseleave="vm.audiencenotreadyout($index)"></div>
+                <div class="column7">
+                    <div class="more-info-icon" ng-click="vm.displaymoreinfo($index); vm.loadmoreinfo($index)" ng-mouseenter="vm.audiencenotreadyin($index)" ng-mouseleave="vm.audiencenotreadyout($index)"></div>
+                </div>
+                <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
+                    <div class="delete-icon"></div>
+                </div>
+                <a ui-sref="home.lookalikeaudience" ng-if="audience.waitboolean">
+                    <div class="column5">
+                        <div class="audience-option-wait">
+                            <p class="audience-option-wait-content">The algorithm runs!</p>
+                        </div>
+                    </div>
+                </a>
+                <a ui-sref="home.createcampaign" ng-if="audience.makeadealboolean">
+                    <div class="column5">
+                        <div class="audience-option-deal">
+                            <p class="audience-option-deal-content">Lancer une campagne</p>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
-                <div class="delete-icon"></div>
-            </div>
-            <a ui-sref="home.lookalikeaudience" ng-if="audience.waitboolean">
-                <div class="column5">
-                    <div class="audience-option-wait">
-                        <p class="audience-option-wait-content">En attente</p>
-                    </div>
-                </div>
-            </a>
-
-            <a ui-sref="home.lookalikeaudience" ng-if="audience.readyboolean">
-                <div class="column5">
-                    <div class="audience-option-ready">
-                        <p class="audience-option-ready-content">Prêt à paramètrer</p>
-                    </div>
-                </div>
-            </a>
-            <a ui-sref="home.makeadeal" ng-if="audience.makeadealboolean">
-                <div class="column5">
-                    <div class="audience-option-deal">
-                        <p class="audience-option-deal-content">Achat média</p>
-                    </div>
-                </div>
-            </a>
         </div>
-
         <div class="load-more" ng-click="vm.loadmore()" ng-if="vm.loadmorebool">
             <div class="load-more-content">CHARGER PLUS ...</div>
         </div>
-
     </div>
+
 </div>
 
 <!-- More information -->
@@ -150,8 +144,16 @@
                     <div class="info-sub-block-title">Nombre d'éditeurs</div>
                     <div class="info-sub-block-content">{{vm.audiencetodetail.nb_publishers}}</div>
                 </div>
-                <div class="info-sub-block info-sub-block-action">
+
+                <div class="info-sub-block-large">
                     <div class="delete-icon-info-block" ng-click="vm.deleteaudienceById(vm.audiencetodetail.id)"></div>
+                    <a ui-sref="home.createcampaign" class="link">
+                        <div class="audience-option-info-block-wrapper">
+                            <div class="audience-option-info-block-deal">
+                                <p class="audience-option-deal-content">Lancer une campagne</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
                 <div class="info-sub-block">
                     <div class="info-sub-block-title">Taille</div>
@@ -162,30 +164,6 @@
                     <div class="info-sub-block-content">{{vm.audiencetodetail.date}}</div>
                 </div>
 
-                <div class="info-sub-block">
-                    <a ui-sref="home.lookalikeaudience" ng-if="vm.audiencetodetail.waitboolean">
-                        <div class="audience-option-info-block-wrapper">
-                            <div class="audience-option-info-block-wait">
-                                <p class="audience-option-wait-content">En attente</p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a ui-sref="home.lookalikeaudience" ng-if="vm.audiencetodetail.readyboolean">
-                        <div class="audience-option-info-block-wrapper">
-                            <div class="audience-option-info-block-set-up">
-                                <p class="audience-option-info-block-content">Prêt à paramétrer</p>
-                            </div>
-                        </div>
-                    </a>
-                    <a ui-sref="home.makeadeal" ng-if="vm.audiencetodetail.makeadealboolean">
-                        <div class="audience-option-info-block-wrapper">
-                            <div class="audience-option-info-block-deal">
-                                <p class="audience-option-deal-content">Achat média</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
             </div>
 
             <div class="publishers-wrapper">

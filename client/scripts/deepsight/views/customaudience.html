@@ -2,7 +2,7 @@
 
 <div class="popup-background" ng-if="vm.closeopenbool">
     <div class="popup-wrapper">
-            <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
+        <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
         <div class="popup-message">Es-tu sûr de vouloir supprimer l'audience ?</div>
         <div class="popup-btn" ng-click="vm.deleteaudience()">
             <div class="popup-btn-content">SUPPRIMER</div>
@@ -12,7 +12,9 @@
 
 <div class="category-block">
 
-    <div class="category-title"><div ng-click="vm.addaudienceLoop()">Audience commune</div></div>
+    <div class="category-title">
+        <div ng-click="vm.addaudienceLoop()">Audience commune</div>
+    </div>
     <div class="category-subtitle" ng-click="vm.broadcastevent()"> Affichage des
         <span style='color:#1580EF'>{{vm.audienceshown}}</span> audience(s) commune(s) crée(s)</div>
     <div class="filter-btn-wrapper">
@@ -63,33 +65,36 @@
                 <div class="column-content-features">DATE</div>
             </div>
         </div>
-        <div class="audience-container" ng-repeat="audience in vm.audiencesloaded | orderBy: vm.sortparameter ">
-            <div class="column1">
-                <p class="column-content" ng-click="vm.viewmoreofcolumncontent($event,audience)">{{audience.name}}</p>
-            </div>
-            <div class="column2">
-                <div class="column-content">{{audience.size}}</div>
-            </div>
-            <div class="column3">
-                <div class="column-content">{{audience.nb_publishers}}</div>
-            </div>
-            <div class="column4">
-                <div class="column-content">{{audience.date}}</div>
-            </div>
-
-            <div class="column7">
-                <div class="more-info-icon" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)"></div>
-            </div>
-            <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
-                <div class="delete-icon"></div>
-            </div>
-            <a ui-sref="home.lookalikeaudience">
-                <div class="column5">
-                    <div class="audience-option">
-                        <p class="audience-option-content">Audience similaire</p>
-                    </div>
+        <div class="audience-block" ng-repeat="audience in vm.audiencesloaded | orderBy: vm.sortparameter ">
+            <div class="audience-container" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)">
+                <div class="column1">
+                    <p class="column-content" ng-click="vm.viewmoreofcolumncontent($event,audience)">{{audience.name}}</p>
                 </div>
-            </a>
+                <div class="column2">
+                    <div class="column-content">{{audience.size}}</div>
+                </div>
+                <div class="column3">
+                    <div class="column-content">{{audience.nb_publishers}}</div>
+                </div>
+                <div class="column4">
+                    <div class="column-content">{{audience.date}}</div>
+                </div>
+            </div>
+            <div class="audience-action">
+                <div class="column7">
+                    <div class="more-info-icon" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)"></div>
+                </div>
+                <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
+                    <div class="delete-icon"></div>
+                </div>
+                <a ui-sref="home.createcampaign" ng-if="true">
+                    <div class="column5">
+                        <div class="audience-option-deal">
+                            <p class="audience-option-deal-content">Lancer une campagne</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
         <div class="load-more" ng-click="vm.loadmore()" ng-if="vm.loadmorebool">
             <div class="load-more-content">CHARGER PLUS ...</div>
@@ -117,9 +122,24 @@
                     <div class="info-sub-block-title">Nombre d'éditeurs</div>
                     <div class="info-sub-block-content">{{vm.audiencetodetail.nb_publishers}}</div>
                 </div>
-                <div class="info-sub-block info-sub-block-action">
+                <div class="info-sub-block-large">
                     <div class="delete-icon-info-block" ng-click="vm.deleteaudienceById(vm.audiencetodetail.id)"></div>
+                    <a ng-click="vm.gotocreatelookalike($index)" class="link">
+                        <div class="audience-option-info-block-wrapper">
+                            <div class="audience-option-info-block">
+                                <p class="audience-option-info-block-content">Create lookalike</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a ui-sref="home.createcampaign" class="link">
+                        <div class="audience-option-info-block-wrapper">
+                            <div class="audience-option-info-block-deal">
+                                <p class="audience-option-deal-content">Lancer une campagne</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
+
                 <div class="info-sub-block">
                     <div class="info-sub-block-title">Size</div>
                     <div class="info-sub-block-content">{{vm.audiencetodetail.size}}</div>
@@ -129,15 +149,6 @@
                     <div class="info-sub-block-content">{{vm.audiencetodetail.date}}</div>
                 </div>
 
-                <div class="info-sub-block">
-                    <a ui-sref="home.lookalikeaudience">
-                        <div class="audience-option-info-block-wrapper">
-                            <div class="audience-option-info-block">
-                                <p class="audience-option-info-block-content">Create lookalike</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
             </div>
 
             <div class="publishers-wrapper">
@@ -153,21 +164,6 @@
                     </div>
                     <div class="column3bis">{{publisher.pertotal}}</div>
                 </div>
-<!--                 <div class="publisher-row">
-                    <div class="column1bis">{{vm.audiencetodetail.publisher2.name}}</div>
-                    <div class="column2bis">
-                        <span style="color:#1580EF">{{vm.audiencetodetail.publisher2.size}}</span>
-                    </div>
-                    <div class="column3bis">{{vm.audiencetodetail.publisher2.overlapper}}</div>
-                </div>
-
-                <div class="publisher-row">
-                    <div class="column1bis">{{vm.audiencetodetail.publisher3.name}}</div>
-                    <div class="column2bis">
-                        <span style="color:#1580EF">{{vm.audiencetodetail.publisher3.size}}</span>
-                    </div>
-                    <div class="column3bis">{{vm.audiencetodetail.publisher3.overlapper}}</div>
-                </div> -->
                 <div class="total-match">
                     <div class="total-match-content">
                         <div class="total">{{vm.audiencetodetail.size}}</div>

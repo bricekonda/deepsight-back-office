@@ -52,11 +52,9 @@ module.exports = function(app) {
                         }
                     }
                 }).catch(function(error) {
-                    console.log('Bad AudienceLoop ne fonctionne pas');
                     throw error;
                 });
             }).catch(function(error) {
-                console.log('Bad AudienceLoop ne fonctionne pas');
                 throw error;
             });
 
@@ -153,7 +151,6 @@ module.exports = function(app) {
 
         vm.choseformat = function(index) {
             vm.formatchosen = vm.format[index].id;
-            console.log(vm.formatchosen);
             vm.index = index;
 
         }
@@ -178,7 +175,6 @@ module.exports = function(app) {
 
         vm.choseremuneration = function(index) {
             vm.remunerationchosen = vm.remuneration[index].id;
-            console.log(vm.remunerationchosen);
             vm.indexrem = index;
 
         }
@@ -194,16 +190,11 @@ module.exports = function(app) {
                 vm.sizeAudience = result.size;
                 vm.loaderonper = true;
                 files.uploadFile(result.file, filename).then(function() {
-                    console.log('on passe a letape suivante');
                     vm.filename = filename;
                 }, function(err) {
-                    console.log(err);
-                    console.log('erreur upload');
                 });
             }, function(error) {
-                console.log('le fichier doit contenir lentete md5');
                 vm.errormd5head = true;
-                console.log(error);
             });
         };
 
@@ -246,14 +237,11 @@ module.exports = function(app) {
 
         vm.test = function() {
 
-            console.log("on y est");
-
         };
 
         vm.showmessage = 'information-block-success-campaign-up';
 
         $rootScope.$on('campaigncreationsuccess', function(event, data) {
-            console.log('campaigncreationsuccess')
 
             vm.showmessage = 'information-block-success-campaign-down';
             $timeout(function() {
@@ -304,7 +292,6 @@ module.exports = function(app) {
                 var redirectionurl = vm.campaignurlredirection;
                 var trackingurl = vm.campaignurltracking;
 
-                console.log("on va scroller");
 
                 user.getcurrentUser().then(function(user) {
                     var idcreator = user.id;

@@ -25,14 +25,9 @@ module.exports = function(app) {
                 var password = vm.user.password;
                 var access_token = $stateParams.access_token;
                 var id = $stateParams.id;
-
-                console.log(access_token);
-                console.log(id);
                 authentication.resetPwd(access_token,id,password).then(function(user) {
                     $rootScope.$broadcast('resetpwdfinalSuccess', null);
-                    console.log('ça fonctionne');
                 }).catch(function(error) {
-                    console.log('petit bug')
                     throw error;
                 });
             }

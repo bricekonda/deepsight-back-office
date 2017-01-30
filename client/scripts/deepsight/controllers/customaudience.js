@@ -12,26 +12,21 @@ module.exports = function(app) {
         var vm = this;
         vm.controllername = fullname;
 
-        // vm.pageloadingboolean = true;
 
         vm.pageloadingboolean = true;
-
 
         //popup cancel
         vm.closeopenbool = false;
 
-        vm.loadindextodelete = function($index){
-            vm.indextodelete = $index; 
+        vm.loadindextodelete = function($index) {
+            vm.indextodelete = $index;
         }
         vm.deleteaudience = function() {
-            console.log(vm.indextodelete);
 
             vm.closeopenbool = false;
-            
+
             vm.pageloadingboolean = true;
             //Attention à vm.audiencesloaded si reverse dans le ng-repeat
-
-            console.log(vm.indextodelete);
 
             var audienceid = vm.audiencesloaded[vm.indextodelete].id
 
@@ -53,18 +48,22 @@ module.exports = function(app) {
 
         //End of popup cancel
 
-
         //Test Loopback
 
         vm.brice = function() {
             Publisheruser.create({
                 'md5': 'FE24GEZT2'
             }).$promise.then(function(response) {
-                console.log("ok");
             });
         };
 
         //End of test Loopback
+
+        vm.gotocreatelookalike = function(index) {
+            $state.go('home.lookalikeaudience.createlookalikeaudience').then(function() {
+                $rootScope.$broadcast('loadcustomaudiencetoextend', vm.audiencetodetail);
+            });
+        }
 
         // filter
 
@@ -136,38 +135,6 @@ module.exports = function(app) {
         var quantityofaudiencestoloadfirst = 5;
         var firsttoskipnumber = 0;
 
-        // customaudience.loadaudience(quantityofaudiencestoloadfirst, firsttoskipnumber).subscribe(function onNext(entities) {
-        //     $scope.$apply(function() {
-        //         vm.audiencesloaded = entities;
-        //     });
-        // }, function onError(error) {
-        //     $rootScope.$broadcast('customaudienceloadingfailure', null);
-        //     throw error;
-        // }, function onComplete() {
-        //     if (vm.audiencesloaded.length === 0) {
-        //         vm.noaudiencebool = true;
-        //     }
-
-        //     $scope.$apply(function() {
-        //         vm.audienceshown = vm.audiencesloaded.length
-        //     })
-
-        //     vm.pageloadingboolean = false;
-
-        //     customaudience.loadaudience(1, vm.counterload + 5).subscribe(function onNext(entities) {
-        //         vm.audiencetest = entities;
-        //     }, function onError(error) {
-        //         throw error;
-        //     }, function onComplete() {
-        //         $scope.$apply(function() {
-        //             if (vm.audiencetest.length === 0) {
-        //                 vm.loadmorebool = false;
-        //             }
-        //         });
-
-        //     });
-        // });
-
         //Load more audience
 
         vm.counterload = 0;
@@ -176,11 +143,9 @@ module.exports = function(app) {
         //Module pour ajouter des audiences test
 
         var date = new Date();
-        console.log(date);
 
         vm.addaudienceLoop = function() {
             var date = new Date();
-            console.log(date);
             var creator = 'brice@deepsight.io';
             var name = 'Parfum kenzo Homme, Campagne automne';
             var nb_publishers = 56;
@@ -201,44 +166,29 @@ module.exports = function(app) {
             }]
 
             customaudience.addaudienceLoop(creator, name, nb_publishers, size, format, date, publishers_list).then(function(user) {
-                console.log('Top AudienceLoop fonctionne');
             }).catch(function(error) {
-                console.log('Bad AudienceLoop ne fonctionne pas');
                 throw error;
             });
         };
 
         //Fin de module pour ajouter des audiences test
 
-        //Current User
-
-        // $scope.$apply(function() {
-        //     user.getcurrentUser().then(function(model) {
-        //         vm.currentuser = model;
-        //         console.log(vm.currentuser.username);
-        //     }).catch(function(error) {});
-        // });
 
         //Charger les audiences et loadmore
 
         user.getcurrentUser().then(function(model) {
             vm.currentuser = model;
-            console.log(vm.currentuser.username);
 
             customaudience.loadaudienceLoop(vm.currentuser.username).then(function(model) {
                 vm.pageloadingboolean = false;
                 vm.audiencesloaded = model;
                 vm.audienceshown = vm.audiencesloaded.length;
-                console.log(vm.audiencesloaded);
-                console.log(vm.audiencesloaded.slice().reverse())
                 vm.initialoffset = 5;
                 vm.counter = 0;
                 if (vm.audiencesloaded.length === 0) {
                     vm.noaudiencebool = true;
                 }
-                console.log("ok");
                 customaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.username).then(function(model) {
-                    console.log(model.length);
                     if (model.length === 0) {
                         vm.loadmorebool = false;
                     }
@@ -246,7 +196,6 @@ module.exports = function(app) {
                 }).catch(function(error) {});
             }).catch(function(error) {
                 vm.pageloadingboolean = false;
-                console.log('On ne parvient pas à charger les audience');
                 throw error;
             });
         }).catch(function(error) {});
@@ -255,22 +204,17 @@ module.exports = function(app) {
             vm.loadmorebool = true;
             user.getcurrentUser().then(function(model) {
                 vm.currentuser = model;
-                console.log(vm.currentuser.username);
 
                 customaudience.loadaudienceLoop(vm.currentuser.username).then(function(model) {
                     vm.pageloadingboolean = false;
                     vm.audiencesloaded = model;
                     vm.audienceshown = vm.audiencesloaded.length;
-                    console.log(vm.audiencesloaded);
-                    console.log(vm.audiencesloaded.slice().reverse())
                     vm.initialoffset = 5;
                     vm.counter = 0;
                     if (vm.audiencesloaded.length === 0) {
                         vm.noaudiencebool = true;
                     }
-                    console.log("ok");
                     customaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.username).then(function(model) {
-                        console.log(model.length);
                         if (model.length === 0) {
                             vm.loadmorebool = false;
                         }
@@ -278,7 +222,6 @@ module.exports = function(app) {
                     }).catch(function(error) {});
                 }).catch(function(error) {
                     vm.pageloadingboolean = false;
-                    console.log('On ne parvient pas à charger les audience');
                     throw error;
                 });
             }).catch(function(error) {});
@@ -291,11 +234,9 @@ module.exports = function(app) {
                 vm.pageloadingboolean = false;
                 vm.audiencetoadd = model;
                 vm.audiencesloaded = vm.audiencesloaded.concat(vm.audiencetoadd);
-                console.log(vm.audiencesloaded);
                 vm.audienceshown = vm.audiencesloaded.length;
 
                 customaudience.loadmoreaudienceLoop(vm.counter + 5, vm.currentuser.username).then(function(model) {
-                    console.log(model.length);
                     if (model.length === 0) {
                         vm.loadmorebool = false;
                     }
@@ -307,46 +248,6 @@ module.exports = function(app) {
 
         };
 
-
-
-        //Fin de charger les audiences et loadmore
-
-        // var test = Customaudience.find({
-        //     limit: 5
-        // }, function() {
-        //     //...
-        // });
-
-        // console.log(test);
-
-        // vm.loadmore = function() {
-        //     vm.counterload = vm.counterload + 5;
-        //     customaudience.loadaudience(5, vm.counterload).subscribe(function onNext(entities) {
-        //         vm.audiencesbis = entities;
-
-        //     }, function onError(error) {
-        //         throw error;
-        //     }, function onComplete() {
-        //         $scope.$apply(function() {
-        //             vm.audiencesloaded = vm.audiencesloaded.concat(vm.audiencesbis);
-        //             vm.audienceshown = vm.audiencesloaded.length;
-        //             customaudience.loadaudience(1, vm.counterload + 5).subscribe(function onNext(entities) {
-        //                 vm.audiencetest = entities;
-        //             }, function onError(error) {
-        //                 throw error;
-        //             }, function onComplete() {
-        //                 $scope.$apply(function() {
-        //                     if (vm.audiencetest.length === 0) {
-        //                         vm.loadmorebool = false;
-        //                     }
-        //                 });
-
-        //             });
-        //         });
-
-        //     });
-
-        // };
 
         //More info
 

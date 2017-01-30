@@ -1,10 +1,12 @@
 <div class="background-signup">
     <div class="sign-in-block">
+        <div class="sign-in-information-error-block" ng-class="vm.showmessage">
+            <div class="sign-in-information-block-content">{{vm.messagetoshow}}</div>
+        </div>
         <img class="logo-deepsight" src="images/logo-deepsight.png">
         <h1 class="sign-in-title">Reset your password</h1>
         <h2 class="sign-in-instructions"></h2>
-<!--         <h2 class="sign-in-instructions" ng-if="vm.signinfailed" style="color:#EF2B2D">Cet email n'est pas dans notre base données.
-            <br>Try again!</h2> -->
+        
         <form name="signInForm" ng-submit="vm.submitForm(signInForm.$valid)">
 
             <label class="form-label">Email</label>

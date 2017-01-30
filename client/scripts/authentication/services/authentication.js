@@ -26,22 +26,6 @@ module.exports = function(app) {
 
         };
 
-        // var signUp = function(username, password, firstname, lastname, organization, tva, email) {
-
-        //     var newuser = $kinvey.User.signup({
-        //         username: username,
-        //         password: password,
-        //         firstname: firstname,
-        //         lastname: lastname,
-        //         organization: organization,
-        //         tva: tva,
-        //         email: email
-        //     })
-
-        //     return newuser;
-
-        // };
-
         var signIn = function(username, password) {
             var usertoconnect = Deepsightuser.login({
                 username: username,
@@ -52,23 +36,11 @@ module.exports = function(app) {
 
         };
 
-        // var signIn = function(username, password) {
-        //     var usertoconnect = $kinvey.User.login(username, password);
-
-        //     return usertoconnect;
-
-        // };
-
         var logOut = function() {
             var promise = Deepsightuser.logout().$promise
 
             return promise;
         };
-
-        // var logOut = function() {
-        //     var promise = $kinvey.User.logout();
-        //     return promise;
-        // };
 
         var resetPwdreq = function(username) {
 
@@ -85,12 +57,6 @@ module.exports = function(app) {
         };
 
         var resetPwd = function(access_token, id, password) {
-
-            // var promise = Deepsightuser.findById(accessToken.userId, function(err, user) {
-
-            // })
-            console.log('on y passe oui');
-
             $http.defaults.headers.common.authorization = access_token;
 
             var promisetest = Deepsightuser.prototype$updateAttributes({
@@ -107,12 +73,6 @@ module.exports = function(app) {
         $rootScope.$on('resetPasswordRequest', function() {
             console.log("L'évènement pour le reset est bien émis")
         });
-
-        // var resetPwd = function(username) {
-        //     var passwordtoreset = $kinvey.User.resetPassword(username)
-
-        //     return passwordtoreset;
-        // };
 
         return {
             ping: ping,

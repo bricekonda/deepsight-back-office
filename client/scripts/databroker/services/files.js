@@ -34,18 +34,6 @@ module.exports = function(app) {
             return deferred.promise;
         };
 
-        // var _encrypt = function() {
-        //     var numberMail = results.data.length - 1;
-        //     var data_hashed = [
-        //         ['MD5']
-        //     ];
-        //     for (var i = 1; i < numberMail; i++) {
-        //         var item = [crypto.createHash('md5').update(results.data[i][0]).digest('hex')];
-        //         data_hashed.push(item);
-        //     }
-        //     var csv = Papa.unparse(data_hashed);
-        //     var javascriptFile = new File([csv], filename);
-        // };
 
         var _getSignedUrl = function(file, filename) {
             var deferred = $q.defer();

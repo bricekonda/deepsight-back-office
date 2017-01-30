@@ -63,6 +63,8 @@ module.exports = function(app) {
 
         vm.user = [];
 
+        vm.pageloadingboolean = true;
+
         user.getcurrentUser().then(function(user) {
             vm.currentuser = user;
             vm.user.firstname = user.firstname;
@@ -71,8 +73,10 @@ module.exports = function(app) {
             vm.user.organization = user.organization;
             vm.user.tva = user.tva;
             vm.user.id = user.id
-            console.log(user);
-        }).catch(function(error) {});
+            vm.pageloadingboolean = false;
+        }).catch(function(error) {
+            vm.pageloadingboolean = false;
+        });
 
         vm.tvaboolean === true;
 
@@ -113,14 +117,9 @@ module.exports = function(app) {
             var email = user.email;
             var oldpassword = vm.pwd.oldpwd;
             var currentuser = vm.currentuser;
-            console.log(email);
-            console.log(oldpassword);
-            console.log(currentuser);
 
             user.testoldPassword(currentuser, oldpassword).then(function(response) {
-                console.log("ça roule")
             }).catch(function() {
-                console.log("ça ne fonctionne pas")
             });
         };
 
@@ -134,10 +133,8 @@ module.exports = function(app) {
                 var id = vm.user.id;
 
                 user.updateUser(firstname, lastname, organization, tva, creator, id).then(function(user) {
-                    console.log("ça fonctionne")
                     vm.modifyinformationf();
                 }).catch(function(error) {
-                    console.log("erreur")
                 });
             };
 
@@ -149,10 +146,8 @@ module.exports = function(app) {
                 var id = vm.user.id;
 
                 user.updatePassword(newpassword, id).then(function(response) {
-                    console.log("ok ça fonctionne");
                     vm.changepwd();
                 }).catch(function(error) {
-                    console.log("ça ne fonctionne pas vraiment ")
                 });
             };
 

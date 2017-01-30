@@ -64,13 +64,10 @@ module.exports = function(app) {
         user.getcurrentUser().then(function(model) {
 
             vm.currentuser = model;
-            console.log(vm.currentuser.username);
 
             customaudience.loadallaudienceLoop(vm.currentuser.username).then(function(entities) {
                 vm.audiencetochose = entities;
-                console.log(entities);
             }).catch(function(error) {
-                console.log('Bad AudienceLoop ne fonctionne pas');
                 throw error;
             });
         }).catch(function(error) {});
@@ -100,6 +97,12 @@ module.exports = function(app) {
             }
 
         };
+
+        $rootScope.$on('loadcustomaudiencetoextend', function(event, args) {
+            vm.choice = args.name;
+            vm.customchosen = args.id;
+
+        });
 
         // Menu déroulant audience
 
@@ -275,23 +278,23 @@ module.exports = function(app) {
                     'publisher_name': 'passeportsante',
                     'size': 1547,
                     'pertotal': 0
-                },{
+                }, {
                     'publisher_name': 'sixplay',
                     'size': 28172,
                     'pertotal': 0
-                },{
+                }, {
                     'publisher_name': 'fourchettebikini',
                     'size': 5837,
                     'pertotal': 0
-                },{
+                }, {
                     'publisher_name': 'meteocity',
                     'size': 3330,
                     'pertotal': 0
-                },{
+                }, {
                     'publisher_name': 'cuisineaz',
                     'size': 6249,
                     'pertotal': 0
-                } ]
+                }]
                 var nb_publishers = publishers_list.length;
                 var waitboolean = vm.audiencetest[0].waitboolean;
                 var readyboolean = vm.audiencetest[0].readyboolean;
@@ -299,8 +302,8 @@ module.exports = function(app) {
 
                 user.getcurrentUser().then(function(model) {
                     var creator = model.username
-                    lookalikeaudience.addaudienceLoop(creator, name, customaudience, nb_publishers, size, date, publishers_list, waitboolean, readyboolean, makeadealboolean).then(function onSuccess(entity) {
-                        console.log(entity)
+                    var id = model.id
+                    lookalikeaudience.addaudienceLoop(id, creator, name, customaudience, nb_publishers, size, date, publishers_list, waitboolean, readyboolean, makeadealboolean).then(function onSuccess(entity) {
                         vm.loaderon = false;
                         vm.nextstepfunction();
                     }).catch(function onError(error) {

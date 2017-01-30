@@ -1,6 +1,77 @@
+<loader ng-if="vm.pageloadingboolean"></loader>
+
 <div class="category-block">
-    <div class="category-title">My tags</div>
+    <div class="category-title" ng-click="vm.createtag()">My tags</div>
+    <div class="category-subtitle"> Consultez ici tous vos rapports de campagnes Deepsight
+    </div>
+
+    <div class="tags-wrapper">
+        <div class="tag-block" ng-repeat="tag in vm.taglist">
+            <div class="information-copy-title-tag">
+                {{tag.title}}
+            </div>
+            <div class="information-copy-block-tag">
+                <div class="information-copy-block-title-tag">
+                    Descriptif
+                </div>
+                <div class="information-copy-block-content-tag">
+                    {{tag.description}}
+                </div>
+            </div>
+            <div class="information-copy-block-tag">
+                <div class="information-copy-block-title-tag">
+                    URL du dépôt de tag
+                </div>
+                <div class="information-copy-block-content-tag">
+                    {{tag.url}}
+                </div>
+            </div>
+            <div class="information-copy-block-tag">
+                <div class="information-copy-block-title-tag">
+                    Variable à récupérer
+                </div>
+                <div class="information-copy-block-content-tag">
+                    <div ng-repeat="variable in tag.variables">{{variable.variable}}
+                        <br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="information-copy-block-tag">
+                <div class="information-copy-block-title-tag">
+                </div>
+            </div>
+            <div class="script-wrapper">
+                <div class="script-copy">
+                    &lt;script type="text/javascript"&gt;
+                    <br> &nbsp&nbsp&nbsp&nbsp(function() {
+                    <br> &nbsp&nbsp&nbsp&nbspconsole.log("le tag est bien actif!")
+                    <br> &nbsp&nbsp&nbsp&nbspvar s = document.createElement("script"),
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp s0 = document.getElementsByTagName("script")[0];
+                    <br> &nbsp&nbsp&nbsp&nbsps.type = "text/javascript";
+                    <br> &nbsp&nbsp&nbsp&nbsps.async = true;
+                    <br> &nbsp&nbsp&nbsp&nbspvar dsP = {
+                    <br>
+                    <div ng-repeat="variable in tag.variables">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{variable.variable}}&nbsp&nbsp:&nbsp&nbsp'&nbsp&nbsp&nbsp&nbsp&nbsp'
+                        <br>
+                    </div>
+                    &nbsp&nbsp&nbsp&nbsp};
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbspvar urlParam = []
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbspfor (var i in dsP) {
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspurlParam.push(encodeURI(i) + "=" + encodeURI(dsP[i]));
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbsp}
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbsps.src = 'https://tr.deepsight.io/adv?' + urlParam.join("&");
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbsps0.parentNode.insertBefore(s, s0);
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbsp})();
+                    <br> &lt;/script&gt;
+                    <br>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
+
 <!-- End of more information -->
 
 <ui-view></ui-view>
