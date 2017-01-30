@@ -1,0 +1,55 @@
+<!-- <!doctype html> -->
+<html lang="en" ng-app="main" ng-strict-di>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" type="image/png" href="images/logo-deepsight.png">
+    <!-- Enable all requests, inline styles, and eval() see https://github.com/apache/cordova-plugin-whitelist#content-security-policy-->
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; media-src *; img-src *">
+    <link rel="icon" type="image/ico" href="favicon.ico">
+    <!--[if IE]>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon">
+    <![endif]-->
+    <title>Deepsight Dashboard</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body class="app-body">
+
+    <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <ui-view></ui-view>
+    <script src="//static.intercomcdn.com/intercom.v1.js"></script>
+
+    <script src="scripts/bundle.js"></script>
+
+    <!--Start of Deepsight Script-->
+<!--         <script type="text/javascript">
+    (function() {
+        console.log("le tag est bien actif!")
+        var s = document.createElement("script"),
+            s0 = document.getElementsByTagName("script")[0];
+        s.type = "text/javascript";
+        s.async = true;
+        var dsP = {
+            url: window.location.href,
+            client_id: 'zjiuefc24362FERESG3',
+            cart_value: 587,
+        };
+        var urlParam = []
+        for (var i in dsP) {
+            urlParam.push(encodeURI(i) + "=" + encodeURI(dsP[i]));
+        }
+        // s.src = 'https://tr.deepsight.io/adv?' + urlParam.join("&");
+        // console.log(s.src)
+        s.src = 'http://0.0.0.0:3000/adv?client_id=zjiuefc24362FERESG3&cart_value=587';
+        // s.src = 'https://tr.deepsight.io/adv?client_id=zjiuefc24362FERESG3&cart_value=587';
+        s0.parentNode.insertBefore(s, s0);
+    })();
+    </script> -->
+    <!--End of Deepsight Script-->
+</body>
+
+</html>

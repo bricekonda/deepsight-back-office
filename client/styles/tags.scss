@@ -1,0 +1,92 @@
+/*********************************************
+    COLORS
+*********************************************/
+
+.tags-wrapper {
+    position: absolute;
+    // background-color: blue;
+    width: calc(100% - 60px);
+    top: 130px;
+}
+
+.tag-block {
+    position: relative;
+    float: left;
+    height: auto;
+    width: calc(100% - 60px);
+    min-width: 800px;
+    margin-left: 60px;
+    background: white;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 3px;
+}
+
+.information-copy-tag {
+    position: relative;
+    float: left;
+    display: inline-block;
+    width: calc(100% - 300px);
+    background-color: white;
+    border-radius: 3px;
+}
+
+.information-copy-title-tag {
+    position: relative;
+    font-family: proximanovaregular;
+    font-size: 18px;
+    line-height: 22px;
+    width: calc(100% - 30px);
+    color: #23231C;
+    margin-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    float: left;
+}
+
+.information-copy-block-tag {
+    position: relative;
+    width: calc(100% - 30px);
+    margin-left: 30px;
+    margin-bottom: 12px;
+    float: left;
+}
+
+.information-copy-block-title-tag, .information-copy-block-content-tag {
+    position: relative;
+    font-family: proximanovaregular;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.information-copy-block-title-tag {
+    color: #23231C;
+}
+
+.information-copy-block-content-tag {
+    color: #8E8F90;
+}
+
+.script-wrapper {
+    position: relative;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    float: left;
+    height: auto;
+    width: calc(100% - 60px);
+    background-color: rgba(142, 143, 144, 0.1);
+    border-radius: 3px;
+}
+
+.script-copy {
+    position: relative;
+    width: calc(100% - 40px);
+    height: calc(100% - 40px);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: proximanovaregular;
+    font-size: 14px;
+    line-height: 22px;
+}
