@@ -494,18 +494,21 @@ module.exports = function(app) {
                                     vm.cpl = Math.round(vm.campaingbudget / vm.registrationstodisplay * 100) / 100;
                                     vm.tr = Math.round(vm.registrationstodisplay / vm.volumetotal * 100 * 100) / 100;
                                     vm.mainkpisboolean = false;
-                                    analytics.getopensclicksData(vm.campagnetest, vm.period[0].code).then(function(dataset) {
-                                        vm.data1 = dataset.data.dataset;
-                                        vm.clicksandopensboolean = false;
-                                        analytics.getregistrationssalesData(vm.campagnetest, vm.period[0].code).then(function(dataset) {
-                                            vm.data2 = dataset.data.dataset;
-                                            vm.registrationsandsalesboolean = false;
-                                        }).catch(function(error) {
-                                            throw error;
-                                        });
-                                    }).catch(function(error) {
-                                        throw error;
-                                    });
+                                    vm.data1 = [[10000,40000,20000,15000,10000,7000,5000,4000,3000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000],[1500,4400,2000,2500,1500,1200,800,1000,1400,900,700,600,500,500,500,500,500,500,500,500,500,500,500,500]];
+                                    vm.data2 = [[10000,40000,20000,15000,10000,7000,5000,4000,3000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000],[1500,4400,2000,2500,1500,1200,800,1000,1400,900,700,600,500,500,500,500,500,500,500,500,500,500,500,500]];
+                                    // analytics.getopensclicksData(vm.campagnetest, vm.period[0].code).then(function(dataset) {
+                                    //     vm.data1 = dataset.data.dataset;
+                                    //     console.log(vm.data1);
+                                    //     vm.clicksandopensboolean = false;
+                                    //     analytics.getregistrationssalesData(vm.campagnetest, vm.period[0].code).then(function(dataset) {
+                                    //         vm.data2 = dataset.data.dataset;
+                                    //         vm.registrationsandsalesboolean = false;
+                                    //     }).catch(function(error) {
+                                    //         throw error;
+                                    //     });
+                                    // }).catch(function(error) {
+                                    //     throw error;
+                                    // });
                                 }).catch(function(error) {
                                     throw error;
                                 });

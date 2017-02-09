@@ -24,7 +24,7 @@ module.exports = function(app) {
                     if (header.toUpperCase() === 'MD5') {
                         var result = {};
                         result.file = file;
-                        result.size = results.data.length;
+                        result.size = results.data.length - 2;//Because 1 of header and 1 for blank at the end of file
                         deferred.resolve(result);
                     } else {
                         deferred.reject('le fichier doit contenir lentete MD5');
@@ -48,8 +48,6 @@ module.exports = function(app) {
                     method: 'GET',
                     url: apiConstant.uri + '/sign-s3'
                 }).then(function(status) {
-                    console.log('OK SIGN URL');
-                    console.log(status);
                     var signedUrl = status.data.signedRequest;
                     deferred.resolve(signedUrl);
                 }, function(err) {
@@ -62,11 +60,8 @@ module.exports = function(app) {
         };
 
         var uploadFile = function(file, filename) {
-            console.log('UPLOAD FILE');
             var deferred = $q.defer();
             _getSignedUrl(file, filename).then(function(signedUrl) {
-                console.log('eheh');
-                console.log(signedUrl);
                 var xhr = new XMLHttpRequest();
                 xhr.upload.onprogress = function(e) {
                     var pc = parseInt((e.loaded / e.total * 100));
@@ -79,12 +74,14 @@ module.exports = function(app) {
                         if (xhr.status === 200) {
                             deferred.resolve(200);
                         } else {
-                            deferred.reject('err');
+                            deferred.reject('erreur upload 1');
                         }
                     }
                 };
                 xhr.open('PUT', signedUrl);
                 xhr.send(file);
+            }, function() {
+                deferred.reject('erreur upload 2');
             });
             return deferred.promise;
         };

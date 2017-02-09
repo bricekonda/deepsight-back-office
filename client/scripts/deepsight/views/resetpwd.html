@@ -4,7 +4,7 @@
             <div class="sign-in-information-block-content">{{vm.messagetoshow}}</div>
         </div>
         <img class="logo-deepsight" src="images/logo-deepsight.png">
-        <h1 class="sign-in-title">Reset your password</h1>
+        <h1 class="sign-in-title">Réinitialiser votre mot de passe</h1>
         <h2 class="sign-in-instructions"></h2>
         
         <form name="signInForm" ng-submit="vm.submitForm(signInForm.$valid)">
@@ -14,11 +14,11 @@
             <p ng-if="!vm.emailboolean && signInForm.email.$touched" class="help-block">Un email valide est requis</p>
 
             <button type="submit" ng-class="(!vm.emailboolean) || (signInForm.$invalid) ? 'submit-button-disabled':'submit-button' " ng-disabled="(!vm.emailboolean) || (signInForm.$invalid)">
-                <div ng-class="signInForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">SEND</div>
+                <div ng-class="signInForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">ENVOYER</div>
             </button>
 
         </form>
         <div class="spacer-styled"></div>
-        <p class="sign-in-another-option">Tu te souviens de ton mot de passe? <a ui-sref="signin" style="color:#1580EF;">Retour à la connexion!</a></p>
+        <p class="sign-in-another-option">Vous vous souvenez de votre mot de passe? <a ui-sref="signin" style="color:#1580EF;">Retour à la connexion!</a></p>
     </div>
 </div>

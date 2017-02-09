@@ -27,6 +27,8 @@ var app = angular.module(namespace, [
     // inject:modules end
 ]);
 
+
+
 app.config(['LoopBackResourceProvider', namespace + '.databroker.apiConstant',
     function(LoopBackResourceProvider, apiConstant) {
         // Change the URL where to access the LoopBack REST API server
@@ -189,11 +191,11 @@ var run = function($window, $timeout, $kinvey, $state, $rootScope, Deepsightuser
     });
 
     $rootScope.$on('signinSuccess', function() {
-        $state.go('home.summary');
+        $state.go('home.customaudience');
     });
 
     $rootScope.$on('signupSuccess', function() {
-        $state.go('signin');
+        $state.go('home.customaudience');
     });
 
     $rootScope.$on('resetpwdSuccess', function() {

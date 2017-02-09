@@ -41,11 +41,11 @@ module.exports = function(app) {
 
         user.getcurrentUser().then(function(model) {
             vm.currentuser = model;
-            customaudience.loadallaudienceLoop(vm.currentuser.username).then(function(customaudience) {
+            customaudience.loadallaudienceLoop(vm.currentuser.id).then(function(customaudience) {
                 for (var i = 0; i < customaudience.length; i++) {
                     vm.audiencetochose.push(customaudience[i])
                 }
-                lookalikeaudience.loadallaudiencebycreatorid(vm.currentuser.username).then(function(lookalikeaudience) {
+                lookalikeaudience.loadallaudiencebycreatorid(vm.currentuser.id).then(function(lookalikeaudience) {
                     for (var k = 0; k < lookalikeaudience.length; k++) {
                         if (lookalikeaudience[k].makeadealboolean === true) {
                             vm.audiencetochose.push(lookalikeaudience[k])
@@ -114,8 +114,8 @@ module.exports = function(app) {
 
             if (vm.choicecampaigntype === 'ab') {
                 vm.ABtestboolean = true;
-                vm.perreachA = 50;
-                vm.perreachB = 100 - vm.perreachA;
+                vm.perreachA = 100;
+                vm.perreachB = 0;
             } else if (vm.choicecampaigntype === 'regular') {
                 vm.ABtestboolean = false;
                 vm.perreachA = '';
@@ -127,9 +127,9 @@ module.exports = function(app) {
             vm.filterbottomcampaigntype = "choicebottomanimationup-campaign";
         };
 
-        $scope.$watch(function() {
-            vm.perreachB = 100 - vm.perreachA;
-        });
+        // $scope.$watch(function() {
+        //     vm.perreachB = 100 - vm.perreachA;
+        // });
 
         //Choisir votre type de format
 
@@ -263,7 +263,7 @@ module.exports = function(app) {
             if (isValid) {
                 vm.loaderon = true;
 
-                var idcreator = '';
+                var userId = '';
                 var name = vm.campaignname;
                 var audience = vm.audiencechoice.id;
                 var typecampaign = vm.choicecampaigntype;
@@ -294,8 +294,8 @@ module.exports = function(app) {
 
 
                 user.getcurrentUser().then(function(user) {
-                    var idcreator = user.id;
-                    campaign.createcampaign(idcreator, name, audience, typecampaign, reachA, reachB, subject, date, format, urlfile, information, compensationmode, compensationprice, compensationvolume, compensationbudget, reach, utmsource, utmmedium, utmterm, utmcontent, utmcampaign, redirectionurl, trackingurl).then(function(campaign) {
+                    var userId = user.id;
+                    campaign.createcampaign(userId, name, audience, typecampaign, reachA, reachB, subject, date, format, urlfile, information, compensationmode, compensationprice, compensationvolume, compensationbudget, reach, utmsource, utmmedium, utmterm, utmcontent, utmcampaign, redirectionurl, trackingurl).then(function(campaign) {
                         $rootScope.$broadcast('campaigncreationsuccess', null);
                         var idcreator = '';
                         vm.campaignname = '';

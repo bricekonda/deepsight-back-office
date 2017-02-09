@@ -228,6 +228,7 @@
     position: relative;
     font-family: proximanovaregular;
     font-size: 20px;
+    line-height: 26px;
     color: #23231C;
     text-align: center;
     width: calc(100% - 180px);
@@ -265,17 +266,25 @@
     margin-top: 20px;
 }
 
-.chose-audience-name-input {
+.chose-audience-name-input, .chose-audience-name-input-temporary {
     height: 40px;
     width: calc(100% - 120px);
-    margin-left: 60px;
-    margin-right: 60px;
     border: 1px solid #D8D8D8;
     font-family: proximanovaregular;
+    margin-left: 60px;
+    margin-right: 60px;
     font-size: 14px;
     line-height: 40px;
     border-radius: 3px;
     padding-left: 10px;
+}
+
+.chose-audience-name-input {
+    color: #23231C;
+}
+
+.chose-audience-name-input-temporary {
+    color: #C5CDD1;
 }
 
 //chose a file
@@ -347,6 +356,7 @@
     font-family: proximanovaregular;
     font-size: 18px;
     color: #8E8F90;
+    text-align: center;
 }
 
 .chose-file-drag-and-drop-title {
@@ -379,15 +389,14 @@
     margin-right: 60px;
     height: 24px;
     margin-top: 20px;
-
 }
 
-.file-name{
-        margin-bottom: 40px;
+.file-name {
+    margin-bottom: 40px;
 }
 
-.error-upload{
-        margin-bottom: 20px;
+.error-upload {
+    margin-bottom: 20px;
 }
 
 .file-logo {
@@ -420,15 +429,12 @@
     margin-left: 0px;
 }
 
-
 .error-upload-message {
     color: #EF2B2D;
     margin-left: 0px;
     width: 100%;
     text-align: center;
-
 }
-
 
 //End of chose a file
 .cancel-btn {
@@ -613,6 +619,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 40px;
+    cursor:pointer;
 }
 
 .make-deal-btn:hover, .create-lookalike-btn:hover {
@@ -626,7 +633,7 @@
 
 .make-deal-btn-content, .create-lookalike-btn-content {
     font-family: proximanovaregular;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .done-btn {
@@ -703,7 +710,6 @@
 
 //Enf od wate for your audience to be created
 //Loader
-
 .testclass {
     color: blue;
 }

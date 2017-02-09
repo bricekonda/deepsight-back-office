@@ -12,9 +12,10 @@ module.exports = function(app) {
 
         //Mes fonctions Loopback
 
-        var addaudienceLoop = function(creator, name, nb_publishers, size, format, date, publishers_list) {
+        var addaudienceLoop = function(userId, name, nb_publishers, size, format, date, publishers_list) {
+
             var newaudience = Customaudience.create({
-                'creator': creator,
+                'userId': userId,
                 'name': name,
                 'nb_publishers': nb_publishers,
                 'size': size,
@@ -23,16 +24,27 @@ module.exports = function(app) {
                 'publishers_list': publishers_list,
             }).$promise
             return newaudience;
+
+            // var newaudience = Customaudience.create({
+            //     'creator': creator,
+            //     'name': name,
+            //     'nb_publishers': nb_publishers,
+            //     'size': size,
+            //     'format': format,
+            //     'date': date,
+            //     'publishers_list': publishers_list,
+            // }).$promise
+            // return newaudience;
         };
 
-        var loadaudienceLoop = function(creator) {
+        var loadaudienceLoop = function(userId) {
 
             var audiencetoload = Customaudience.find({
                 "filter": {
                     limit: 5,
                     order: 'date DESC',
                     where: {
-                        creator: creator
+                        userId: userId
                     },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
@@ -40,14 +52,14 @@ module.exports = function(app) {
             return audiencetoload;
         };
 
-        var loadmoreaudienceLoop = function(skipnumber, creator) {
+        var loadmoreaudienceLoop = function(skipnumber, userId) {
             var audiencetoload = Customaudience.find({
                 "filter": {
                     skip: skipnumber,
                     order: 'date DESC',
                     limit: 5,
                     where: {
-                        creator: creator
+                        userId: userId
                     },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
@@ -55,13 +67,13 @@ module.exports = function(app) {
             return audiencetoload;
         };
 
-        var loadallaudienceLoop = function(creator) {
+        var loadallaudienceLoop = function(userId) {
 
             var audiencetoload = Customaudience.find({
                 "filter": {
                     order: 'date DESC',
                     where: {
-                        creator: creator
+                        userId: userId
                     },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
@@ -95,9 +107,9 @@ module.exports = function(app) {
             return deferred.promise;
         };
 
-        var createAudience = function(id_creator,username, name) {
+        var createAudience = function(userId, username, name) {
             var audience = Customaudience.create({
-                'id_creator': id_creator,
+                'userId': userId,
                 'creator': username,
                 'name': name,
                 'date': new Date()
@@ -105,24 +117,25 @@ module.exports = function(app) {
             return audience;
         };
 
-        var updateAudience = function(id, sizeAudience, resultArray) {
-            var publishers_list = [];
-            var total = 0;
-            for (var i = 0; i < resultArray.length; i++) {
-                var data = {};
-                data.publisher_name = resultArray[i]._id;
-                data.size = resultArray[i].count;
-                data.pertotal = parseInt((resultArray[i].count / sizeAudience) * 100);
-                publishers_list.push(data);
-                total = total + data.size;
-            }
-            Customaudience.prototype$updateAttributes({
+        var updateAudience = function(id, sizeAudience, arrayPublishers) {
+            // var publishers_list = [];
+            // var total = 0;
+            // for (var i = 0; i < resultArray.length; i++) {
+            //     var data = {};
+            //     data.publisher_name = resultArray[i]._id;
+            //     data.size = resultArray[i].count;
+            //     data.pertotal = parseInt((resultArray[i].count / sizeAudience) * 100);
+            //     publishers_list.push(data);
+            //     total = total + data.size;
+            // }
+            var audience = Customaudience.prototype$updateAttributes({
                 id: id
             }, {
-                nb_publishers: resultArray.length,
-                publishers_list: publishers_list,
-                size: total
-            });
+                nb_publishers: arrayPublishers.length,
+                publishers_list: arrayPublishers,
+                size: sizeAudience
+            }).$promise;
+            return audience;
         };
 
         var match = function(username, filename, id) {
@@ -137,7 +150,11 @@ module.exports = function(app) {
                 method: 'GET',
                 url: apiConstant.uri + '/matching'
             }).then(function(result) {
-                deferred.resolve(result);
+                if(result.data) {
+                    deferred.resolve(result.data);
+                } else {
+                    deferred.reject(result);
+                }
             }, function(error) {
                 deferred.reject(error);
             });
@@ -161,7 +178,7 @@ module.exports = function(app) {
             createAudience: createAudience,
             updateAudience: updateAudience,
             match: match,
-            findaudiencebyID:findaudiencebyID,
+            findaudiencebyID: findaudiencebyID,
         };
 
     }

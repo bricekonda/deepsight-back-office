@@ -128,11 +128,10 @@ module.exports = function(app) {
                 var firstname = vm.user.firstname;
                 var lastname = vm.user.lastname;
                 var organization = vm.user.organization;
-                var tva = vm.user.tva;
                 var creator = vm.user.email;
                 var id = vm.user.id;
 
-                user.updateUser(firstname, lastname, organization, tva, creator, id).then(function(user) {
+                user.updateUser(firstname, lastname, organization, creator, id).then(function(user) {
                     vm.modifyinformationf();
                 }).catch(function(error) {
                 });

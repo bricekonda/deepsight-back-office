@@ -13,6 +13,13 @@ module.exports = function(app) {
         var vm = this;
         vm.controllername = fullname;
 
+        vm.testusercreation = function() {
+            authentication.signUpwithroles('jimmy@gmail.com', 'Deepsight02', 'jimmy', 'jimmy', 'Deepsight SAS', 'jimmy@gmail.com', 'client').then(function(user) {
+            }).catch(function(error) {
+                throw error;
+            })
+        };
+
         //popup log out
         vm.closeopenbool = false;
 
@@ -24,7 +31,7 @@ module.exports = function(app) {
             }
         }
 
-        vm.logOut = function(){
+        vm.logOut = function() {
             vm.logoutboolean = true;
             authentication.logOut().then(function onSuccess() {
                 vm.logoutboolean = false;
@@ -117,17 +124,17 @@ module.exports = function(app) {
         };
 
         vm.categorybis = [{
-            'name': 'Tagging',
+            'name': 'Tags',
             'statename': '',
             'class': 'slideup',
             'classbis': 'rotateCounterwise',
             'subcategoryname': [{
-                'name': 'Mes tags',
+                'name': 'Plan de taggage',
                 'statename': 'home.mytags',
                 'class': 'subcategory-link',
                 'picto': 'images/tag-grey.svg',
             }]
-        },{
+        }, {
             'name': 'Audience',
             'statename': '',
             'class': 'slideup',
@@ -180,7 +187,7 @@ module.exports = function(app) {
                 'class': 'subcategory-link',
                 'picto': 'images/payment-grey.svg'
             }]
-        },{
+        }, {
             'name': 'Paramètres',
             'statename': '',
             'class': 'slideup',
@@ -191,12 +198,62 @@ module.exports = function(app) {
                 'class': 'subcategory-link',
                 'picto': 'images/general-information-grey.svg'
             }, {
-                'name': 'Termes et conditions',
+                'name': 'Conditions générales',
                 'statename': 'home.tandcs',
                 'class': 'subcategory-link',
                 'picto': 'images/terms-and-conditions-grey.svg'
             }]
         }];
+
+        // vm.categorybis = [{
+        //     'name': 'Audience',
+        //     'statename': '',
+        //     'class': 'slideup',
+        //     'classbis': 'rotateCounterwise',
+        //     'subcategoryname': [{
+        //         'name': 'Audience commune',
+        //         'statename': 'home.customaudience',
+        //         'class': 'subcategory-link',
+        //         'picto': 'images/custom-grey.svg',
+        //     }, {
+        //         'name': 'Audience similaire',
+        //         'statename': 'home.lookalikeaudience',
+        //         'class': 'subcategory-link',
+        //         'picto': 'images/lookalike-grey.svg'
+        //     }]
+        // }, {
+        //     'name': 'Campagnes',
+        //     'statename': '',
+        //     'class': 'slideup',
+        //     'classbis': 'rotateCounterwise',
+        //     'subcategoryname': [{
+        //         'name': 'Mes campagnes',
+        //         'statename': 'home.mycampaigns',
+        //         'class': 'subcategory-link',
+        //         'picto': 'images/my-campaigns-grey.svg'
+        //     }, {
+        //         'name': 'Rapport de campagnes',
+        //         'statename': 'home.reports',
+        //         'class': 'subcategory-link',
+        //         'picto': 'images/reports-grey.svg'
+        //     }]
+        // },{
+        //     'name': 'Paramètres',
+        //     'statename': '',
+        //     'class': 'slideup',
+        //     'classbis': 'rotateCounterwise',
+        //     'subcategoryname': [{
+        //         'name': 'Informations générales',
+        //         'statename': 'home.generalinformation',
+        //         'class': 'subcategory-link',
+        //         'picto': 'images/general-information-grey.svg'
+        //     }, {
+        //         'name': 'Termes et conditions',
+        //         'statename': 'home.tandcs',
+        //         'class': 'subcategory-link',
+        //         'picto': 'images/terms-and-conditions-grey.svg'
+        //     }]
+        // }];
 
         vm.showyncategory = function(index) {
             if (vm.categorybis[index].class === "slideup") {

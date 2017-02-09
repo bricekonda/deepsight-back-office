@@ -23,7 +23,22 @@ module.exports = function(app) {
             }).$promise
 
             return newuser;
+        };
 
+        var signUpwithroles = function(username, password, firstname, lastname, organization, email, usertype) {
+
+            var usernamenew = encodeURIComponent(username);
+            var passwordnew = encodeURIComponent(password);
+            var firstnamenew = encodeURIComponent(firstname);
+            var lastnamenew = encodeURIComponent(lastname);
+            var organizationnew = encodeURIComponent(organization);
+            var emailnew = encodeURIComponent(email);
+            var usertypenew = encodeURIComponent(usertype);
+            // var urluser = apiConstant.uri.concat('/createuser').concat('?', 'username', '=', username).concat('&', 'password', '=', password).concat('&', 'firstname', '=', firstname).concat('&', 'lastname', '=', lastname).concat('&', 'organization', '=', organization).concat('&', 'email', '=', email).concat('&', 'usertype', '=', usertype);
+            var urluser = 'https://deepsight-server.herokuapp.com/api'.concat('/createuser').concat('?', 'username', '=', usernamenew).concat('&', 'password', '=', passwordnew).concat('&', 'firstname', '=', firstnamenew).concat('&', 'lastname', '=', lastnamenew).concat('&', 'organization', '=', organizationnew).concat('&', 'email', '=', emailnew).concat('&', 'usertype', '=', usertypenew);
+            var newuser = $http.get(urluser);
+
+            return newuser
         };
 
         var signIn = function(username, password) {
@@ -47,9 +62,6 @@ module.exports = function(app) {
             var passwordtoreset = Deepsightuser.resetPassword({
                 email: username
             }, function(value, responseHeaders) {
-                console.log(username)
-                console.log(value);
-                console.log(responseHeaders);
 
             }).$promise
 
@@ -71,11 +83,11 @@ module.exports = function(app) {
         };
 
         $rootScope.$on('resetPasswordRequest', function() {
-            console.log("L'évènement pour le reset est bien émis")
         });
 
         return {
             ping: ping,
+            signUpwithroles: signUpwithroles,
             signUp: signUp,
             signIn: signIn,
             logOut: logOut,

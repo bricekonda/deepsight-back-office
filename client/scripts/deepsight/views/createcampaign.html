@@ -9,13 +9,13 @@
         <div id='top'>Créer une campagne</div>
     </div>
 
-    <div class="category-subtitle"> Choisissez votre audience et créeez une campgne de A à Z
+    <div class="category-subtitle"> Choisissez une audience et paramétrez votre campagne
     </div>
 
     <form name="createcampaignForm" class="create-campaign-form" ng-submit="vm.submitForm(createcampaignForm.$valid)">
         <div class="chose-campaign-name">
             <div class="chose-campaign-name-title">Nom de la campagne</div>
-            <input type="text" name="name" class="chose-campaign-name-input" ng-model="vm.campaignname"></input>
+            <input type="text" name="name" placeholder="Réactivation prospects janvier 2017" class="chose-campaign-name-input" ng-model="vm.campaignname"></input>
         </div>
 
         <div class="chose-campaign-name">
@@ -71,12 +71,12 @@
                 <div class="subchoice-campaign">
                     <div class="chose-campaign-name-subtitle">Segment A
                         <br> En % du volume total de l'audience</div>
-                    <input type="text" name="perreachA" class="chose-campaign-name-input-subchoice" ng-model="vm.perreachA"></input>
+                    <input type="text" name="perreachA" class="chose-campaign-name-input-subchoice disabled" ng-model="vm.perreachA" ng-disabled="true"></input>
                 </div>
                 <div class="subchoice-campaign">
                     <div class="chose-campaign-name-subtitle">Segment B
                         <br> En % du volume total de l'audience</div>
-                    <input type="text" name="perreachB" class="chose-campaign-name-input-subchoice disabled" ng-model="vm.perreachB" ng-disabled="true"></input>
+                    <input type="text" name="perreachB" class="chose-campaign-name-input-subchoice" ng-model="vm.perreachB"></input>
                 </div>
             </div>
         </div>

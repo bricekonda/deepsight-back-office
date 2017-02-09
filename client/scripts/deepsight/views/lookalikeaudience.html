@@ -14,7 +14,7 @@
     <div class="category-title">
         <div ng-click="vm.addaudienceLoop()">Audience similaire</div>
     </div>
-    <div class="category-subtitle">Affichage des
+    <div class="category-subtitle">Affichage de(s)
         <span style='color:#1580EF'>{{vm.audienceshown}}</span> audience(s) commune(s) crée(s)</div>
 
     <div class="filter-btn-wrapper">
@@ -35,7 +35,7 @@
                 <div class="filters-content" ng-class="{activefilterclass : vm.activefilter === filter.name}">{{filter.name}}</div>
             </div>
         </div>
-        <div class="filter-list-bottom" ng-class="vm.filterbottom"></div>
+        <div class="filter-list-bottom" ng-class="vm.filterbottom" ng-click="vm.showfilter()"></div>
     </div>
     <a ui-sref=".createlookalikeaudience">
         <div class="create-audience-btn">
@@ -96,7 +96,7 @@
             <div class="audience-action">
 
                 <div class="column7">
-                    <div class="more-info-icon" ng-click="vm.displaymoreinfo($index); vm.loadmoreinfo($index)" ng-mouseenter="vm.audiencenotreadyin($index)" ng-mouseleave="vm.audiencenotreadyout($index)"></div>
+                    <div class="more-info-icon" ng-click="vm.displaymoreinfo($index);vm.loadindextodelete($index) ; vm.loadmoreinfo($index)" ng-mouseenter="vm.audiencenotreadyin($index)" ng-mouseleave="vm.audiencenotreadyout($index)"></div>
                 </div>
                 <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
                     <div class="delete-icon"></div>
@@ -104,7 +104,7 @@
                 <a ui-sref="home.lookalikeaudience" ng-if="audience.waitboolean">
                     <div class="column5">
                         <div class="audience-option-wait">
-                            <p class="audience-option-wait-content">The algorithm runs!</p>
+                            <p class="audience-option-wait-content">En cours de création</p>
                         </div>
                     </div>
                 </a>
@@ -146,7 +146,7 @@
                 </div>
 
                 <div class="info-sub-block-large">
-                    <div class="delete-icon-info-block" ng-click="vm.deleteaudienceById(vm.audiencetodetail.id)"></div>
+                    <div class="delete-icon-info-block" ng-click="vm.closepopup()"></div>
                     <a ui-sref="home.createcampaign" class="link">
                         <div class="audience-option-info-block-wrapper">
                             <div class="audience-option-info-block-deal">

@@ -4,11 +4,11 @@
         <div class="sign-in-information-block" ng-class="vm.showmessage">
             <div class="sign-in-information-block-content">{{vm.messagetoshow}}</div>
         </div>
-        <img class="logo-deepsight" src="images/logo-deepsight.png" ng-click="vm.testmessage()">
+        <img class="logo-deepsight" src="images/logo-deepsight.png">
+
         <h1 class="sign-in-title">Connexion</h1>
-        <h2 class="sign-in-instructions">Connectez-vous au service deepsight et construisez vos segments en un claquement de doigt!</h2>
-        <h2 class="sign-in-instructions" ng-if="vm.signinfailed" style="color:#EF2B2D">L'email n'existe pas ou le mot passe n'est pas le bon.
-            <br>Essayez à nouveau</h2>
+        <h2 class="sign-in-instructions">Créez votre compte Deepsight et créez vos audiences personnalisées</h2>
+        <h2 class="sign-in-instructions" ng-if="vm.signinfailed" style="color:#EF2B2D">L'email n'existe pas ou le mot passe n'est pas le bon. <br>Essayez à nouveau</h2>
         <form name="signInForm" ng-submit="vm.submitForm(signInForm.$valid)">
 
             <label class="form-label">E-mail</label>
@@ -16,8 +16,8 @@
             <p ng-if="!vm.emailboolean && signInForm.email.$touched" class="help-block">Un email valide est requis</p>
 
             <label class="form-label">Mot de passe</label>
-            <input type="password" name="password" ng-model="vm.user.password" ng-class="signInForm.password.$error.minlength && signInForm.password.$touched ? 'sign-up-input-not-ok' : 'sign-up-input'" autocomplete="off" ng-minlength="8" required>
-            <p ng-if="signInForm.password.$error.minlength && signInForm.password.$touched" class="help-block">Le mot de passe contient au moins 8 caracères</p>
+            <input type="password" name="password" ng-model="vm.user.password" ng-class="signInForm.password.$error.minlength && signInForm.password.$touched ? 'sign-up-input-not-ok' : 'sign-up-input'" autocomplete="off" ng-minlength="2" required>
+            <p ng-if="signInForm.password.$error.minlength && signInForm.password.$touched" class="help-block">Écrivez un mot de passe valide afin de vous connecter</p>
             <p class="reset-pwd"><a ui-sref="resetpwdreq" class="resetpwd-link">Mot de passe oublié ?</a></p>
 
             <button type="submit" ng-class="(!vm.emailboolean) || (signInForm.$invalid) ? 'submit-button-disabled':'submit-button' " ng-disabled="(!vm.emailboolean) || (signInForm.$invalid)">

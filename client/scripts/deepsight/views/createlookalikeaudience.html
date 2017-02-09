@@ -2,7 +2,7 @@
 
 <div class="popup-background" ng-if="vm.closeopenbool">
     <div class="popup-wrapper">
-            <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
+        <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
         <div class="popup-message">Es-tu sûr(e) de vouloir quitter la création de ta custom audience ?</div>
         <div class="popup-btn" ng-click="vm.cancel()">
             <div class="popup-btn-content">QUITTER</div>
@@ -14,7 +14,7 @@
     <div class="create-audience-modal">
         <div class="create-audience-modal-title">
             <h1 class="create-audience-modal-title-content">Créer une audience similaire </h1>
-                <img class="close-modal" src="images/cross-close-modal-logo.png" ng-click="vm.cancelfirststep()">
+            <img class="close-modal" src="images/cross-close-modal-logo.png" ng-click="vm.cancelfirststep()">
         </div>
 
         <div class="progression-bar-wrapper">
@@ -23,14 +23,14 @@
                     <div ng-class="vm.progressionstatenumber1">
                         <div class="progression-state-number-content"> 1</div>
                     </div>
-                    <div ng-class="vm.progressionstatename1">Nom et Audience</div>
+                    <div ng-class="vm.progressionstatename1">Choix Audience</div>
                 </div>
                 <div ng-class="vm.progressionbar12"></div>
                 <div class="progression-state progression-state-2">
                     <div ng-class="vm.progressionstatenumber2">
                         <div class="progression-state-number-content">2</div>
                     </div>
-                    <div ng-class="vm.progressionstatename2">Audience Similiaire</div>
+                    <div ng-class="vm.progressionstatename2">Résumer</div>
                 </div>
                 <div ng-class="vm.progressionbar23"></div>
                 <div class="progression-state progression-state-3">
@@ -49,19 +49,20 @@
         <div class="step-content" ng-if="vm.step1boolean">
             <form name="chosecustomForm">
                 <div class="step-message">
-                    <div class="step-main-message">Choississez un nom pour votre audience similaire et une audience commune</div>
-                    <div class="step-sub-message">Cette étape est très importante. Elle nous permettra de trouver des profils similaires sur les bases de nos éditeurs partenaires.</div>
+                    <div class="step-main-message">L'algorithme de Deepsight va étendre votre audience commune afin de trouver des profils similaires sur le réseau éditeur Deepsight</div>
                 </div>
-                <div class="chose-audience-name">
+
+                <!--                 <div class="chose-audience-name">
                     <div class="chose-audience-name-title">Nom de l'audience</div>
                     <input name="name" class="chose-audience-name-input" ng-model="vm.lookalikeaudiencename" required></input>
-                </div>
+                </div> -->
+
                 <div class="chose-audience-name">
                     <div class="chose-audience-name-title">Choisissez une audience commune</div>
                     <div class="chose-btn-wrapper">
                         <div class="chose-btn" ng-click="vm.showfilter()">
                             <div class="chose-btn-content">
-                                <div ng-class=" vm.choice === 'Choisissez une audience commune afin de construire une audience similaire' ? 'choice-to-chose-no' : 'choice-to-chose'">
+                                <div ng-class=" vm.choice === 'Liste des audiences communes disponibles' ? 'choice-to-chose-no' : 'choice-to-chose'">
                                     {{vm.choice}}
                                 </div>
                                 <div class="choice-show-noshow" ng-class="vm.filterclass"></div>
@@ -78,11 +79,9 @@
                 </div>
 
                 <div class="bottom-option-cancel-next">
-                    <a ui-sref="home.lookalikeaudience">
-                        <div class="cancel-btn">
+                        <div class="cancel-btn" ng-click="vm.closepopup()">
                             <div class="cancel-btn-content">ANNULER</div>
                         </div>
-                    </a>
                     <div ng-class="chosecustomForm.name.$invalid || !vm.nofileboolean ? 'next-btn-disabled' : 'next-btn'" ng-click="vm.check(!chosecustomForm.name.$invalid && vm.nofileboolean)">
 
                         <div class="next-btn-content">SUIVANT</div>
@@ -95,15 +94,57 @@
 
         <div class="step-content" ng-if="vm.step2boolean">
 
+            <div class="step-message">
+                <div class="step-main-message">Deepsight va créer l'audience Lookalike Suivante :
+                    <br>
+                    <span style='color:#1580EF'>{{vm.lookalikeaudiencename}}</span>
+                    <br>
+                    <br>
+                    Voici les éditeurs qui composent le segment d'audience commune<br>
+                    L'algorithme de Deepsight va étendre cette audience et trouver des profils similaire
+                </div>
+                <div class="step-sub-message">Audience commune : {{vm.choice}}</div>
+            </div>
+
+            <div class="publishers-wrapper">
+                <div class="publishers-features">
+                    <div class="column1bis-features">ÉDITEURS</div>
+                </div>
+                <div class="publisher-row" ng-repeat="publisher in vm.audienceselected.publishers_list">
+                    <div class="column1bis">{{publisher}}</div>
+                </div>
+                <div class="total-match">
+                    <div class="total-match-content">
+                        <div class="total">{{vm.sizetodisplay}}</div>
+                        <div class="total-subtitle">Utilisateurs communs</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-option-cancel-next">
+                    <div class="cancel-btn" ng-click="vm.closepopup()">
+                        <div class="cancel-btn-content">ANNULER</div>
+                    </div>
+                <div class="next-btn" ng-click="vm.nextstepfunction(); vm.createlookalikeaudience()" >
+                    <div class="next-btn-content">SUIVANT</div>
+                </div>
+            </div>
+
+            <!--             <div class="chose-audience-name">
+                <div class="chose-audience-name-title">Nom de l'audience </div>
+                <input name="name" class="chose-audience-name-input" ng-model="vm.lookalikeaudiencename" required></input>
+            </div> -->
+
+        </div>
+
+        <!--         step3 -->
+
+        <div class="step-content" ng-if="vm.step3boolean">
             <img src="images/clock.png" class="clock-class">
             <div class="step-message-bis">
                 <div class="step-main-message">
-                    <span style="color:#23231C">Votre audience similaire sera bientôt prête!
-                        <br> L'algorithme de Deepsight est en train
-                        <br> de construire votre audience similaire.</span>
+                    <span style="color:#23231C">Félicitations, la création de votre audience similaire a démarré, vous serez notifié par email lorsque votre audience sera disponible</span>
                 </div>
-                <div class="step-sub-message">Dès que cette étape s'achève,
-                    <br>vous serez notifié</div>
             </div>
 
             <div class="bottom-option-cancel-next">
@@ -111,39 +152,6 @@
                 <a ui-sref="home.lookalikeaudience">
                     <div class="wait-btn">
                         <div class="wait-btn-content">OK</div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <!--         step3 -->
-
-        <div class="step-content" ng-if="vm.step3boolean">
-            <div class="step-message">
-                <div class="step-main-message">
-                    <span style="color:#22B577">Your audience has been created and saved</span>
-                </div>
-                <div class="step-sub-message">Chose your next step </div>
-            </div>
-            <div class="next-step-option">
-                <div class="options-wrapper">
-                    <a ui-sref="home.makeadeal">
-                        <div class="make-deal-btn">
-                            <div class="make-deal-btn-content">Make a data deal</div>
-                        </div>
-                    </a>
-
-                    <a ui-sref="home.lookalikeaudience">
-                        <div class="create-lookalike-btn">
-                            <div class="create-lookalike-btn-content">Create another lookalike</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="bottom-option-cancel-next">
-                <a ui-sref="home.lookalikeaudience">
-                    <div class="done-btn">
-                        <div class="done-btn-content">Done</div>
                     </div>
                 </a>
             </div>

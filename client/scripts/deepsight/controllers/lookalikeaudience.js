@@ -23,8 +23,8 @@ module.exports = function(app) {
             }
         }
 
-        vm.loadindextodelete = function($index){
-            vm.indextodelete = $index; 
+        vm.loadindextodelete = function($index) {
+            vm.indextodelete = $index;
         }
 
         vm.deleteaudience = function() {
@@ -38,6 +38,9 @@ module.exports = function(app) {
             lookalikeaudience.deleteaudienceLoop(audienceid).then(function(model) {
                 $rootScope.$broadcast('reloadlookalikeaudience', null);
                 vm.pageloadingboolean = false;
+                if (vm.moreinfoboolean === true) {
+                    vm.moreinfoboolean = false
+                }
             }).catch(function(error) {
                 vm.pageloadingboolean = false;
             });
@@ -179,29 +182,73 @@ module.exports = function(app) {
                 'pertotal': '48%',
             }]
 
-            lookalikeaudience.addaudienceLoop(creator, name, nb_publishers, size, format, date, publishers_list, waitboolean, readyboolean, makeadealboolean).then(function(model) {
-            }).catch(function(error) {
+            lookalikeaudience.addaudienceLoop(creator, name, nb_publishers, size, format, date, publishers_list, waitboolean, readyboolean, makeadealboolean).then(function(model) {}).catch(function(error) {
                 throw error;
             });
+        };
+
+        vm.styledate = function(date) {
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var hour = date.getHours();
+            var minute = date.getMinutes();
+
+            if (day < 10) {
+                var datestring = '0'.concat(day.toString())
+            } else {
+                var datestring = day.toString();
+            }
+            if (month < 10) {
+                var monthstring = '0'.concat(month.toString())
+            } else {
+                var monthstring = month.toString();
+            }
+            var yearstring = year.toString();
+            if (hour < 10) {
+                var hourstring = '0'.concat(hour.toString())
+            } else {
+                var hourstring = hour.toString();
+            }
+            if (minute < 10) {
+                var minutestring = '0'.concat(minute.toString())
+            } else {
+                var minutestring = minute.toString();
+            }
+
+            var validdate = datestring.concat('/', monthstring, '/', yearstring, ' à ', hourstring, ':', minutestring)
+
+            return validdate
         };
 
         user.getcurrentUser().then(function(model) {
             vm.currentuser = model;
 
-            lookalikeaudience.loadaudienceLoop(vm.currentuser.username).then(function(model) {
-                vm.pageloadingboolean = false;
-                vm.audiencesloaded = model;
+            lookalikeaudience.loadaudienceLoop(vm.currentuser.id).then(function(model) {
+                vm.audiencesloaded = [];
+                for (var i = 0; i < model.length; i++) {
+                    var date = new Date(model[i].date);
+                    model[i].date = vm.styledate(date);
+                    if (isNaN(model[i].size) || model[i].size === null) {
+                        model[i].size = '_'
+                    }
+                    vm.audiencesloaded.push(model[i])
+                }
                 vm.audienceshown = vm.audiencesloaded.length;
                 vm.initialoffset = 5;
                 vm.counter = 0;
-                if (vm.audiencesloaded.length === 0) {
-                    vm.noaudiencebool = true;
-                }
-                lookalikeaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.username).then(function(model) {
-                    if (model.length === 0) {
-                        vm.loadmorebool = false;
+                    if (vm.audiencesloaded.length === 0) {
+                        vm.noaudiencebool = true;
+                    } else if (vm.audiencesloaded.length !== 0){
+                        vm.noaudiencebool = false;
                     }
+                vm.pageloadingboolean = false;
+                lookalikeaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.id).then(function(model) {
+                    if (model.length === 0) {
 
+                        vm.loadmorebool = false;
+
+                    }
                 }).catch(function(error) {});
             }).catch(function(error) {
                 vm.pageloadingboolean = false;
@@ -211,19 +258,30 @@ module.exports = function(app) {
 
         $rootScope.$on('reloadlookalikeaudience', function(event, data) {
             vm.loadmorebool = true;
+
             user.getcurrentUser().then(function(model) {
                 vm.currentuser = model;
 
-                lookalikeaudience.loadaudienceLoop(vm.currentuser.username).then(function(model) {
+                lookalikeaudience.loadaudienceLoop(vm.currentuser.id).then(function(model) {
                     vm.pageloadingboolean = false;
-                    vm.audiencesloaded = model;
+                    vm.audiencesloaded = [];
+                    for (var i = 0; i < model.length; i++) {
+                        var date = new Date(model[i].date);
+                        model[i].date = vm.styledate(date);
+                        if (isNaN(model[i].size) || model[i].size === null) {
+                            model[i].size = '_'
+                        }
+                        vm.audiencesloaded.push(model[i])
+                    }
                     vm.audienceshown = vm.audiencesloaded.length;
                     vm.initialoffset = 5;
                     vm.counter = 0;
                     if (vm.audiencesloaded.length === 0) {
                         vm.noaudiencebool = true;
+                    } else if (vm.audiencesloaded.length !== 0){
+                        vm.noaudiencebool = false;
                     }
-                    lookalikeaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.username).then(function(model) {
+                    lookalikeaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.id).then(function(model) {
                         if (model.length === 0) {
                             vm.loadmorebool = false;
                         }
@@ -240,13 +298,21 @@ module.exports = function(app) {
         vm.loadmore = function() {
             vm.pageloadingboolean = true;
             vm.counter = vm.counter + 5;
-            lookalikeaudience.loadmoreaudienceLoop(vm.counter, vm.currentuser.username).then(function(model) {
+            lookalikeaudience.loadmoreaudienceLoop(vm.counter, vm.currentuser.id).then(function(model) {
                 vm.pageloadingboolean = false;
-                vm.audiencetoadd = model;
+                vm.audiencetoadd = [];
+                for (var i = 0; i < model.length; i++) {
+                    var date = new Date(model[i].date);
+                    model[i].date = vm.styledate(date);
+                    if (isNaN(model[i].size) || model[i].size === null) {
+                        model[i].size = '_'
+                    }
+                    vm.audiencetoadd.push(model[i])
+                }
                 vm.audiencesloaded = vm.audiencesloaded.concat(vm.audiencetoadd);
                 vm.audienceshown = vm.audiencesloaded.length;
 
-                lookalikeaudience.loadmoreaudienceLoop(vm.counter + 5, vm.currentuser.username).then(function(model) {
+                lookalikeaudience.loadmoreaudienceLoop(vm.counter + 5, vm.currentuser.id).then(function(model) {
                     if (model.length === 0) {
                         vm.loadmorebool = false;
                     }

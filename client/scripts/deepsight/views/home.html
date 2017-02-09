@@ -5,7 +5,7 @@
         <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
         <div class="popup-message">Est-tu sûr(e) de vouloir te déconnecter ?</div>
         <div class="popup-btn" ng-click="vm.logOut()">
-            <div class="popup-btn-content">LOG OUT</div>
+            <div class="popup-btn-content">DECONNEXION</div>
         </div>
     </div>
 </div>
@@ -36,9 +36,9 @@
 
 <aside class="side-bar">
     <div class="side-bar-top">
-        <img class="side-bar-logo" src="images/logo-deepsight.png" ng-click="vm.gotostate()">
+        <img class="side-bar-logo" src="images/logo-deepsight.png">
         <div class="side-bar-title">Deepsight</div>
-        <img class="side-bar-logo-menu" src="images/icon-menu.png">
+        <img class="side-bar-logo-menu" src="images/icon-menu.png" ng-click="vm.testusercreation()">
     </div>
 
     <div class="side-bar-category-wrapper">
@@ -67,7 +67,7 @@
     </div>
 
     <div class="log-out-side-bar-block">
-        <div class="log-out-side-bar-block-content" ng-click="vm.logOutfirststep()">LOG OUT</div>
+        <div class="log-out-side-bar-block-content" ng-click="vm.logOutfirststep()">DECONNEXION </div>
     </div>
 
 </aside>

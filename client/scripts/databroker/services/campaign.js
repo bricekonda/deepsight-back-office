@@ -10,9 +10,9 @@ module.exports = function(app) {
 
     function service($kinvey, $rootScope, $q, $state, $timeout, MarketingCampaign, user, apiConstant) {
 
-        var createcampaign = function(idcreator, name, audience, typecampaign, reachA, reachB, subject, date, format, urlfile, information, compensationmode, compensationprice, compensationvolume, compensationbudget, reach, utmsource, utmmedium, utmterm, utmcontent, utmcampaign, redirectionurl, trackingurl) {
+        var createcampaign = function(userId, name, audience, typecampaign, reachA, reachB, subject, date, format, urlfile, information, compensationmode, compensationprice, compensationvolume, compensationbudget, reach, utmsource, utmmedium, utmterm, utmcontent, utmcampaign, redirectionurl, trackingurl) {
             var newcampaign = MarketingCampaign.create({
-                'id_creator': idcreator,
+                'userId': userId,
                 'name': name,
                 'id_audience': audience,
                 'reach': reach,
@@ -48,13 +48,13 @@ module.exports = function(app) {
 
         };
 
-        var loadcampaigns = function(creator) {
+        var loadcampaigns = function(userId) {
             var campaigntoload = MarketingCampaign.find({
                 "filter": {
                     limit: 5,
                     order: 'date DESC',
                     where: {
-                        id_creator: creator
+                        userId: userId
                     },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
@@ -62,14 +62,14 @@ module.exports = function(app) {
             return campaigntoload;
         };
 
-        var loadmorecampaigns = function(skipnumber, creator) {
+        var loadmorecampaigns = function(skipnumber, userId) {
             var campaigntoload = MarketingCampaign.find({
                 "filter": {
                     skip: skipnumber,
                     order: 'date DESC',
                     limit: 5,
                     where: {
-                        id_creator: creator
+                        userId: userId
                     },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
@@ -77,13 +77,13 @@ module.exports = function(app) {
             return campaigntoload;
         };
 
-        var loadallcampaignbycreatorid = function(creator) {
+        var loadallcampaignbycreatorid = function(userId) {
 
             var campaigntoload = MarketingCampaign.find({
                 "filter": {
                     order: 'date DESC',
                     where: {
-                        id_creator: creator
+                        userId: userId
                     },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise

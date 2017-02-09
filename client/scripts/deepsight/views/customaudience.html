@@ -15,7 +15,7 @@
     <div class="category-title">
         <div ng-click="vm.addaudienceLoop()">Audience commune</div>
     </div>
-    <div class="category-subtitle" ng-click="vm.broadcastevent()"> Affichage des
+    <div class="category-subtitle" ng-click="vm.broadcastevent()"> Affichage de(s)
         <span style='color:#1580EF'>{{vm.audienceshown}}</span> audience(s) commune(s) crée(s)</div>
     <div class="filter-btn-wrapper">
         <div class="filter-btn" ng-click="vm.showfilter()">
@@ -34,7 +34,7 @@
                 <div class="filters-content" ng-class="{activefilterclass : vm.activefilter === filter.name}">{{filter.name}}</div>
             </div>
         </div>
-        <div class="filter-list-bottom" ng-class="vm.filterbottom"></div>
+        <div class="filter-list-bottom" ng-class="vm.filterbottom" ng-click="vm.showfilter()"></div>
     </div>
     <a ui-sref=".createcustomaudience">
         <div class="create-audience-btn">
@@ -82,18 +82,16 @@
             </div>
             <div class="audience-action">
                 <div class="column7">
-                    <div class="more-info-icon" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)"></div>
+                    <div class="more-info-icon" ng-click="vm.closemoreinfo();vm.loadindextodelete($index); vm.loadmoreinfo($index)"></div>
                 </div>
                 <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
                     <div class="delete-icon"></div>
                 </div>
-                <a ui-sref="home.createcampaign" ng-if="true">
-                    <div class="column5">
-                        <div class="audience-option-deal">
-                            <p class="audience-option-deal-content">Lancer une campagne</p>
-                        </div>
+                <div class="column5">
+                    <div class="audience-option-deal" ng-click="vm.sendMail($index)">
+                        <p class="audience-option-deal-content">Activer cette audience</p>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
         <div class="load-more" ng-click="vm.loadmore()" ng-if="vm.loadmorebool">
@@ -123,25 +121,21 @@
                     <div class="info-sub-block-content">{{vm.audiencetodetail.nb_publishers}}</div>
                 </div>
                 <div class="info-sub-block-large">
-                    <div class="delete-icon-info-block" ng-click="vm.deleteaudienceById(vm.audiencetodetail.id)"></div>
-                    <a ng-click="vm.gotocreatelookalike($index)" class="link">
+                    <div class="delete-icon-info-block" ng-click="vm.closepopup()"></div>
+                    <div class="audience-option-info-block-wrapper">
+                        <div class="audience-option-info-block" ng-click="vm.gotocreatelookalike($index)">
+                            <p class="audience-option-info-block-content">Créer un lookalike</p>
+                        </div>
+                    </div>
                         <div class="audience-option-info-block-wrapper">
-                            <div class="audience-option-info-block">
-                                <p class="audience-option-info-block-content">Create lookalike</p>
+                            <div class="audience-option-info-block-deal" ng-click="vm.sendMail1()">
+                                <p class="audience-option-deal-content">Activer cette audience </p>
                             </div>
                         </div>
-                    </a>
-                    <a ui-sref="home.createcampaign" class="link">
-                        <div class="audience-option-info-block-wrapper">
-                            <div class="audience-option-info-block-deal">
-                                <p class="audience-option-deal-content">Lancer une campagne</p>
-                            </div>
-                        </div>
-                    </a>
                 </div>
 
                 <div class="info-sub-block">
-                    <div class="info-sub-block-title">Size</div>
+                    <div class="info-sub-block-title">Taille</div>
                     <div class="info-sub-block-content">{{vm.audiencetodetail.size}}</div>
                 </div>
                 <div class="info-sub-block">
@@ -154,27 +148,22 @@
             <div class="publishers-wrapper">
                 <div class="publishers-features">
                     <div class="column1bis-features">ÉDITEURS</div>
-                    <div class="column2bis-features">TAILLE</div>
-                    <div class="column3bis-features">%TOTAL</div>
                 </div>
                 <div class="publisher-row" ng-repeat="publisher in vm.audiencetodetail.publishers_list">
-                    <div class="column1bis">{{publisher.publisher_name}}</div>
-                    <div class="column2bis">
-                        <span style="color:#1580EF">{{publisher.size}}</span>
-                    </div>
-                    <div class="column3bis">{{publisher.pertotal}}</div>
+                    <div class="column1bis">{{publisher}}</div>
                 </div>
                 <div class="total-match">
                     <div class="total-match-content">
                         <div class="total">{{vm.audiencetodetail.size}}</div>
-                        <div class="total-subtitle">persons matched</div>
+                        <div class="total-subtitle">Utilisateurs uniques
+                            <br>communs</div>
                     </div>
                 </div>
             </div>
 
             <div class="bottom-option-cancel-next">
-                <div class="close-btn">
-                    <div class="close-btn-content" ng-click="vm.closemoreinfo()">Close</div>
+                <div class="close-btn" ng-click="vm.closemoreinfo()"> 
+                    <div class="close-btn-content">FERMER</div>
                 </div>
             </div>
 

@@ -10,7 +10,7 @@ module.exports = function(namespace) {
     var app = angular.module(fullname, []);
     // inject:folders start
     require('./constants')(app);
-require('./services')(app);
+    require('./services')(app);
     // inject:folders end
     app.namespace = app.namespace || {};
 

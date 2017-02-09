@@ -19,12 +19,11 @@ module.exports = function(app) {
             return creator;
         };
 
-        var updateUser = function(firstname, lastname, organization, tva, creator, id) {
+        var updateUser = function(firstname, lastname, organization, creator, id) {
             var usertoupdate = Deepsightuser.prototype$updateAttributes({
                 'firstname': firstname,
                 'lastname': lastname,
                 'organization': organization,
-                'tva': tva,
                 'id': id
             }).$promise;
 

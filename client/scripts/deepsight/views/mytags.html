@@ -2,20 +2,20 @@
 
 <div class="category-block">
     <div class="category-title" ng-click="vm.createtag()">My tags</div>
-    <div class="category-subtitle"> Consultez ici tous vos rapports de campagnes Deepsight
-    </div>
+    <div class="category-subtitle"> Affichage de(s)
+        <span style='color:#1580EF'>1</span> tag(s) Deepsight à déposer sur votre site</div>
 
     <div class="tags-wrapper">
-        <div class="tag-block" ng-repeat="tag in vm.taglist">
+        <div class="tag-block">
             <div class="information-copy-title-tag">
-                {{tag.title}}
+                Tag de conversion
             </div>
             <div class="information-copy-block-tag">
                 <div class="information-copy-block-title-tag">
                     Descriptif
                 </div>
                 <div class="information-copy-block-content-tag">
-                    {{tag.description}}
+                    Le tag de conversion va permettre le tracking des des ventes sur le site de Sarenza
                 </div>
             </div>
             <div class="information-copy-block-tag">
@@ -23,7 +23,7 @@
                     URL du dépôt de tag
                 </div>
                 <div class="information-copy-block-content-tag">
-                    {{tag.url}}
+                    http://www.sarenza.com/MyBasket.aspx
                 </div>
             </div>
             <div class="information-copy-block-tag">
@@ -31,9 +31,15 @@
                     Variable à récupérer
                 </div>
                 <div class="information-copy-block-content-tag">
-                    <div ng-repeat="variable in tag.variables">{{variable.variable}}
-                        <br>
-                    </div>
+                    url
+                        , &nbsp
+                        ProductsPrice
+                        , &nbsp
+                        PageType
+                        , &nbsp
+                        PageID
+                        , &nbsp
+                        CustomerID
                 </div>
             </div>
 
@@ -51,11 +57,12 @@
                     <br> &nbsp&nbsp&nbsp&nbsps.type = "text/javascript";
                     <br> &nbsp&nbsp&nbsp&nbsps.async = true;
                     <br> &nbsp&nbsp&nbsp&nbspvar dsP = {
-                    <br>
-                    <div ng-repeat="variable in tag.variables">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{variable.variable}}&nbsp&nbsp:&nbsp&nbsp'&nbsp&nbsp&nbsp&nbsp&nbsp'
-                        <br>
-                    </div>
-                    &nbsp&nbsp&nbsp&nbsp};
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspurl: window.location.href,
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspProductsPrice:'',
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspPageType:'',
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspPageID:'',
+                    <br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspCustomerID:'',
+                    <br> &nbsp&nbsp&nbsp&nbsp};
                     <br> &nbsp&nbsp&nbsp&nbsp&nbspvar urlParam = []
                     <br> &nbsp&nbsp&nbsp&nbsp&nbspfor (var i in dsP) {
                     <br> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspurlParam.push(encodeURI(i) + "=" + encodeURI(dsP[i]));

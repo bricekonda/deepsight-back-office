@@ -43,14 +43,12 @@ module.exports = function(app) {
             }
         };
 
-
         vm.gotoreporting = function(index) {
             vm.audiencetoshow = vm.audiencesloaded[index];
             $state.go('home.reports').then(function() {
                 $rootScope.$broadcast('loadreport', vm.audiencetoshow);
             });
         }
-
 
         // filter lookalike
         vm.customaudience = 'kikoo';
@@ -130,14 +128,51 @@ module.exports = function(app) {
 
         vm.loadmorebool = true;
 
+        vm.styledate = function(date) {
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var hour = date.getHours();
+            var minute = date.getMinutes();
+
+            if (day < 10) {
+                var datestring = '0'.concat(day.toString())
+            } else {
+                var datestring = day.toString();
+            }
+            if (month < 10) {
+                var monthstring = '0'.concat(month.toString())
+            } else {
+                var monthstring = month.toString();
+            }
+            var yearstring = year.toString();
+            if (hour < 10) {
+                var hourstring = '0'.concat(hour.toString())
+            } else {
+                var hourstring = hour.toString();
+            }
+            if (minute < 10) {
+                var minutestring = '0'.concat(minute.toString())
+            } else {
+                var minutestring = minute.toString();
+            }
+
+            var validdate = datestring.concat('/', monthstring, '/', yearstring, ' à ', hourstring, ':', minutestring)
+
+            return validdate
+        };
+
         user.getcurrentUser().then(function(currentuser) {
             vm.currentuser = currentuser;
-            console.log(currentuser);
 
             campaign.loadcampaigns(vm.currentuser.id).then(function(audience) {
-                console.log(audience);
                 vm.pageloadingboolean = false;
-                vm.audiencesloaded = audience;
+                vm.audiencesloaded = [];
+                for (var i = 0; i < audience.length; i++) {
+                    var date = new Date(audience[i].date);
+                    audience[i].date = vm.styledate(date);
+                    vm.audiencesloaded.push(audience[i])
+                }
                 vm.audienceshown = vm.audiencesloaded.length;
                 vm.initialoffset = 5;
                 vm.counter = 0;
@@ -145,7 +180,6 @@ module.exports = function(app) {
                     vm.noaudiencebool = true;
                 }
                 campaign.loadmorecampaigns(vm.initialoffset, vm.currentuser.id).then(function(moreaudience) {
-                    console.log(moreaudience);
                     if (moreaudience.length === 0) {
                         vm.loadmorebool = false;
                     }
@@ -163,7 +197,12 @@ module.exports = function(app) {
                 vm.currentuser = currentuser;
                 campaign.loadcampaigns(vm.currentuser.id).then(function(audience) {
                     vm.pageloadingboolean = false;
-                    vm.audiencesloaded = audience;
+                    vm.audiencesloaded = [];
+                    for (var i = 0; i < audience.length; i++) {
+                        var date = new Date(audience[i].date);
+                        audience[i].date = vm.styledate(date);
+                        vm.audiencesloaded.push(audience[i])
+                    }
                     vm.audienceshown = vm.audiencesloaded.length;
                     vm.initialoffset = 5;
                     vm.counter = 0;
@@ -189,7 +228,12 @@ module.exports = function(app) {
             vm.counter = vm.counter + 5;
             campaign.loadmorecampaigns(vm.counter, vm.currentuser.id).then(function(model) {
                 vm.pageloadingboolean = false;
-                vm.audiencetoadd = model;
+                vm.audiencetoadd = [];
+                for (var i = 0; i < model.length; i++) {
+                    var date = new Date(model[i].date);
+                    model[i].date = vm.styledate(date);
+                    vm.audiencetoadd.push(model[i])
+                }
                 vm.audiencesloaded = vm.audiencesloaded.concat(vm.audiencetoadd);
                 vm.audienceshown = vm.audiencesloaded.length;
 

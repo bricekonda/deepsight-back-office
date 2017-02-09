@@ -15,18 +15,31 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PLTCWGX');</script>
+<!-- End Google Tag Manager -->
+
 <body class="app-body">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PLTCWGX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
 
     <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->
     <ui-view></ui-view>
-    <script src="//static.intercomcdn.com/intercom.v1.js"></script>
+<!--     <script src="//static.intercomcdn.com/intercom.v1.js"></script> -->
 
     <script src="scripts/bundle.js"></script>
 
     <!--Start of Deepsight Script-->
-<!--         <script type="text/javascript">
+<!--     <script type="text/javascript">
     (function() {
         console.log("le tag est bien actif!")
         var s = document.createElement("script"),
@@ -35,20 +48,16 @@
         s.async = true;
         var dsP = {
             url: window.location.href,
-            client_id: 'zjiuefc24362FERESG3',
-            cart_value: 587,
         };
         var urlParam = []
         for (var i in dsP) {
-            urlParam.push(encodeURI(i) + "=" + encodeURI(dsP[i]));
+            urlParam.push(encodeURIComponent(i) + "=" + encodeURIComponent(dsP[i]));
         }
-        // s.src = 'https://tr.deepsight.io/adv?' + urlParam.join("&");
-        // console.log(s.src)
-        s.src = 'http://0.0.0.0:3000/adv?client_id=zjiuefc24362FERESG3&cart_value=587';
-        // s.src = 'https://tr.deepsight.io/adv?client_id=zjiuefc24362FERESG3&cart_value=587';
+        s.src = 'https://tr.deepsight.io/adv?' + urlParam.join("&");
         s0.parentNode.insertBefore(s, s0);
     })();
     </script> -->
+
     <!--End of Deepsight Script-->
 </body>
 

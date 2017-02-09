@@ -44,6 +44,16 @@ module.exports = function(app) {
         vm.filterbottom = "choicebottomanimationup";
         vm.nofileboolean = false;
 
+        $rootScope.$on('loadcustomaudiencetoextend', function(event, args) {
+            vm.choice = args.name;
+            vm.customchosen = args.id;
+            vm.sizetodisplay = args.size;
+            vm.audienceselected = args;
+            vm.nofileboolean = true;
+
+            vm.lookalikeaudiencename = 'LA - '.concat(vm.styledate(new Date), ' ', vm.choice);
+
+        });
         vm.showfilter = function() {
             if (vm.filterclass === "rotateCounterwise") {
                 vm.filtershown = "filterslidedown";
@@ -56,7 +66,7 @@ module.exports = function(app) {
             }
         };
 
-        vm.choice = 'Choisissez une audience commune afin de construire une audience similaire';
+        vm.choice = 'Liste des audiences communes disponibles';
         vm.sortparameter = '';
 
         vm.audiencetochose = [];
@@ -65,23 +75,92 @@ module.exports = function(app) {
 
             vm.currentuser = model;
 
-            customaudience.loadallaudienceLoop(vm.currentuser.username).then(function(entities) {
+            customaudience.loadallaudienceLoop(vm.currentuser.id).then(function(entities) {
                 vm.audiencetochose = entities;
             }).catch(function(error) {
                 throw error;
             });
         }).catch(function(error) {});
 
+        //Date
+        vm.styledate = function(date) {
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var hour = date.getHours();
+            var minute = date.getMinutes();
+            var seconds = date.getSeconds();
+
+            if (day < 10) {
+                var datestring = '0'.concat(day.toString())
+            } else {
+                var datestring = day.toString();
+            }
+            if (month < 10) {
+                var monthstring = '0'.concat(month.toString())
+            } else {
+                var monthstring = month.toString();
+            }
+            var yearstring = year.toString();
+            if (hour < 10) {
+                var hourstring = '0'.concat(hour.toString())
+            } else {
+                var hourstring = hour.toString();
+            }
+            if (minute < 10) {
+                var minutestring = '0'.concat(minute.toString())
+            } else {
+                var minutestring = minute.toString();
+            }
+            if (seconds < 10) {
+                var secondstring = '0'.concat(seconds.toString())
+            } else {
+                var secondstring = seconds.toString();
+            }
+
+            var validdate = datestring.concat(monthstring, yearstring, hourstring, minutestring, secondstring)
+
+            return validdate
+        };
+
         // vm.audiencetochose = customaudience.load
 
         vm.selectfilter = function(index) {
             vm.choice = vm.audiencetochose[index].name;
             vm.customchosen = vm.audiencetochose[index].id;
+            vm.audienceselected = vm.audiencetochose[index];
+            vm.sizetodisplay = vm.audienceselected.size;
+            vm.lookalikeaudiencename = 'LA - '.concat(vm.styledate(new Date), ' ', vm.choice);
 
             vm.nofileboolean = true;
             vm.filtershown = "filterslideup";
             vm.filterclass = "rotateCounterwise";
             vm.filterbottom = "choicebottomanimationup";
+        };
+
+        vm.createlookalikeaudience = function() {
+            vm.loaderon = true;
+            vm.id = '';
+            var name = vm.lookalikeaudiencename;
+            var id_customaudience = vm.audienceselected.id;
+            var size = '_';
+            var date = new Date();
+            var nb_publishers = vm.audienceselected.nb_publishers;
+            var waitboolean = true;
+            var makeadealboolean = false;
+
+            user.getcurrentUser().then(function(model) {
+                var creator = model.username
+                var id = model.id
+                lookalikeaudience.addaudienceLoop(id, creator, name, id_customaudience, nb_publishers, size, date, waitboolean, makeadealboolean).then(function onSuccess(entity) {
+                    vm.loaderon = false;
+                    vm.nextstepfunction();
+                }).catch(function onError(error) {
+                    vm.loaderon = false;
+                });
+            }).catch(function(error) {
+                vm.loaderon = false;
+            });
         };
 
         vm.check = function(value) {
@@ -91,18 +170,10 @@ module.exports = function(app) {
                 $timeout(function() {
                     vm.loaderon = false;
                     vm.nextstepfunction();
-                    // vm.totalmatchedcalcf();
-                    // vm.fonctiontest();
                 }, 700);
             }
 
         };
-
-        $rootScope.$on('loadcustomaudiencetoextend', function(event, args) {
-            vm.choice = args.name;
-            vm.customchosen = args.id;
-
-        });
 
         // Menu déroulant audience
 
@@ -234,7 +305,6 @@ module.exports = function(app) {
                 vm.progressionbar12 = "progression-bar-1-2-completed";
                 vm.progressionbar23 = "progression-bar-2-3-completed";
                 vm.progressionbar34 = "progression-bar-3-4";
-                totalmatchedcalcf();
             }
         }
 
@@ -265,56 +335,6 @@ module.exports = function(app) {
                 'totalper': '_',
             }]
         }];
-
-        vm.check = function(value) {
-            if (value) {
-                vm.loaderon = true;
-                vm.id = '';
-                var name = vm.lookalikeaudiencename;
-                var customaudience = vm.customchosen;
-                var size = 45135;
-                var date = new Date();
-                var publishers_list = [{
-                    'publisher_name': 'passeportsante',
-                    'size': 1547,
-                    'pertotal': 0
-                }, {
-                    'publisher_name': 'sixplay',
-                    'size': 28172,
-                    'pertotal': 0
-                }, {
-                    'publisher_name': 'fourchettebikini',
-                    'size': 5837,
-                    'pertotal': 0
-                }, {
-                    'publisher_name': 'meteocity',
-                    'size': 3330,
-                    'pertotal': 0
-                }, {
-                    'publisher_name': 'cuisineaz',
-                    'size': 6249,
-                    'pertotal': 0
-                }]
-                var nb_publishers = publishers_list.length;
-                var waitboolean = vm.audiencetest[0].waitboolean;
-                var readyboolean = vm.audiencetest[0].readyboolean;
-                var makeadealboolean = vm.audiencetest[0].makeadealboolean;
-
-                user.getcurrentUser().then(function(model) {
-                    var creator = model.username
-                    var id = model.id
-                    lookalikeaudience.addaudienceLoop(id, creator, name, customaudience, nb_publishers, size, date, publishers_list, waitboolean, readyboolean, makeadealboolean).then(function onSuccess(entity) {
-                        vm.loaderon = false;
-                        vm.nextstepfunction();
-                    }).catch(function onError(error) {
-                        vm.loaderon = false;
-                    });
-                }).catch(function(error) {
-                    vm.loaderon = false;
-                });
-            }
-
-        };
 
         vm.saveaudiencetest = function() {
             vm.id = '';

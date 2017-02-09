@@ -19,7 +19,6 @@
     position: relative;
     font-family: proximanovaregular;
     font-size: 14px;
-    color: #23231C;
     width: calc(100% - 400px);
     margin-left: 60px;
     margin-right: 60px;
@@ -40,7 +39,12 @@
     padding-right: 10px;
 }
 
-.chose-campaign-name-input {
+.chose-campaign-name-input, .chose-campaign-name-input-large {
+    color: #23231C;
+}
+
+
+.chose-campaign-name-input{
     height: 40px;
     line-height: 40px;
 }
@@ -99,7 +103,7 @@
     display: inline-block;
 }
 
-.disabled{
+.disabled {
     background-color: rgba(142, 143, 144, 0.5);
 }
 
@@ -135,7 +139,7 @@
     z-index: 50;
 }
 
-.choice-to-chose-no-campaign, .choice-to-chose-campaign, .choice-to-chose-no-campaign-blue  {
+.choice-to-chose-no-campaign, .choice-to-chose-campaign, .choice-to-chose-no-campaign-blue {
     position: relative;
     display: inline-block;
     float: left;
@@ -157,7 +161,7 @@
     color: #1580EF;
 }
 
-.choice-to-chose-no-campaign-blue{
+.choice-to-chose-no-campaign-blue {
     color: #1580EF;
 }
 
@@ -442,7 +446,7 @@
     margin-left: 30px;
 }
 
-.format-btn,.remuneration-btn {
+.format-btn, .remuneration-btn {
     display: flex;
     color: #1580EF;
     align-items: center;
@@ -460,7 +464,7 @@
     color: white;
 }
 
-.format-btn-unselected,.remuneration-btn-unselected {
+.format-btn-unselected, .remuneration-btn-unselected {
     display: flex;
     color: #626466;
     align-items: center;
@@ -548,17 +552,17 @@
 
 .information-campaign-block {
     position: relative;
-    margin-bottom: 20px;
+    display: block;
+    float: left;
     margin-top: 15px;
     width: 100%;
-    height: 30px;
+    height: auto;
 }
 
 .information-campaign-title {
     position: relative;
     font-family: proximanovaregular;
     font-size: 14px;
-    float: left;
     width: 100%;
     // background-color: purple;
     display: block;
@@ -569,7 +573,6 @@
     position: relative;
     font-family: proximanovaregular;
     font-size: 14px;
-    float: left;
     width: 100%;
     // background-color: purple;
     display: block;

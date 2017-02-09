@@ -6,12 +6,11 @@ module.exports = function(app) {
     /*jshint validthis: true */
 
     var databroker = require('../../databroker')(app.name.split('.')[0]).name;
-    var deps = ['$rootScope', '$timeout', '$state', '$scope', databroker + '.customaudience', databroker + '.user', 'Deepsightuser', 'Customaudience'];
+    var deps = ['$window', '$rootScope', '$timeout', '$state', '$scope', databroker + '.customaudience', databroker + '.user', 'Deepsightuser', 'Customaudience'];
 
-    function controller($rootScope, $timeout, $state, $scope, customaudience, user, Deepsightuser, Customaudience) {
+    function controller($window, $rootScope, $timeout, $state, $scope, customaudience, user, Deepsightuser, Customaudience) {
         var vm = this;
         vm.controllername = fullname;
-
 
         vm.pageloadingboolean = true;
 
@@ -33,6 +32,9 @@ module.exports = function(app) {
             customaudience.deleteaudienceLoop(audienceid).then(function(model) {
                 $rootScope.$broadcast('reloadcustomaudience', null);
                 vm.pageloadingboolean = false;
+                if (vm.moreinfoboolean === true) {
+                    vm.moreinfoboolean = false
+                }
             }).catch(function(error) {
                 vm.pageloadingboolean = false;
             });
@@ -48,13 +50,35 @@ module.exports = function(app) {
 
         //End of popup cancel
 
+        //Envoi mail
+        vm.sendMail = function(index) {
+
+            var name = vm.audiencesloaded[index].name;
+
+            var subject = "Demande d'activation de l'audience commune ".concat(name)
+
+            var message = "Bonjour Brice,"
+
+            $window.open("mailto:" + 'brice@deepsight.io' + "?subject=" + subject + "&body=" + message, "_self");
+        };
+
+        vm.sendMail1 = function() {
+
+            var name = vm.audiencetodetail.name;
+
+            var subject = "Demande d'activation de l'audience commune ".concat(name)
+
+            var message = "Bonjour Brice,"
+
+            $window.open("mailto:" + 'brice@deepsight.io' + "?subject=" + subject + "&body=" + message, "_self");
+        };
+
         //Test Loopback
 
         vm.brice = function() {
             Publisheruser.create({
                 'md5': 'FE24GEZT2'
-            }).$promise.then(function(response) {
-            });
+            }).$promise.then(function(response) {});
         };
 
         //End of test Loopback
@@ -146,7 +170,6 @@ module.exports = function(app) {
 
         vm.addaudienceLoop = function() {
             var date = new Date();
-            var creator = 'brice@deepsight.io';
             var name = 'Parfum kenzo Homme, Campagne automne';
             var nb_publishers = 56;
             var size = 1392495;
@@ -165,30 +188,78 @@ module.exports = function(app) {
                 'pertotal': '48%',
             }]
 
-            customaudience.addaudienceLoop(creator, name, nb_publishers, size, format, date, publishers_list).then(function(user) {
+            user.getcurrentUser().then(function(user) {
+                customaudience.addaudienceLoop(user.id, name, nb_publishers, size, format, date, publishers_list).then(function(audience) {
+                }).catch(function(error) {
+                    throw error;
+                });
             }).catch(function(error) {
-                throw error;
-            });
+                throw error
+            })
         };
 
         //Fin de module pour ajouter des audiences test
 
-
         //Charger les audiences et loadmore
+
+        var date = new Date();
+
+        vm.styledate = function(date) {
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            var hour = date.getHours();
+            var minute = date.getMinutes();
+
+            if (day < 10) {
+                var datestring = '0'.concat(day.toString())
+            } else {
+                var datestring = day.toString();
+            }
+            if (month < 10) {
+                var monthstring = '0'.concat(month.toString())
+            } else {
+                var monthstring = month.toString();
+            }
+            var yearstring = year.toString();
+            if (hour < 10) {
+                var hourstring = '0'.concat(hour.toString())
+            } else {
+                var hourstring = hour.toString();
+            }
+            if (minute < 10) {
+                var minutestring = '0'.concat(minute.toString())
+            } else {
+                var minutestring = minute.toString();
+            }
+
+            var validdate = datestring.concat('/', monthstring, '/', yearstring, ' à ', hourstring, ':', minutestring)
+
+            return validdate
+        };
+
 
         user.getcurrentUser().then(function(model) {
             vm.currentuser = model;
+            vm.pageloadingboolean = false;
 
-            customaudience.loadaudienceLoop(vm.currentuser.username).then(function(model) {
-                vm.pageloadingboolean = false;
-                vm.audiencesloaded = model;
+            customaudience.loadaudienceLoop(vm.currentuser.id).then(function(model) {
+                vm.audiencesloaded = [];
+                for (var i = 0; i < model.length; i++) {
+                    var date = new Date(model[i].date);
+                    model[i].date = vm.styledate(date);
+                    vm.audiencesloaded.push(model[i])
+                }
+                    // vm.audiencesloaded = model;
                 vm.audienceshown = vm.audiencesloaded.length;
                 vm.initialoffset = 5;
                 vm.counter = 0;
-                if (vm.audiencesloaded.length === 0) {
+                if (vm.audiencesloaded.length === 0 ) {
                     vm.noaudiencebool = true;
+                } else if (vm.audiencesloaded.length !== 0) {
+                    vm.noaudiencebool = false;
                 }
-                customaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.username).then(function(model) {
+                customaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.id).then(function(model) {
                     if (model.length === 0) {
                         vm.loadmorebool = false;
                     }
@@ -205,16 +276,23 @@ module.exports = function(app) {
             user.getcurrentUser().then(function(model) {
                 vm.currentuser = model;
 
-                customaudience.loadaudienceLoop(vm.currentuser.username).then(function(model) {
-                    vm.pageloadingboolean = false;
-                    vm.audiencesloaded = model;
+                customaudience.loadaudienceLoop(vm.currentuser.id).then(function(model) {
+                    vm.audiencesloaded = [];
+                    for (var i = 0; i < model.length; i++) {
+                        var date = new Date(model[i].date);
+                        model[i].date = vm.styledate(date);
+                        vm.audiencesloaded.push(model[i])
+                    }
                     vm.audienceshown = vm.audiencesloaded.length;
                     vm.initialoffset = 5;
                     vm.counter = 0;
                     if (vm.audiencesloaded.length === 0) {
                         vm.noaudiencebool = true;
+                    } else if (vm.audiencesloaded.length !== 0) {
+                        vm.noaudiencebool = false;
                     }
-                    customaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.username).then(function(model) {
+                    vm.pageloadingboolean = false;
+                    customaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.id).then(function(model) {
                         if (model.length === 0) {
                             vm.loadmorebool = false;
                         }
@@ -230,13 +308,18 @@ module.exports = function(app) {
         vm.loadmore = function() {
             vm.pageloadingboolean = true;
             vm.counter = vm.counter + 5;
-            customaudience.loadmoreaudienceLoop(vm.counter, vm.currentuser.username).then(function(model) {
+            customaudience.loadmoreaudienceLoop(vm.counter, vm.currentuser.id).then(function(model) {
                 vm.pageloadingboolean = false;
-                vm.audiencetoadd = model;
+                vm.audiencetoadd = [];
+                for (var i = 0; i < model.length; i++) {
+                    var date = new Date(model[i].date);
+                    model[i].date = vm.styledate(date);
+                    vm.audiencetoadd.push(model[i])
+                }
                 vm.audiencesloaded = vm.audiencesloaded.concat(vm.audiencetoadd);
                 vm.audienceshown = vm.audiencesloaded.length;
 
-                customaudience.loadmoreaudienceLoop(vm.counter + 5, vm.currentuser.username).then(function(model) {
+                customaudience.loadmoreaudienceLoop(vm.counter + 5, vm.currentuser.id).then(function(model) {
                     if (model.length === 0) {
                         vm.loadmorebool = false;
                     }
@@ -247,7 +330,6 @@ module.exports = function(app) {
             });
 
         };
-
 
         //More info
 

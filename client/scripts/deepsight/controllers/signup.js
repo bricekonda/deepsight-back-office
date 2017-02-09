@@ -12,7 +12,7 @@ module.exports = function(app) {
         var vm = this;
         vm.controllername = fullname;
 
-        vm.signupboolean = false; 
+        vm.signupboolean = false;
 
         vm.tvaboolean === false;
 
@@ -37,28 +37,39 @@ module.exports = function(app) {
 
         vm.submitForm = function(isValid) {
             if (isValid) {
-                vm.signupboolean = true; 
+                vm.signupboolean = true;
                 var username = vm.user.email;
                 var password = vm.user.password;
                 var firstname = vm.user.firstname;
                 var lastname = vm.user.lastname;
                 var organization = vm.user.organization;
-                var tva = vm.user.tva;
                 var email = vm.user.email;
-                authentication.signUp(username, password, firstname, lastname, organization, tva,email).then(function(user) {
-                $rootScope.$broadcast('signupSuccess', null);
-                vm.signupboolean = false; 
-            }).catch(function(error) {
-                $rootScope.$broadcast('signupfailed', null);
-                throw error;
-            });
+                authentication.signUpwithroles(username, password, firstname, lastname, organization, email, 'client').then(function(user) {
+                    authentication.signIn(username, password).then(function(currentuser) {
+                        $rootScope.$broadcast('signupSuccess', null);
+                    }).catch(function(eror) {
+                        throw error;
+                    })
+                }).catch(function(error) {
+                    $rootScope.$broadcast('signupfailed', null);
+                    throw error;
+                })
+
+                // authentication.signUp(username, password, firstname, lastname, organization, email).then(function(user) {
+                //     $rootScope.$broadcast('signupSuccess', null);
+                //     vm.signupboolean = false;
+                // }).catch(function(error) {
+                //     $rootScope.$broadcast('signupfailed', null);
+                //     throw error;
+                // });
+
             }
 
         };
 
         vm.signupfailed === false;
 
-        $rootScope.$on('signupfailed', function(){
+        $rootScope.$on('signupfailed', function() {
             $scope.$apply(vm.signupfailed = true);
         });
 

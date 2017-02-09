@@ -9,9 +9,9 @@ module.exports = function(app) {
     /*jshint validthis: true */
     var databroker = require('../../databroker')(app.name.split('.')[0]).name;
 
-    var deps = ['$timeout', '$state', '$scope', '$http', '$rootScope', databroker + '.customaudience', databroker + '.user', databroker + '.files'];
+    var deps = ['$window','$timeout', '$state', '$scope', '$http', '$rootScope', databroker + '.customaudience', databroker + '.user', databroker + '.files'];
 
-    function controller($timeout, $state, $scope, $http, $rootScope, customaudience, user, files) {
+    function controller($window, $timeout, $state, $scope, $http, $rootScope, customaudience, user, files) {
         var vm = this;
         vm.controllername = fullname;
 
@@ -38,6 +38,19 @@ module.exports = function(app) {
             }
         };
 
+        //           Envoi email  
+
+        vm.sendMail1 = function() {
+
+            var name = vm.audiencetoshow.name;
+
+            var subject = "Demande d'activation de l'audience commune ".concat(name)
+
+            var message = "Bonjour Brice,"
+
+            $window.open("mailto:" + 'brice@deepsight.io' + "?subject=" + subject + "&body=" + message, "_self");
+        };
+
         //mesage bug matching
 
         vm.showmessage = 'information-block-error-done-up';
@@ -53,7 +66,7 @@ module.exports = function(app) {
 
         //End of popup log out
 
-        vm.filename = "Upload un fichier pour pouvoir passer à l'étape suivante";
+        vm.filename = "Chargez un fichier pour pouvoir passer à l'étape suivante";
 
         vm.filenameclass = "file-name-content-no-file"
 
@@ -67,8 +80,7 @@ module.exports = function(app) {
             vm.currentUser = model;
         });
 
-        $rootScope.$on('progressPercentage', function(event, data) {
-        });
+        $rootScope.$on('progressPercentage', function(event, data) {});
 
         vm.errormd5head = false;
 
@@ -82,6 +94,7 @@ module.exports = function(app) {
                     vm.nextstepfunction();
                     vm.filename = filename;
                 }, function(err) {
+                    //Error upload
                 });
             }, function(error) {
                 vm.errormd5head = true;
@@ -92,19 +105,24 @@ module.exports = function(app) {
 
         vm.match = function() {
             vm.loaderon = true;
-            customaudience.createAudience(vm.currentUser.id,vm.currentUser.username, vm.audiencename).then(function(audience) {
+            customaudience.createAudience(vm.currentUser.id, vm.currentUser.username, vm.audiencename).then(function(audience) {
                 customaudience.match(vm.currentUser.username, vm.filename, audience.id).then(function(result) {
-                    vm.audiencetodisplay = result.data;
-                    vm.sizetodisplay = 0;
-                    for (var i = 0; i < result.data.length; i++) {
-                        vm.sizetodisplay = vm.sizetodisplay + result.data[i].count;
-                    }
-                    customaudience.updateAudience(audience.id, vm.sizeAudience, result.data);
-                    vm.nextstepfunction();
+                    vm.audiencetodisplay = result.publishers;
+                    vm.sizetodisplay = result.total;
+                    // for (var i = 0; i < result.data.length; i++) {
+                    //     vm.sizetodisplay = vm.sizetodisplay + result.data[i].count;
+                    // }
+                    customaudience.updateAudience(audience.id, result.total, result.publishers).then(function(audienceupdated) {
+                        vm.audiencetoshow = audienceupdated;
+                        vm.nextstepfunction();
+                        vm.loaderon = false;
+                    }).catch(function(error) {
+                        throw erroe;
+                    });
                 }).catch(function(error) {
                     vm.loaderon = false;
                     $rootScope.$broadcast('matchfailure', null);
-                });;
+                });
             });
         };
 
@@ -145,8 +163,19 @@ module.exports = function(app) {
             vm.chossefile3 = 'chose-file-drag-and-drop-title';
         };
 
+        vm.gotocreatelookalike = function() {
+            $state.go('home.lookalikeaudience.createlookalikeaudience').then(function() {
+                $rootScope.$broadcast('loadcustomaudiencetoextend', vm.audiencetoshow);
+            });
+        }
+
+        vm.gotocreatecampaign = function() {
+            $state.go('home.createcampaign')
+        }
+
         vm.nextstepboolean = false;
         vm.nextstepstyle = 'next-btn-disabled';
+        // vm.temporaryaudiencename = 'exemple : clients janvier 2017';
         vm.audiencename = '';
 
         vm.counterstep = 1;
@@ -245,7 +274,6 @@ module.exports = function(app) {
             }
             // }, 3000);
         };
-
 
     }
 

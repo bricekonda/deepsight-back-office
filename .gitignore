@@ -30,7 +30,7 @@ temp/
 test/tmp
 test/temp
 
-# Other temp
+# Other Temp
 .sass-cache
 .grunt
 

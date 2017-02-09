@@ -1,111 +1,119 @@
-.general-information-block{
-	position: absolute;
-    top: 130px;
-    height: auto;
-    width: calc(100% - 80px);
-    margin-left: 40px;
-    border-radius: 3px;
-    background-color: white;
-}
-
-.general-information-content-block{
-position: relative;
-height: 300px;
-width: calc(100% - 40px);
-margin-left: 20px;
-margin-right: 20px;
-margin-top: 20px;
-margin-bottom: 20px;
-}
-
-.forgot-password-block{
+.general-information-wrapper {
     position: absolute;
-    top: 490px;
-    height: auto;
+    top: 130px;
     width: calc(100% - 80px);
     margin-left: 40px;
+    height: auto;
+}
+
+.general-information-block {
+    position: relative;
+    height: auto;
+    float: left;
+    display: block;
+    width: calc(100%);
     border-radius: 3px;
     background-color: white;
 }
 
-.forgot-password-content-block{
-position: relative;
-height: 120px;
-width: calc(100% - 40px);
-margin-left: 20px;
-margin-right: 20px;
-margin-top: 20px;
-margin-bottom: 20px;
-
+.general-information-content-block {
+    position: relative;
+    height: auto;
+    float: left;
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.general-information-content-title,.general-information-content-content{
-	font-family: proximanovaregular;
-	font-size: 14px;
-	line-height: 18px;
+.forgot-password-block {
+    position: relative;
+    height: auto;
+    float: left;
+    display: block;
+    width: calc(100%);
+    border-radius: 3px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    background-color: white;
 }
 
-.general-information-content-title{
-	color : #23231C;
+.forgot-password-content-block {
+    position: relative;
+    height: auto;
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.general-information-content-content{
-	color: #8E8F90;
+.general-information-content-title, .general-information-content-content {
+    font-family: proximanovaregular;
+    font-size: 14px;
+    line-height: 18px;
 }
 
-.general-information-content-sub-block{
-position: relative;
-float: left;
-margin-top: 5px;
-margin-bottom: 5px;
-width: 100%;
-height: auto;
-
+.general-information-content-title {
+    color: #23231C;
 }
 
-.edit-btn{
-	position: relative;
-	width: 80px;
-	height : 26px;
-	border-radius: 30px;
-	border : solid 1px;
-	color: #626466;
-	background-color: #F6F7F8;
+.general-information-content-content {
+    color: #8E8F90;
+}
+
+.general-information-content-sub-block {
+    position: relative;
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    height: auto;
+}
+
+.edit-btn {
+    position: relative;
+    width: 80px;
+    height: 26px;
+    border-radius: 30px;
+    border: solid 1px;
+    color: #626466;
+    background-color: #F6F7F8;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 20px;
     float: left;
-    cursor : pointer;
+    cursor: pointer;
 }
 
-.edit-btn:hover{
-	color: #fff;
-	background-color: #626466;
- 
+.edit-btn:hover {
+    color: #fff;
+    background-color: #626466;
 }
 
-.edit-btn{
-	font-family: proximanovaregular;
-	font-size: 14px;
+.edit-btn {
+    font-family: proximanovaregular;
+    font-size: 14px;
 }
 
 // Modal
-.form-label-gi{
-position: relative;
-font-family: proximanovaregular;
-font-size: 14px;
-float:  left;
+.form-label-gi {
+    position: relative;
+    font-family: proximanovaregular;
+    font-size: 14px;
+    float: left;
 }
 
-.modify-information-wrapper{
+.modify-information-wrapper {
     position: relative;
     width: 100%;
     height: auto;
     margin-top: 20px;
 }
 
-.modify-information-title{
+.modify-information-title {
     position: relative;
     font-family: proximanovaregular;
     font-size: 14px;
@@ -115,12 +123,12 @@ float:  left;
     margin-right: 60px;
 }
 
-.modify-information-input, .modify-information-input-not-ok,.modify-information-disabled{
+.modify-information-input, .modify-information-input-not-ok, .modify-information-disabled {
     height: 40px;
     width: calc(100% - 120px);
     margin-left: 60px;
     margin-right: 60px;
-    border : 1px solid #D8D8D8;
+    border: 1px solid #D8D8D8;
     font-family: proximanovaregular;
     font-size: 14px;
     margin-top: 15px;
@@ -128,22 +136,20 @@ float:  left;
     padding-left: 10px;
 }
 
-.modify-information-input{
-    border : 1px solid #D8D8D8;
+.modify-information-input {
+    border: 1px solid #D8D8D8;
 }
 
-.modify-information-input-not-ok{
-	border : 1px solid #EF2B2D;
-
+.modify-information-input-not-ok {
+    border: 1px solid #EF2B2D;
 }
 
-.modify-information-disabled{
-    border : 1px solid #D8D8D8;
+.modify-information-disabled {
+    border: 1px solid #D8D8D8;
     background-color: #D8D8D8;
 }
 
-
-.help-block-modify,.info-email, {
+.help-block-modify, .info-email, {
     position: relative;
     font-family: proximanovaregular;
     font-size: 12px;
@@ -152,25 +158,23 @@ float:  left;
     margin: 0 auto;
     padding-left: 20px
 }
-.help-block-modify{
-	    color: #EF2B2D;
+
+.help-block-modify {
+    color: #EF2B2D;
 }
 
-.info-email{
+.info-email {
     color: #23231C;
 }
 
-.close-modal-generalinfo{
-	cursor:pointer
+.close-modal-generalinfo {
+    cursor: pointer
 }
 
-
-.submit-save{
-	border-radius: 20px!important;
+.submit-save {
+    border-radius: 20px!important;
 }
 
-::-webkit-input-placeholder{
-}
+::-webkit-input-placeholder {}
 
 // End of Modal
-

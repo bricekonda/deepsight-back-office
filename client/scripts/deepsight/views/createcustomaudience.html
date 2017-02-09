@@ -58,20 +58,19 @@
 
             <form name="nameForm">
                 <div class="step-message">
-                    <div class="step-main-message" ng-click="vm.broadcastevent()">Choisissez un nom d'audience et un fichier</div>
+                    <div class="step-main-message" ng-click="vm.broadcastevent()">Choisissez un nom pour votre audience commune et téléchargez votre fichier de données</div>
                     <div class="step-sub-message">Ton fichier va être upload en préparation sur matching sur les bases éditeurs</div>
                 </div>
                 <div class="chose-audience-name">
                     <div class="chose-audience-name-title">Nom de l'audience</div>
-
-                    <input class="chose-audience-name-input" name="name" ng-model="vm.audiencename" required></input>
-
+                    <input placeholder="exemple : clients janvier 2017" ng-class="vm.audiencename === '' ? 'chose-audience-name-input-temporary' : 'chose-audience-name-input'" name="name" ng-model="vm.audiencename" required></input>
                 </div>
                 <div class="chose-file">
                     <div class="chose-file-title">Choisissez un fichier</div>
                     <div id="dropzone-container" ng-class="vm.chossefile1" ng-mouseenter="vm.dropin()" ng-mouseleave="vm.dropout()">
                         <div id="select-zone" ng-class="vm.chossefile2">
-                            <div ng-class="vm.chossefile3">Glissez un fichier ou cliquez </div>
+                            <div ng-class="vm.chossefile3">Glissez un fichier ou cliquez
+                                <br>Le fichier doit être au format CSV et contenir une en-tête intitulée md5 </div>
                             <div id="preview-template" style="display:none">
                                 <div></div>
                             </div>
@@ -93,11 +92,9 @@
                 </div>
 
                 <div class="bottom-option-cancel-next">
-                    <a ui-sref="home.customaudience">
-                        <div class="cancel-btn">
-                            <div class="cancel-btn-content">ANNULER</div>
-                        </div>
-                    </a>
+                    <div class="cancel-btn" ng-click="vm.closepopup()">
+                        <div class="cancel-btn-content">ANNULER</div>
+                    </div>
                     <div ng-class="nameForm.name.$invalid || !vm.nofileboolean ? 'next-btn-disabled' : 'next-btn'" ng-click="nameForm.name.$invalid || !vm.nofileboolean || vm.upload()">
                         <div class="next-btn-content">UPLOAD</div>
                     </div>
@@ -115,16 +112,14 @@
 
             <div class="step-message">
                 <div class="step-main-message">
-                    <span style="color:#22B577">Votre fichier à été upload avec succès</span>
+                    <span style="color:#22B577">Votre fichier à été chargé avec succès</span>
                 </div>
-                <div class="step-sub-message">Maintenant, construisez votre audience commune en matchant ce fichier avec nos bases de données éditeur</div>
+                <div class="step-sub-message">Cliquez sur match pour retrouver les profils communs avec nos éditeurs partenaires</div>
             </div>
             <div class="bottom-option-cancel-next">
-                <a ui-sref="home.customaudience">
-                    <div class="cancel-btn">
-                        <div class="cancel-btn-content">ANNULER</div>
-                    </div>
-                </a>
+                <div class="cancel-btn" ng-click="vm.closepopup()">
+                    <div class="cancel-btn-content">ANNULER</div>
+                </div>
                 <div class="next-btn" ng-click="vm.match()">
                     <div class="next-btn-content">MATCH</div>
                 </div>
@@ -145,30 +140,24 @@
             <div class="publishers-wrapper">
                 <div class="publishers-features">
                     <div class="column1bis-features">ÉDITEURS</div>
-                    <div class="column2bis-features">TAILLE</div>
-                    <div class="column3bis-features">%TOTAL</div>
+<!--                     <div class="column2bis-features">TAILLE</div>
+                    <div class="column3bis-features">%TOTAL</div> -->
                 </div>
-                <div class="publisher-row" ng-repeat="audience in vm.audiencetodisplay">
-                    <div class="column1bis">{{audience._id}}</div>
-                    <div class="column2bis">
-                        <span style="color:#1580EF">{{audience.count}}</span>
-                    </div>
-                    <div class="column3bis">10%</div>
+                <div class="publisher-row" ng-repeat="publisher in vm.audiencetoshow.publishers_list">
+                    <div class="column1bis">{{publisher}}</div>
                 </div>
                 <div class="total-match">
                     <div class="total-match-content">
                         <div class="total">{{vm.sizetodisplay}}</div>
-                        <div class="total-subtitle">Utilisateurs communs</div>
+                        <div class="total-subtitle">Utilisateurs Uniques</div>
                     </div>
                 </div>
             </div>
 
             <div class="bottom-option-cancel-next">
-                <a ui-sref="home.customaudience">
-                    <div class="cancel-btn">
-                        <div class="cancel-btn-content">ANNULER</div>
-                    </div>
-                </a>
+                <div class="cancel-btn" ng-click="vm.closepopup()">
+                    <div class="cancel-btn-content">ANNULER</div>
+                </div>
                 <div class="next-btn" ng-click="vm.nextstepfunction()">
                     <div class="next-btn-content">SUIVANT</div>
                 </div>
@@ -180,23 +169,19 @@
         <div class="step-content" ng-if="vm.step4boolean">
             <div class="step-message">
                 <div class="step-main-message">
-                    <span style="color:#22B577">Votre audience a bien été créée</span>
+                    <span style="color:#22B577">Votre audience commune a bien été créée</span>
+                    <br>Vous pouvez désormais activer votre audience commune ou créer un audience similaire (lookalike) et activer vos audiences ensuite
                 </div>
-                <div class="step-sub-message">Passez à l'étape suivante</div>
             </div>
             <div class="next-step-option">
                 <div class="options-wrapper">
-                    <a ui-sref="home.makeadeal">
-                        <div class="make-deal-btn">
-                            <div class="make-deal-btn-content"> Achat média</div>
-                        </div>
-                    </a>
+                    <div class="make-deal-btn" ng-click="vm.sendMail1()">
+                        <div class="make-deal-btn-content"> Activer mon audience commune</div>
+                    </div>
 
-                    <a ui-sref="home.lookalikeaudience">
-                        <div class="create-lookalike-btn">
-                            <div class="create-lookalike-btn-content">Audience similaire</div>
-                        </div>
-                    </a>
+                    <div class="create-lookalike-btn" ng-click="vm.gotocreatelookalike()">
+                        <div class="create-lookalike-btn-content">Créer mon audience similaire</div>
+                    </div>
                 </div>
             </div>
             <div class="bottom-option-cancel-next">

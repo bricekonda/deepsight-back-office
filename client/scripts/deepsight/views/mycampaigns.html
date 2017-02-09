@@ -15,8 +15,8 @@
     <div class="category-title">
         <div ng-click="vm.addaudienceLoop()">Campagnes</div>
     </div>
-    <div class="category-subtitle">Affichage des
-        <span style='color:#1580EF'>{{vm.audienceshown}}</span> audience(s) commune(s) crée(s)</div>
+    <div class="category-subtitle">Affichage de(s)
+        <span style='color:#1580EF'>{{vm.audienceshown}}</span> campagnes que vous avez créées</div>
 
     <div class="filter-btn-wrapper">
         <div class="filter-btn" ng-click="vm.showfilter()">
@@ -36,21 +36,22 @@
                 <div class="filters-content" ng-class="{activefilterclass : vm.activefilter === filter.name}">{{filter.name}}</div>
             </div>
         </div>
-        <div class="filter-list-bottom" ng-class="vm.filterbottom"></div>
+        <div class="filter-list-bottom" ng-class="vm.filterbottom" ng-click="vm.showfilter()"></div>
     </div>
-    <a ui-sref="home.reports">
+    <a ui-sref="home.createcampaign">
         <div class="create-audience-btn">
             <div class="create-audience-btn-content">
-                <div class="create-audience-text">RAPPORTS</div>
+                <img class="cross-class" src="images/cross.png">
+                <div class="create-audience-text">CRÉER UNE CAMPAGNE</div>
             </div>
 
         </div>
     </a>
 
-<!--     <img ng-if="vm.noaudiencebool" src="images/pointer.png" class="pointer pointeranimation"> -->
+        <img ng-if="vm.noaudiencebool" src="images/pointer.png" class="pointer pointeranimation">
 
     <div ng-if="vm.noaudiencebool" class="no-audience">
-        <div class="no-audience-content">Vous n'avez pas encore de Campagne Deepsight disponible</div>
+        <div class="no-audience-content">Vous n'avez pas encore de campagne disponible</div>
     </div>
 
     <div class="audience-wrapper" ng-if="!vm.noaudiencebool">
@@ -92,7 +93,7 @@
                     <div class="delete-icon"></div>
                 </div>
 
-                <a  ng-if="true" ng-click="vm.gotoreporting($index)">
+                <a ng-if="true" ng-click="vm.gotoreporting($index)">
                     <div class="column5">
                         <div class="audience-option-deal">
                             <p class="audience-option-deal-content">Rapport</p>
@@ -147,7 +148,7 @@
                 </div>
                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
-                        Reach
+                        Volume
                     </div>
                     <div class="information-campaign-content">
                         {{vm.campaigntodetail.reach}}
@@ -171,7 +172,7 @@
                 </div>
                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
-                        Reach A
+                        Volume A
                     </div>
                     <div class="information-campaign-content">
                         {{vm.campaigntodetail.reach_A}}%
@@ -179,7 +180,7 @@
                 </div>
                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
-                        Reach B
+                        Volume B
                     </div>
                     <div class="information-campaign-content">
                         {{vm.campaigntodetail.reach_B}}%
@@ -203,7 +204,7 @@
                 </div>
                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
-                        Price
+                        Prix
                     </div>
                     <div class="information-campaign-content">
                         {{vm.campaigntodetail.compensation_price}}
@@ -225,7 +226,7 @@
                         {{vm.campaigntodetail.compensation_budget}}
                     </div>
                 </div>
-                <div class="information-campaign-block">
+<!--                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
                         utm_source
                     </div>
@@ -272,7 +273,7 @@
                     <div class="information-campaign-content">
                         {{vm.campaigntodetail.url_tracking_raw}}
                     </div>
-                </div>
+                </div> -->
                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
                         URL redirection
@@ -289,7 +290,7 @@
                         {{vm.campaigntodetail.information}}
                     </div>
                 </div>
-                <div class="information-campaign-block">
+<!--                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
                         Disponible
                     </div>
@@ -337,7 +338,7 @@
                         <div class="information-campaign-content">
                             {{urlgroup.Bopen}}
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

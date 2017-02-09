@@ -9,18 +9,16 @@ module.exports = function(app) {
 
         //Mes fonctions Loopback
 
-        var addaudienceLoop = function(id, creator, name, customaudience, nb_publishers, size, date, publishers_list, waitboolean, readyboolean, makeadealboolean) {
+        var addaudienceLoop = function(userId, creator, name, id_customaudience, nb_publishers, size, date, waitboolean, makeadealboolean) {
             var newaudience = Lookalikeaudience.create({
-                'id_creator': id,
+                'userId': userId,
                 'creator': creator,
                 'name': name,
-                'id_customaudienceid': customaudience,
+                'id_customaudience': id_customaudience,
                 'nb_publishers': nb_publishers,
                 'size': size,
                 'date': date,
-                'publishers_list': publishers_list,
-                'waitboolean': waitboolean,
-                'readyboolean': readyboolean,
+                'waitboolean':waitboolean,
                 'makeadealboolean': makeadealboolean,
 
             }).$promise
@@ -28,13 +26,13 @@ module.exports = function(app) {
             return newaudience;
         };
 
-        var loadallaudiencebycreatorid = function(creator) {
+        var loadallaudiencebycreatorid = function(userId) {
 
             var audiencetoload = Lookalikeaudience.find({
                 "filter": {
                     order: 'date DESC',
                     where: {
-                        creator: creator
+                        userId: userId
                     },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
@@ -42,14 +40,14 @@ module.exports = function(app) {
             return audiencetoload;
         };
 
-        var loadaudienceLoop = function(creator) {
+        var loadaudienceLoop = function(userId) {
 
             var audiencetoload = Lookalikeaudience.find({
                 "filter": {
                     limit: 5,
                     order: 'date DESC',
                     where: {
-                        creator: creator
+                        userId: userId
                     },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
@@ -57,14 +55,14 @@ module.exports = function(app) {
             return audiencetoload;
         };
 
-        var loadmoreaudienceLoop = function(skipnumber, creator) {
+        var loadmoreaudienceLoop = function(skipnumber, userId) {
             var audiencetoload = Lookalikeaudience.find({
                 "filter": {
                     skip: skipnumber,
                     order: 'date DESC',
                     limit: 5,
                     where: {
-                        creator: creator
+                        userId: userId
                     },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise

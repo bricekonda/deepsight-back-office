@@ -34,7 +34,7 @@ module.exports = function(app) {
         vm.showmessage = 'sign-in-information-block-up';
 
         $rootScope.$on('resetpwdfailed', function(event, data) {
-            vm.messagetoshow = "L'utilisateur n'existe pas. Essayez avec un nouvel e-mail"
+            vm.messagetoshow = "L'utilisateur n'existe pas. Essayez avec un autre e-mail"
             vm.showmessage = 'sign-in-information-block-down';
             $timeout(function() {
                 vm.showmessage = 'sign-in-information-block-up';

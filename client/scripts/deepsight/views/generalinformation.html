@@ -1,9 +1,8 @@
 <loader ng-if="vm.pageloadingboolean"></loader>
 
-
 <div class="popup-background" ng-if="vm.closeopenbool">
     <div class="popup-wrapper">
-            <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
+        <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
         <div class="popup-message">Es-tu sûr(e) de ne pas vouloir prendre en compte les modifications ?</div>
         <div class="popup-btn" ng-click="vm.cancel()">
             <div class="popup-btn-content">ANNULER</div>
@@ -12,16 +11,17 @@
 </div>
 
 <div class="category-block">
-    <div class="category-title">General Information</div>
-    <div class="category-subtitle">Lorem ipsum</div>
-    <div class="general-information-block">
+    <div class="category-title">Mon compte</div>
+    <div class="category-subtitle">Voici avez ici la possibilité de consulter les informations de votre compte et de les modifier</div>
+    <div class="general-information-wrapper">
+            <div class="general-information-block">
         <div class="general-information-content-block">
             <div class="general-information-content-sub-block">
-                <div class="general-information-content-title">First name</div>
+                <div class="general-information-content-title">Prénom</div>
                 <div class="general-information-content-content">{{vm.user.firstname}}</div>
             </div>
             <div class="general-information-content-sub-block">
-                <div class="general-information-content-title">Last Name</div>
+                <div class="general-information-content-title">Nom</div>
                 <div class="general-information-content-content">{{vm.user.lastname}}</div>
             </div>
             <div class="general-information-content-sub-block">
@@ -29,12 +29,8 @@
                 <div class="general-information-content-content">{{vm.user.email}}</div>
             </div>
             <div class="general-information-content-sub-block">
-                <div class="general-information-content-title">Company name</div>
+                <div class="general-information-content-title">Entreprise</div>
                 <div class="general-information-content-content">{{vm.user.organization}}</div>
-            </div>
-            <div class="general-information-content-sub-block">
-                <div class="general-information-content-title">TVA number</div>
-                <div class="general-information-content-content">{{vm.user.tva}}</div>
             </div>
             <div class="edit-btn" ng-click="vm.modifyinformationf();vm.tvatest();vm.emailtest()">
                 <div class="edit-btn-content">EDIT</div>
@@ -45,13 +41,14 @@
     <div class="forgot-password-block">
         <div class="forgot-password-content-block">
             <div class="general-information-content-sub-block">
-                <div class="general-information-content-title">Password</div>
+                <div class="general-information-content-title">Mot de passe</div>
                 <div class="general-information-content-content">••••••••••</div>
             </div>
             <div class="edit-btn" ng-click="vm.changepwd()">
-                <div class="edit-btn-content">CHANGE</div>
+                <div class="edit-btn-content">CHANGER</div>
             </div>
         </div>
+    </div>
     </div>
 
 </div>
@@ -84,18 +81,18 @@
             </div>
 
             <div class="modify-information-wrapper">
-                <label class="modify-information-title">Organization</label>
+                <label class="modify-information-title">Entreprise</label>
                 <input type="text" name="organization" ng-model="vm.user.organization" placeholder="{{vm.userinfo[0].organization}}" ng-class="modifyForm.organization.$error.minlength && modifyForm.organization.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" ng-minlength="2" required>
                 <p ng-if="modifyForm.organization.$error.minlength && modifyForm.organization.$touched" class="help-block-modify">Le om de votre entreprise doit au moins contenir 2 caractères</p>
             </div>
 
-            <div class="modify-information-wrapper">
+            <!--             <div class="modify-information-wrapper">
                 <label class="modify-information-title">Num TVA intracommunautaire</label>
                 <input type="text" name="tvanumber" ng-model="vm.user.tva" placeholder="{{vm.userinfo[0].tva}}" ng-change="vm.tvatest()" ng-class="(modifyForm.tvanumber.$error.minlength || modifyForm.tvanumber.$error.maxlength) && modifyForm.tvanumber.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" ng-minlength="13" ng-maxlength="13" required>
                 <p ng-if="!vm.tvaboolean && modifyForm.tvanumber.$touched" class="help-block-modify">Le numéro de TVA intracommunautaire, comprend le code pays : 2 lettres majusculse, 2 chiffres correspondant à la clef informatique, et 9 chiffres pour votre numéro SIREN </p>
-            </div>
+            </div> -->
 
-            <button type="submit" ng-class="!vm.emailboolean || !vm.tvaboolean || modifyForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled="(modifyForm.$invalid) || (!vm.tvaboolean) || (!vm.emailboolean)">
+            <button type="submit" ng-class="!vm.emailboolean || modifyForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled="(modifyForm.$invalid) || (!vm.emailboolean)">
                 <div ng-class="modifyForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">SAVE</div>
             </button>
         </form>
