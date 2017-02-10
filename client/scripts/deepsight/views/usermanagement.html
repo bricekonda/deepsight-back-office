@@ -1,0 +1,196 @@
+<loader ng-if="vm.pageloadingboolean"></loader>
+
+<div class="popup-background" ng-if="vm.closeopenbool">
+    <div class="popup-wrapper">
+        <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.closepopup()">
+        <div class="popup-message">!!!DANGER!!!
+            <br> Si tu es sûr(e) de bien vouloir supprimer l'utilisateur, tape
+            <span style='color:#EF2B2D'><b>SUPPRIMER</b></span>
+        </div>
+        <input class="delete-confirmation" "type="test " name="deleteconfirmation " ng-model="vm.deleteconfirmation ">
+        <div ng-class="vm.deleteconfirmation==='SUPPRIMER' ? 'popup-btn' : 'popup-btn-disabled' " ng-click="vm.deleteuserById() ">
+            <div class="popup-btn-content ">SUPPRIMER</div>
+        </div>
+    </div>
+</div>
+
+<div class="category-block " id="usermanagementblock ">
+    <div class="information-block-success-campaign " ng-class="vm.showmessage ">
+        <div class="information-block-success-campaign-content ">L'utilisateur sélectionné a bien été mis à jour</div>
+    </div>
+
+     <div class="category-title ">User management</div>
+    <div class="category-subtitle ">Tu peux ici créer, gérer, modifier et supprimer tous les users Deepsight</div>
+        <div class="create-audience-btn " ng-click="vm.createauseroc() ">
+            <div class="create-audience-btn-content ">
+                <img class="cross-class " src="images/cross.png ">
+                <div class="create-audience-text ">CRÉER UN USER</div>
+            </div>
+        </div>
+
+    <div class="userfilter-wrapper ">
+        <input class="search-bar " type="text " name="query " placeholder="Entre ici le nom de l 'entreprise que tu recherche" ng-model="vm.userquery">
+    </div>
+
+    <img ng-if="vm.noaudiencebool" src="images/pointer.png" class="pointer pointeranimation">
+
+    <div ng-if="vm.noaudiencebool" class="no-audience">
+        <div class="no-audience-content">Vous n'avez pas encore de campagne disponible</div>
+    </div>
+
+    <div class="usermanagement-wrapper">
+        <div class="audience-features">
+            <div class="column-user-top">
+                <p class="column-user-top-content">PRENOM</p>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">NOM</div>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">STATUT</div>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">ENTREPRISE</div>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">EMAIL</div>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">CREATION</div>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">CREATEUR</div>
+            </div>
+        </div>
+
+        <div class="audience-block" ng-repeat="user in vm.allusers | filter:vm.userquery">
+            <div class="audience-container" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)">
+                <div class="column-user-top">
+                    <p class="column-user-content">{{user.firstname}}</p>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{user.lastname}}</div>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">ADMIN</div>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{user.organization}}</div>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{user.username}}</div>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{user.date}}</div>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">brice@deepsight.io</div>
+                </div>
+            </div>
+            <div class="audience-action">
+                <div class="column7">
+                    <div class="modify-icon" ng-click="vm.modifyinformationf(); vm.loadusertomodify($index)"></div>
+                </div>
+                <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
+                    <div class="delete-icon"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- More information -->
+<div class="create-audience-background" ng-if="vm.generalinformationboolean">
+    <div class="create-audience-modal">
+        <div class="create-audience-modal-title">
+            <h1 class="create-audience-modal-title-content">Modifier vos informations</h1>
+            <img class="close-modal close-modal-generalinfo" src="images/cross-close-modal-logo.png" ng-click="vm.cancel()">
+        </div>
+
+        <form name="modifyForm" ng-submit="vm.submitForm(modifyForm.$valid)" class="formclass" novalidate>
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Prénom</label>
+                <input type="text" name="firstname" ng-model="vm.user.firstname" placeholder="{{vm.userinfo[0].firstname}}" ng-class="modifyForm.firstname.$error.minlength && modifyForm.firstname.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" ng-minlength="2" required>
+                <p ng-if=" modifyForm.firstname.$error.minlength && modifyForm.firstname.$touched" class="help-block-modify">Modifier mes information</p>
+            </div>
+
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Nom</label>
+                <input type="text" name="lastname" ng-model="vm.user.lastname" placeholder="{{vm.userinfo[0].lastname}}" ng-class="modifyForm.lastname.$error.minlength && modifyForm.lastname.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" ng-minlength="2" required>
+                <p ng-if="modifyForm.lastname.$error.minlength && modifyForm.lastname.$touched" class="help-block-modify">Votre nom doit contenir plus de 2 caractères</p>
+            </div>
+
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Email</label>
+                <input type="email" name="email" ng-model="vm.user.email" ng-change="vm.emailtest()" ng-class="!vm.emailboolean && signUpForm.email.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" required>
+                <p ng-if="!vm.emailboolean && modifyForm.email.$touched" class="help-block-modify">Un email valide est requis</p>
+            </div>
+
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Entreprise</label>
+                <input type="text" name="organization" ng-model="vm.user.organization" placeholder="{{vm.userinfo[0].organization}}" ng-class="modifyForm.organization.$error.minlength && modifyForm.organization.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" ng-minlength="2" required>
+                <p ng-if="modifyForm.organization.$error.minlength && modifyForm.organization.$touched" class="help-block-modify">Le nom de votre entreprise doit au moins contenir 2 caractères</p>
+            </div>
+
+            <button type="submit" ng-class="!vm.emailboolean || modifyForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled="modifyForm.$invalid || !vm.emailboolean">
+                <div ng-class="modifyForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">SAVE</div>
+            </button>
+        </form>
+
+    </div>
+</div>
+<!-- End of more information -->
+
+<!-- Create a user -->
+<!-- <div class="create-audience-background" ng-if="vm.usercreationboolean"> -->
+<div class="create-audience-background" ng-if="true">
+    <div class="create-audience-modal">
+        <div class="create-audience-modal-title">
+            <h1 class="create-audience-modal-title-content">Modifier vos informations</h1>
+            <img class="close-modal close-modal-generalinfo" src="images/cross-close-modal-logo.png" ng-click="vm.createauseroc()">
+        </div>
+
+        <form name="createuserForm" ng-submit="vm.submitusercreationForm(createuserForm.$valid)" class="formclass" novalidate>
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Prénom</label>
+                <input type="text" name="firstname" ng-model="vm.newuser.firstname" placeholder="" ng-class="createuserForm.firstname.$error.minlength && createuserForm.firstname.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" ng-minlength="2" required>
+                <p ng-if="createuserForm.firstname.$error.minlength && createuserForm.firstname.$touched" class="help-block-modify">Modifier mes information</p>
+            </div>
+
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Nom</label>
+                <input type="text" name="lastname" ng-model="vm.newuser.lastname" placeholder="" ng-class="createuserForm.lastname.$error.minlength && createuserForm.lastname.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" ng-minlength="2" required>
+                <p ng-if="createuserForm.lastname.$error.minlength && createuserForm.lastname.$touched" class="help-block-modify">Votre nom doit contenir plus de 2 caractères</p>
+            </div>
+
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Email</label>
+                <input type="email" name="email" ng-model="vm.newuser.email" ng-change="vm.emailtest()" ng-class="!vm.emailboolean && createuserForm.email.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" required>
+                <p ng-if="!vm.emailboolean && createuserForm.email.$touched" class="help-block-modify">Un email valide est requis</p>
+            </div>
+
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Entreprise</label>
+                <input type="text" name="organization" ng-model="vm.newuser.organization" placeholder="" ng-class="createuserForm.organization.$error.minlength && createuserForm.organization.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" ng-minlength="2" required>
+                <p ng-if="createuserForm.organization.$error.minlength && createuserForm.organization.$touched" class="help-block-modify">Le nom de votre entreprise doit au moins contenir 2 caractères</p>
+            </div>
+
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Mot de passe</label>
+                <input type="text" name="organization" ng-model="vm.newuser.organization" placeholder="" class="modify-information-disabled" autocomplete="off" ng-disabled="true" required>
+            </div>
+
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Type d'utilisateur</label>
+                <input type="checkbox" ng-model="master">
+            </div>
+
+            <button type="submit" ng-class="!vm.emailboolean || createuserForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled="!vm.emailboolean || createuserForm.$invalid">
+                <div ng-class="createuserForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">SAVE</div>
+            </button>
+        </form>
+
+    </div>
+</div>
+<!-- End of create a user -->

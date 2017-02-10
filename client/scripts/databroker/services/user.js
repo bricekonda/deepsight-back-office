@@ -46,6 +46,39 @@ module.exports = function(app) {
             return usertoupdate;
         }
 
+        var loadallusers = function() {
+            var allusers = Deepsightuser.find().$promise;
+
+            return allusers;
+        }
+
+        var loaduserByID = function(id) {
+            var user = Deepsightuser.findById(id).$promise;
+
+            return user;
+        }
+
+        var deleteuserById = function(id) {
+
+            var user = Deepsightuser.deleteById(id).$promise;
+
+            return user;
+        }
+
+        var updateuserattributes = function(id, firstname, lastname, organization, username) {
+
+            var user = Deepsightuser.prototype$updateAttributes({
+                'id': id,
+                'firstname': firstname,
+                'lastname': lastname,
+                'organization': organization,
+                'username': username,
+                'email': username
+
+            }).$promise;
+
+            return user;
+        }
 
         return {
             testoldPassword: testoldPassword,
@@ -53,6 +86,10 @@ module.exports = function(app) {
             updateUser: updateUser,
             updatePassword: updatePassword,
             getcurrentUserbyID: getcurrentUserbyID,
+            loadallusers: loadallusers,
+            loaduserByID: loaduserByID,
+            deleteuserById: deleteuserById,
+            updateuserattributes: updateuserattributes,
         };
 
     }

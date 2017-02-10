@@ -193,6 +193,11 @@ module.exports = function(app) {
             'class': 'slideup',
             'classbis': 'rotateCounterwise',
             'subcategoryname': [{
+                'name': 'Gestions des utilisateurs',
+                'statename': 'home.usermanagement',
+                'class': 'subcategory-link',
+                'picto': 'images/general-information-grey.svg'
+            },{
                 'name': 'Informations générales',
                 'statename': 'home.generalinformation',
                 'class': 'subcategory-link',

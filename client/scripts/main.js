@@ -27,16 +27,12 @@ var app = angular.module(namespace, [
     // inject:modules end
 ]);
 
-
-
 app.config(['LoopBackResourceProvider', namespace + '.databroker.apiConstant',
     function(LoopBackResourceProvider, apiConstant) {
         // Change the URL where to access the LoopBack REST API server
         LoopBackResourceProvider.setUrlBase(apiConstant.uri);
     }
 ]);
-
-
 
 // if (process.env.SENTRY_MODE === 'prod') {
 //     var configCompileDeps = ['$compileProvider'];
@@ -159,6 +155,8 @@ var run = function($window, $timeout, $kinvey, $state, $rootScope, Deepsightuser
                 $state.go('home.customaudience.createcustomaudience');
             } else if ($state.current.name === 'home.lookalikeaudience.createlookalikeaudience') {
                 $state.go('home.lookalikeaudience.createlookalikeaudience');
+            } else if ($state.current.name === 'home.usermanagement') {
+                $state.go('home.usermanagement');
             } else {
                 $state.go('home');
             }
@@ -199,13 +197,13 @@ var run = function($window, $timeout, $kinvey, $state, $rootScope, Deepsightuser
     });
 
     $rootScope.$on('resetpwdSuccess', function() {
-        $state.go('signin').then(function(){
+        $state.go('signin').then(function() {
             $rootScope.$broadcast('resetpwdrequestsuccessconfirmation', null);
         });
     });
 
     $rootScope.$on('resetpwdfinalSuccess', function() {
-        $state.go('signin').then(function(){
+        $state.go('signin').then(function() {
             $rootScope.$broadcast('resetpwdsuccessconfirmation', null);
         });;
     });

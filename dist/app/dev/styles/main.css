@@ -245,7 +245,8 @@
       align-items: center;
   -ms-flex-pack: center;
       justify-content: center;
-  border-radius: 20px; }
+  border-radius: 20px;
+  cursor: pointer; }
 
 .create-audience-btn-content {
   position: relative;
@@ -2029,6 +2030,7 @@
   position: relative;
   margin-top: 50px;
   font-size: 18px;
+  line-height: 22px;
   font-family: proximanovaregular;
   margin-bottom: 30px;
   color: #23231C;
@@ -2054,6 +2056,25 @@
   margin-bottom: 30px;
   cursor: pointer; }
 
+.popup-btn-disabled {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  color: #626466;
+  height: 26px;
+  background-color: #F6F7F8;
+  border: 1px solid #626466;
+  border-radius: 20px;
+  width: 110px;
+  margin-left: calc(50% - 55px);
+  margin-bottom: 30px;
+  opacity: 0.3;
+  cursor: default; }
+
 .popup-btn:hover {
   background-color: #626466;
   color: white; }
@@ -2071,6 +2092,22 @@
   margin-bottom: 13px;
   top: 10px;
   cursor: pointer; }
+
+.delete-confirmation {
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #EF2B2D;
+  height: 40px;
+  background-color: #F6DADA;
+  width: calc(100% - 80px);
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 40px;
+  font-family: proximanovaregular;
+  font-size: 14px;
+  color: #EF2B2D;
+  margin-bottom: 30px;
+  text-align: center; }
 
 /*********************************************
     INPUT
@@ -2930,6 +2967,90 @@
   font-family: proximanovaregular;
   font-size: 14px;
   line-height: 22px; }
+
+.userfilter-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  background-color: none;
+  top: 130px; }
+
+.usermanagement-wrapper {
+  position: absolute;
+  top: 180px;
+  width: calc(100% - 80px);
+  height: auto;
+  margin-left: 40px;
+  border-radius: 3px;
+  margin-bottom: 80px; }
+
+.search-bar {
+  position: relative;
+  float: left;
+  border-radius: 3px;
+  border: 1px solid #1580EF;
+  height: 40px;
+  background-color: #89BDF3;
+  width: calc(100% - 80px);
+  padding-left: 10px;
+  margin-left: 40px;
+  font-family: proximanovaregular;
+  font-size: 14px;
+  color: white; }
+
+input[name=query]::-webkit-input-placeholder {
+  color: #C6E0FB; }
+
+.column-user-top {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+  width: 100px;
+  z-index: 5; }
+
+.column-user-content, .column-user-top-content {
+  position: relative;
+  float: left;
+  margin-left: 20px;
+  margin-top: 0px;
+  font-family: proximanovaregular;
+  font-size: 12px;
+  color: #23231C; }
+
+.column-user-content {
+  position: relative;
+  float: left;
+  margin-top: 14px;
+  margin-bottom: 14px;
+  width: calc(100% - 20px);
+  white-space: nowrap; }
+
+.column-user-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: none; }
+
+.column-user-content:hover {
+  overflow: visible;
+  background-color: #FFFFBC;
+  width: auto; }
+
+.column-user-top-content {
+  line-height: 30px;
+  width: 100px; }
+
+.modify-icon {
+  position: absolute;
+  display: inline-block;
+  margin-top: 8px;
+  width: 100%;
+  cursor: pointer;
+  height: 24px;
+  background-size: 40px 24px;
+  background-image: url("../images/modify.png"); }
+
+.modify-icon:hover {
+  background-image: url("../images/modify-hover.png"); }
 
 @font-face {
   font-family: 'proximanovalight';

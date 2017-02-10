@@ -12,6 +12,7 @@ module.exports = function(namespace) {
     // inject:folders start
     require('./controllers')(app);
 require('./directives')(app);
+require('./services')(app);
     // inject:folders end
     app.namespace = app.namespace || {};
 
@@ -113,6 +114,12 @@ require('./directives')(app);
             url: '/settings/tandcs',
             template: require('./views/tandcs.html'),
             controller: fullname + '.tandcs',
+            controllerAs: 'vm',
+            authenticate: true
+        }).state('home.usermanagement', {
+            url: '/settings/usermanagement',
+            template: require('./views/usermanagement.html'),
+            controller: fullname + '.usermanagement',
             controllerAs: 'vm',
             authenticate: true
         }).state('home.customaudience.createcustomaudience', {

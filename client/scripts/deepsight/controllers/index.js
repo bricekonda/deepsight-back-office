@@ -21,5 +21,6 @@ module.exports = function(app) {
     require('./signup')(app);
     require('./summary')(app);
     require('./tandcs')(app);
+    require('./usermanagement')(app);
     // inject:end
 };

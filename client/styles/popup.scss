@@ -26,6 +26,7 @@
     position: relative;
     margin-top: 50px;
     font-size: 18px;
+    line-height: 22px;
     font-family: proximanovaregular;
     margin-bottom: 30px;
     color: #23231C;
@@ -48,6 +49,24 @@
     margin-left: calc(50% - 55px);
     margin-bottom: 30px;
     cursor: pointer;
+
+}
+
+.popup-btn-disabled{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #626466;
+    height: 26px;
+    background-color: #F6F7F8;
+    border: 1px solid #626466;
+    border-radius: 20px;
+    width: 110px;
+    margin-left: calc(50% - 55px);
+    margin-bottom: 30px;
+    opacity: 0.3;
+        cursor: default;
 }
 
 .popup-btn:hover {
@@ -69,4 +88,21 @@
     margin-bottom: 13px;
     top: 10px;
     cursor: pointer;
+}
+
+.delete-confirmation{
+    position: relative;
+    border-radius: 3px;
+    border: 1px solid #EF2B2D;
+    height: 40px;
+    background-color: #F6DADA;
+    width: calc(100% - 80px);
+    padding-left: 10px;
+        padding-right: 10px;
+    margin-left: 40px;
+    font-family: proximanovaregular;
+    font-size: 14px;
+    color: #EF2B2D;
+    margin-bottom: 30px;
+    text-align: center;
 }
