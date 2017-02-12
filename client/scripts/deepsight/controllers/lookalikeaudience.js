@@ -12,6 +12,90 @@ module.exports = function(app) {
         var vm = this;
         vm.controllername = fullname;
 
+        //Modification de l'audience
+
+        vm.audiencetodetail = {};
+
+        vm.modifyaudience = false;
+
+        vm.loadaudience = function() {
+            if (vm.modifyaudience === true) {
+                vm.modifyaudience = false;
+            } else if (vm.modifyaudience === false) {
+                vm.modifyaudience = true
+            }
+        }
+
+        vm.loadaudiencedetail = function(index) {
+            vm.audiencetodetail = vm.audiencesloaded[index];
+            console.log(vm.audiencetodetail);
+
+            if (vm.audiencetodetail.waitboolean === true) {
+                vm.audiencetomodifystatus = 'waitboolean'
+            } else {
+                vm.audiencetodetail.waitboolean === 'makeadealboolean'
+            }
+
+        };
+
+        vm.emailboolean = true;
+
+        vm.emailtest = function() {
+            var regEmail = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            vm.emailboolean = regEmail.test(vm.audiencetodetail.creator);
+        }
+
+        $scope.$watch(function(){
+            console.log(vm.audiencetomodifystatus);
+        })
+
+        vm.submitForm = function(isValid) {
+            if (isValid) {
+                vm.pageloadingboolean = true;
+                console.log("kikoo")
+                var id = vm.audiencetodetail.id
+                var name = vm.audiencetodetail.name;
+                var size = vm.audiencetodetail.size;
+                var nb_publishers = vm.audiencetodetail.nb_publishers;
+                var creator = vm.audiencetodetail.creator;
+
+                console.log(vm.audiencetomodifystatus);
+
+                if (vm.audiencetomodifystatus === 'waitboolean') {
+                    var makeadealboolean = false;
+                    var waitboolean = true;
+                } else if (vm.audiencetomodifystatus === 'makeadealboolean') {
+                    var makeadealboolean = true;
+                    var waitboolean = false;
+                }
+                console.log(id);
+
+                lookalikeaudience.updateallparametersAudience(id, name, size, nb_publishers, creator, makeadealboolean, waitboolean).then(function(audience) {
+                    $rootScope.$broadcast('lookalikeaudienceupdated', null);
+                    $rootScope.$broadcast('reloadlookalikeaudience', null);
+                    vm.loadaudience()
+                    var container = document.getElementById('lookalikeaudienceblock');
+                    container.scrollTop = scrollTo.offsetTop;
+                    console.log(audience);
+                    vm.audiencetodetail = {};
+                    vm.pageloadingboolean = false;
+                }).catch(function(error) {
+                    vm.pageloadingboolean = false;
+                    throw error
+                })
+
+            };
+        };
+
+        vm.showmessage = 'information-block-success-campaign-up';
+
+        $rootScope.$on('lookalikeaudienceupdated', function(event, data) {
+            vm.showmessage = 'information-block-success-campaign-down';
+            $timeout(function() {
+                vm.showmessage = 'information-block-success-campaign-up';
+            }, 6000);
+        });
+
         //popup cancel
         vm.closeopenbool = false;
 
@@ -65,91 +149,91 @@ module.exports = function(app) {
         // filter lookalike
         vm.customaudience = 'kikoo'
 
-        vm.filterclass = "rotateCounterwise";
-        vm.filtershown = "filterslideup";
-        vm.filterbottom = "filterbottomanimationup";
-        vm.moreinfoboolean = false;
+        // vm.filterclass = "rotateCounterwise";
+        // vm.filtershown = "filterslideup";
+        // vm.filterbottom = "filterbottomanimationup";
+        // vm.moreinfoboolean = false;
 
-        vm.showfilter = function() {
-            if (vm.filterclass === "rotateCounterwise") {
-                vm.filtershown = "filterslidedown";
-                vm.filterclass = "rotate";
-                vm.filterbottom = "filterbottomanimationdown";
-            } else if (vm.filterclass === "rotate") {
-                vm.filtershown = "filterslideup";
-                vm.filterclass = "rotateCounterwise";
-                vm.filterbottom = "filterbottomanimationup";
-            }
-        };
+        // vm.showfilter = function() {
+        //     if (vm.filterclass === "rotateCounterwise") {
+        //         vm.filtershown = "filterslidedown";
+        //         vm.filterclass = "rotate";
+        //         vm.filterbottom = "filterbottomanimationdown";
+        //     } else if (vm.filterclass === "rotate") {
+        //         vm.filtershown = "filterslideup";
+        //         vm.filterclass = "rotateCounterwise";
+        //         vm.filterbottom = "filterbottomanimationup";
+        //     }
+        // };
 
-        vm.audienceshown = "0";
+        // vm.audienceshown = "0";
 
-        vm.activefilter = "Aucun";
-        vm.sortparameter = '';
+        // vm.activefilter = "Aucun";
+        // vm.sortparameter = '';
 
-        vm.filter = [{
-            'name': 'Aucun',
-            'kinveyname': '',
-        }, {
-            'name': '- + Nom',
-            'kinveyname': '+name',
-        }, {
-            'name': '+ - Nom',
-            'kinveyname': '-name',
-        }, {
-            'name': '- + Taille',
-            'kinveyname': '+size',
-        }, {
-            'name': '+ - Taille',
-            'kinveyname': '-size',
-        }, {
-            'name': '- +  NB Éd.',
-            'kinveyname': '+nb_publishers',
-        }, {
-            'name': '+ - NB Éd.',
-            'kinveyname': '-nb_publishers',
-        }, {
-            'name': '- + Date',
-            'kinveyname': '+date',
-        }, {
-            'name': '+ - Date',
-            'kinveyname': '-date',
-        }];
+        // vm.filter = [{
+        //     'name': 'Aucun',
+        //     'kinveyname': '',
+        // }, {
+        //     'name': '- + Nom',
+        //     'kinveyname': '+name',
+        // }, {
+        //     'name': '+ - Nom',
+        //     'kinveyname': '-name',
+        // }, {
+        //     'name': '- + Taille',
+        //     'kinveyname': '+size',
+        // }, {
+        //     'name': '+ - Taille',
+        //     'kinveyname': '-size',
+        // }, {
+        //     'name': '- +  NB Éd.',
+        //     'kinveyname': '+nb_publishers',
+        // }, {
+        //     'name': '+ - NB Éd.',
+        //     'kinveyname': '-nb_publishers',
+        // }, {
+        //     'name': '- + Date',
+        //     'kinveyname': '+date',
+        // }, {
+        //     'name': '+ - Date',
+        //     'kinveyname': '-date',
+        // }];
 
-        for (var i = 0; i < vm.filter.length; i++) {
+        // for (var i = 0; i < vm.filter.length; i++) {
 
-        }
+        // }
 
-        vm.selectfilter = function(index) {
-            for (var i = 0; i < vm.filter.length; i++) {
-                if (vm.filter[index].name === vm.filter[i].name) {
-                    vm.sortparameter = vm.filter[i].kinveyname;
-                    vm.activefilter = vm.filter[i].name;
-                    vm.filtershown = "filterslideup";
-                    vm.filterclass = "rotateCounterwise";
-                    vm.filterbottom = "filterbottomanimationup";
-                }
-            }
-        };
+        // vm.selectfilter = function(index) {
+        //     for (var i = 0; i < vm.filter.length; i++) {
+        //         if (vm.filter[index].name === vm.filter[i].name) {
+        //             vm.sortparameter = vm.filter[i].kinveyname;
+        //             vm.activefilter = vm.filter[i].name;
+        //             vm.filtershown = "filterslideup";
+        //             vm.filterclass = "rotateCounterwise";
+        //             vm.filterbottom = "filterbottomanimationup";
+        //         }
+        //     }
+        // };
 
         vm.readyboolean = false;
 
-        vm.audiencenotreadyout = function() {
-            vm.readyboolean = false;
-        };
+        // vm.audiencenotreadyout = function() {
+        //     vm.readyboolean = false;
+        // };
 
-        vm.audiencenotreadyin = function(index) {
-            if (vm.audiencesloaded[index].waitboolean === true) {
-                var y = 78 + (index) * 50;
-                var ypx = y.toString().concat('px');
-                vm.readyboolean = true;
-                $timeout(function() {
-                    document.getElementById('notready').style.setProperty("top", ypx);
-                });
-            } else {
-                vm.readyboolean = false;
-            }
-        };
+        // vm.audiencenotreadyin = function(index) {
+        //     if (vm.audiencesloaded[index].waitboolean === true) {
+        //         var y = 78 + (index) * 50;
+        //         var ypx = y.toString().concat('px');
+        //         vm.readyboolean = true;
+        //         $timeout(function() {
+        //             document.getElementById('notready').style.setProperty("top", ypx);
+        //         });
+        //     } else {
+        //         vm.readyboolean = false;
+        //     }
+        // };
 
         //Load more audience
 
@@ -235,13 +319,13 @@ module.exports = function(app) {
                     vm.audiencesloaded.push(model[i])
                 }
                 vm.audienceshown = vm.audiencesloaded.length;
-                vm.initialoffset = 5;
+                vm.initialoffset = 30;
                 vm.counter = 0;
-                    if (vm.audiencesloaded.length === 0) {
-                        vm.noaudiencebool = true;
-                    } else if (vm.audiencesloaded.length !== 0){
-                        vm.noaudiencebool = false;
-                    }
+                if (vm.audiencesloaded.length === 0) {
+                    vm.noaudiencebool = true;
+                } else if (vm.audiencesloaded.length !== 0) {
+                    vm.noaudiencebool = false;
+                }
                 vm.pageloadingboolean = false;
                 lookalikeaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.id).then(function(model) {
                     if (model.length === 0) {
@@ -274,11 +358,11 @@ module.exports = function(app) {
                         vm.audiencesloaded.push(model[i])
                     }
                     vm.audienceshown = vm.audiencesloaded.length;
-                    vm.initialoffset = 5;
+                    vm.initialoffset = 30;
                     vm.counter = 0;
                     if (vm.audiencesloaded.length === 0) {
                         vm.noaudiencebool = true;
-                    } else if (vm.audiencesloaded.length !== 0){
+                    } else if (vm.audiencesloaded.length !== 0) {
                         vm.noaudiencebool = false;
                     }
                     lookalikeaudience.loadmoreaudienceLoop(vm.initialoffset, vm.currentuser.id).then(function(model) {
@@ -297,7 +381,7 @@ module.exports = function(app) {
 
         vm.loadmore = function() {
             vm.pageloadingboolean = true;
-            vm.counter = vm.counter + 5;
+            vm.counter = vm.counter + 30;
             lookalikeaudience.loadmoreaudienceLoop(vm.counter, vm.currentuser.id).then(function(model) {
                 vm.pageloadingboolean = false;
                 vm.audiencetoadd = [];
@@ -312,7 +396,7 @@ module.exports = function(app) {
                 vm.audiencesloaded = vm.audiencesloaded.concat(vm.audiencetoadd);
                 vm.audienceshown = vm.audiencesloaded.length;
 
-                lookalikeaudience.loadmoreaudienceLoop(vm.counter + 5, vm.currentuser.id).then(function(model) {
+                lookalikeaudience.loadmoreaudienceLoop(vm.counter + 30, vm.currentuser.id).then(function(model) {
                     if (model.length === 0) {
                         vm.loadmorebool = false;
                     }

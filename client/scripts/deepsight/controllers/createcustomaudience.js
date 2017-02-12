@@ -9,11 +9,80 @@ module.exports = function(app) {
     /*jshint validthis: true */
     var databroker = require('../../databroker')(app.name.split('.')[0]).name;
 
-    var deps = ['$window','$timeout', '$state', '$scope', '$http', '$rootScope', databroker + '.customaudience', databroker + '.user', databroker + '.files'];
+    var deps = ['$window', '$timeout', '$state', '$scope', '$http', '$rootScope', databroker + '.customaudience', databroker + '.user', databroker + '.files'];
 
     function controller($window, $timeout, $state, $scope, $http, $rootScope, customaudience, user, files) {
         var vm = this;
         vm.controllername = fullname;
+
+        // Choix user;
+
+        vm.filterclass = "rotateCounterwise";
+        vm.filtershown = "filterslideup";
+        vm.filterbottom = "choicebottomanimationup";
+        vm.nofileboolean = false;
+
+        // $rootScope.$on('loadcustomaudiencetoextend', function(event, args) {
+        //     vm.choice = args.name;
+        //     vm.customchosen = args.id;
+        //     vm.sizetodisplay = args.size;
+        //     vm.audienceselected = args;
+        //     vm.nofileboolean = true;
+
+        //     vm.lookalikeaudiencename = 'LA - '.concat(vm.styledate(new Date), ' ', vm.choice);
+
+        // });
+
+        vm.showfilter = function() {
+            if (vm.filterclass === "rotateCounterwise") {
+                vm.filtershown = "filterslidedown";
+                vm.filterclass = "rotate";
+                vm.filterbottom = "choicebottomanimationdown";
+            } else if (vm.filterclass === "rotate") {
+                vm.filtershown = "filterslideup";
+                vm.filterclass = "rotateCounterwise";
+                vm.filterbottom = "choicebottomanimationup";
+            }
+        };
+
+        vm.choice = 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer une audience';
+        vm.sortparameter = '';
+
+        user.loadallusers().then(function(users) {
+            console.log(users);
+            vm.audiencetochose = [];
+            vm.usertochose = users;
+            for (var k = 0; k < users.length; k++) {
+                var company = users[k].organization;
+                var username = users[k].username;
+                var nametodisplay = company.concat(' ', '-', ' ', username);
+                vm.audiencetochose.push(nametodisplay)
+
+            }
+            console.log(vm.audiencetochose);
+        }).catch(function(error) {
+            console.log(error)
+            throw error
+        })
+
+        vm.audiencetochose = [];
+
+        vm.selectfilter = function(index) {
+            vm.choice = vm.audiencetochose[index];
+            vm.iduserchosentocreateaudience = vm.usertochose[index].id;
+            vm.usernameuserchosentocreateaudience = vm.usertochose[index].username;
+
+
+            // vm.customchosen = vm.audiencetochose[index].id;
+            // vm.audienceselected = vm.audiencetochose[index];
+            // vm.sizetodisplay = vm.audienceselected.size;
+            // vm.lookalikeaudiencename = 'LA - '.concat(vm.styledate(new Date), ' ', vm.choice);
+
+            vm.nofileboolean = true;
+            vm.filtershown = "filterslideup";
+            vm.filterclass = "rotateCounterwise";
+            vm.filterbottom = "choicebottomanimationup";
+        };
 
         //popup log out
         vm.closeopenbool = false;
@@ -105,7 +174,7 @@ module.exports = function(app) {
 
         vm.match = function() {
             vm.loaderon = true;
-            customaudience.createAudience(vm.currentUser.id, vm.currentUser.username, vm.audiencename).then(function(audience) {
+            customaudience.createAudience(vm.iduserchosentocreateaudience, vm.currentUser.username, vm.audiencename).then(function(audience) {
                 customaudience.match(vm.currentUser.username, vm.filename, audience.id).then(function(result) {
                     vm.audiencetodisplay = result.publishers;
                     vm.sizetodisplay = result.total;

@@ -58,6 +58,27 @@
                 </div> -->
 
                 <div class="chose-audience-name">
+                    <div class="chose-audience-name-title">Nom de l'utilisateur</div>
+                    <div class="chose-btn-wrapper" id="chosetheuser">
+                        <div class="chose-btn" ng-click="vm.showfilteruser()">
+                            <div class="chose-btn-content">
+                                <div ng-class=" vm.choiceuser === 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer une audience' ? 'choice-to-chose-no' : 'choice-to-chose'">
+                                    {{vm.choiceuser}}
+                                </div>
+                                <div class="choice-show-noshow" ng-class="vm.filterclassuser"></div>
+                            </div>
+                        </div>
+                        <div class="chose-list" ng-class="vm.filtershownuser">
+                            <div class="chose-spacer"></div>
+                            <div class="choice" ng-repeat="choice in vm.usertochoselist" ng-click="vm.selectfilteruser($index); vm.loadallcustomaudienceByuserId()">
+                                <div class="choice-content" ng-class="{activefilterclass : vm.activefilter === filter.name}">{{choice}}</div>
+                            </div>
+                        </div>
+                        <div class="chose-list-bottom" ng-class="vm.filterbottomuser"></div>
+                    </div>
+                </div>
+
+                <div class="chose-audience-name" ng-if="vm.chosecustomaudienceboolean">
                     <div class="chose-audience-name-title">Choisissez une audience commune</div>
                     <div class="chose-btn-wrapper">
                         <div class="chose-btn" ng-click="vm.showfilter()">
@@ -79,10 +100,10 @@
                 </div>
 
                 <div class="bottom-option-cancel-next">
-                        <div class="cancel-btn" ng-click="vm.closepopup()">
-                            <div class="cancel-btn-content">ANNULER</div>
-                        </div>
-                    <div ng-class="chosecustomForm.name.$invalid || !vm.nofileboolean ? 'next-btn-disabled' : 'next-btn'" ng-click="vm.check(!chosecustomForm.name.$invalid && vm.nofileboolean)">
+                    <div class="cancel-btn" ng-click="vm.closepopup()">
+                        <div class="cancel-btn-content">ANNULER</div>
+                    </div>
+                    <div ng-class="(vm.choiceuser === 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer une audience')|| (vm.choice === 'Liste des audiences communes disponibles') ? 'next-btn-disabled' : 'next-btn'" ng-click="vm.check((vm.choiceuser !== 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer une audience')&& (vm.choice !== 'Liste des audiences communes disponibles'))">
 
                         <div class="next-btn-content">SUIVANT</div>
                     </div>
@@ -99,9 +120,8 @@
                     <br>
                     <span style='color:#1580EF'>{{vm.lookalikeaudiencename}}</span>
                     <br>
-                    <br>
-                    Voici les éditeurs qui composent le segment d'audience commune<br>
-                    L'algorithme de Deepsight va étendre cette audience et trouver des profils similaire
+                    <br> Voici les éditeurs qui composent le segment d'audience commune
+                    <br> L'algorithme de Deepsight va étendre cette audience et trouver des profils similaire
                 </div>
                 <div class="step-sub-message">Audience commune : {{vm.choice}}</div>
             </div>
@@ -122,10 +142,10 @@
             </div>
 
             <div class="bottom-option-cancel-next">
-                    <div class="cancel-btn" ng-click="vm.closepopup()">
-                        <div class="cancel-btn-content">ANNULER</div>
-                    </div>
-                <div class="next-btn" ng-click="vm.nextstepfunction(); vm.createlookalikeaudience()" >
+                <div class="cancel-btn" ng-click="vm.closepopup()">
+                    <div class="cancel-btn-content">ANNULER</div>
+                </div>
+                <div class="next-btn" ng-click="vm.nextstepfunction(); vm.createlookalikeaudience()">
                     <div class="next-btn-content">SUIVANT</div>
                 </div>
             </div>

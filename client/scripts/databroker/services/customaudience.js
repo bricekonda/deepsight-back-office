@@ -41,11 +41,11 @@ module.exports = function(app) {
 
             var audiencetoload = Customaudience.find({
                 "filter": {
-                    limit: 5,
+                    limit: 30,
                     order: 'date DESC',
-                    where: {
-                        userId: userId
-                    },
+                    // where: {
+                    //     userId: userId
+                    // },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
 
@@ -57,10 +57,10 @@ module.exports = function(app) {
                 "filter": {
                     skip: skipnumber,
                     order: 'date DESC',
-                    limit: 5,
-                    where: {
-                        userId: userId
-                    },
+                    limit: 30,
+                    // where: {
+                    //     userId: userId
+                    // },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
 
@@ -68,6 +68,20 @@ module.exports = function(app) {
         };
 
         var loadallaudienceLoop = function(userId) {
+
+            var audiencetoload = Customaudience.find({
+                "filter": {
+                    order: 'date DESC',
+                    // where: {
+                    //     userId: userId
+                    // },
+                }
+            }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
+
+            return audiencetoload;
+        };
+
+        var loadallaudienceLoopById = function(userId) {
 
             var audiencetoload = Customaudience.find({
                 "filter": {
@@ -138,6 +152,18 @@ module.exports = function(app) {
             return audience;
         };
 
+        var updateallparametersAudience = function(id, name, size, nb_publishers, creator) {
+            var audience = Customaudience.prototype$updateAttributes({
+                id: id
+            }, {
+                name: name,
+                size: size,
+                nb_publishers: nb_publishers,
+                creator: creator,
+            }).$promise;
+            return audience;
+        }
+
         var match = function(username, filename, id) {
             var deferred = $q.defer();
             var data = {
@@ -150,7 +176,7 @@ module.exports = function(app) {
                 method: 'GET',
                 url: apiConstant.uri + '/matching'
             }).then(function(result) {
-                if(result.data) {
+                if (result.data) {
                     deferred.resolve(result.data);
                 } else {
                     deferred.reject(result);
@@ -173,10 +199,12 @@ module.exports = function(app) {
             addaudienceLoop: addaudienceLoop,
             loadaudienceLoop: loadaudienceLoop,
             loadmoreaudienceLoop: loadmoreaudienceLoop,
+            loadallaudienceLoopById: loadallaudienceLoopById,
             loadallaudienceLoop: loadallaudienceLoop,
             deleteaudienceLoop: deleteaudienceLoop,
             createAudience: createAudience,
             updateAudience: updateAudience,
+            updateallparametersAudience: updateallparametersAudience,
             match: match,
             findaudiencebyID: findaudiencebyID,
         };

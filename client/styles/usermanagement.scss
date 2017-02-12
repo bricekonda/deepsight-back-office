@@ -44,7 +44,7 @@ input[name=query]::-webkit-input-placeholder {
     z-index: 5;
 }
 
-.column-user-content, .column-user-top-content{
+.column-user-content, .column-user-top-content {
     position: relative;
     float: left;
     margin-left: 20px;
@@ -77,10 +77,10 @@ input[name=query]::-webkit-input-placeholder {
 
 .column-user-top-content {
     line-height: 30px;
- 	width: 100px;
+    width: 100px;
 }
 
-.modify-icon{
+.modify-icon {
     position: absolute;
     display: inline-block;
     margin-top: 8px;
@@ -95,3 +95,35 @@ input[name=query]::-webkit-input-placeholder {
     background-image: url("../images/modify-hover.png");
 }
 
+.check-box-wrapper {
+    position: relative;
+    // background-color: blue;
+    width: calc(100%);
+    // margin-left: 60px;
+    height: auto;
+    margin-top: 15px;
+}
+
+.check-box-block {
+    position: relative;
+    // background-color: green;
+    // background-color: blue;
+    width: calc(100% - 120px);
+    margin-left: 60px;
+    height: 36px;
+}
+
+.check-box-form {
+    position: relative;
+    display: inline-block;
+}
+
+.box-name {
+    position: relative;
+    display: inline-block;
+    font-family: proximanovaregular;
+    font-size: 14px;
+    margin-top: 11px;
+    margin-left: 10px;
+    color: #23231C;
+}

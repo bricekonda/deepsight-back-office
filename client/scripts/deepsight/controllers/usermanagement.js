@@ -8,9 +8,9 @@ module.exports = function(app) {
     var databroker = require('../../databroker')(app.name.split('.')[0]).name;
     var authentication = require('../../authentication')(app.name.split('.')[0]).name;
 
-    var deps = ['$window', '$rootScope', '$timeout', '$state', '$scope', databroker + '.customaudience', databroker + '.user', 'Deepsightuser', 'Customaudience',authentication + '.authentication'];
+    var deps = ['$window', '$rootScope', '$timeout', '$state', '$scope', databroker + '.customaudience', databroker + '.user', authentication + '.authentication'];
 
-    function controller($window, $rootScope, $timeout, $state, $scope, customaudience, user, Deepsightuser, Customaudience, authentication) {
+    function controller($window, $rootScope, $timeout, $state, $scope, customaudience, user, authentication) {
         var vm = this;
         vm.controllername = fullname;
 
@@ -52,35 +52,13 @@ module.exports = function(app) {
         vm.createauseroc = function() {
             if (vm.usercreationboolean === false) {
                 vm.usercreationboolean = true
+                vm.setpassword();
             } else if (vm.usercreationboolean = true) {
                 vm.usercreationboolean = false
             }
         }
 
         //End of popup cancel
-
-        //Envoi mail
-        // vm.sendMail = function(index) {
-
-        //     var name = vm.audiencesloaded[index].name;
-
-        //     var subject = "Demande d'activation de l'audience commune ".concat(name)
-
-        //     var message = "Bonjour Brice,"
-
-        //     $window.open("mailto:" + 'brice@deepsight.io' + "?subject=" + subject + "&body=" + message, "_self");
-        // };
-
-        // vm.sendMail1 = function() {
-
-        //     var name = vm.audiencetodetail.name;
-
-        //     var subject = "Demande d'activation de l'audience commune ".concat(name)
-
-        //     var message = "Bonjour Brice,"
-
-        //     $window.open("mailto:" + 'brice@deepsight.io' + "?subject=" + subject + "&body=" + message, "_self");
-        // };
 
         //Test Loopback
 
@@ -100,66 +78,6 @@ module.exports = function(app) {
 
         // filter
 
-        // vm.filterclass = "rotateCounterwise";
-        // vm.filtershown = "filterslideup";
-        // vm.filterbottom = "filterbottomanimationup";
-
-        // vm.showfilter = function() {
-        //     if (vm.filterclass === "rotateCounterwise") {
-        //         vm.filtershown = "filterslidedown";
-        //         vm.filterclass = "rotate";
-        //         vm.filterbottom = "filterbottomanimationdown";
-        //     } else if (vm.filterclass === "rotate") {
-        //         vm.filtershown = "filterslideup";
-        //         vm.filterclass = "rotateCounterwise";
-        //         vm.filterbottom = "filterbottomanimationup";
-        //     }
-        // };
-
-        // vm.activefilter = "Aucun";
-        // vm.sortparameter = '';
-
-        // vm.filter = [{
-        //     'name': 'Aucun',
-        //     'kinveyname': '',
-        // }, {
-        //     'name': '- + Nom',
-        //     'kinveyname': '+name',
-        // }, {
-        //     'name': '+ - Nom',
-        //     'kinveyname': '-name',
-        // }, {
-        //     'name': '- + Taille',
-        //     'kinveyname': '+size',
-        // }, {
-        //     'name': '+ - Taille',
-        //     'kinveyname': '-size',
-        // }, {
-        //     'name': '- +  NB Éd.',
-        //     'kinveyname': '+nb_publishers',
-        // }, {
-        //     'name': '+ - NB Éd.',
-        //     'kinveyname': '-nb_publishers',
-        // }, {
-        //     'name': '- + Date',
-        //     'kinveyname': '+date',
-        // }, {
-        //     'name': '+ - Date',
-        //     'kinveyname': '-date',
-        // }];
-
-        // vm.selectfilter = function(index) {
-        //     for (var i = 0; i < vm.filter.length; i++) {
-        //         if (vm.filter[index].name === vm.filter[i].name) {
-        //             vm.sortparameter = vm.filter[i].kinveyname;
-        //             vm.activefilter = vm.filter[i].name;
-        //             vm.filtershown = "filterslideup";
-        //             vm.filterclass = "rotateCounterwise";
-        //             vm.filterbottom = "filterbottomanimationup";
-        //         }
-        //     }
-        // };
-
         //Load audience
 
         vm.noaudiencebool = false;
@@ -172,41 +90,6 @@ module.exports = function(app) {
 
         vm.counterload = 0;
         vm.loadmorebool = true;
-
-        //Module pour ajouter des audiences test
-
-        var date = new Date();
-
-        vm.addaudienceLoop = function() {
-            var date = new Date();
-            var name = 'Parfum kenzo Homme, Campagne automne';
-            var nb_publishers = 56;
-            var size = 1392495;
-            var format = 'Display';
-            var publishers_list = [{
-                'publisher_name': 'Le monde',
-                'size': 64740,
-                'pertotal': '25%',
-            }, {
-                'publisher_name': 'Le parisien',
-                'size': 69920,
-                'pertotal': '27%',
-            }, {
-                'publisher_name': 'Le Figaro',
-                'size': 124302,
-                'pertotal': '48%',
-            }]
-
-            user.getcurrentUser().then(function(user) {
-                customaudience.addaudienceLoop(user.id, name, nb_publishers, size, format, date, publishers_list).then(function(audience) {}).catch(function(error) {
-                    throw error;
-                });
-            }).catch(function(error) {
-                throw error
-            })
-        };
-
-        //Fin de module pour ajouter des audiences test
 
         //Charger les audiences et loadmore
 
@@ -246,16 +129,60 @@ module.exports = function(app) {
             return validdate
         };
 
+        vm.loadroleById = function(id) {
+            user.getRole(id).then(function(role) {
+                // if(role[0].roleId === undefined){}
+                user.getRoletype(role[0].roleId).then(function(roletype) {
+                    // console.log(roletype);
+                    vm.roletoload = roletype[0].name
+                    console.log(vm.roletoload);
+                    // console.log(vm.usertomodifytype);
+                }).catch(function(error) {
+                    throw error
+                })
+            }).catch(function(error) {
+                throw error
+            })
+
+        }
+
         user.loadallusers().then(function(allusers) {
+            // console.log(allusers);
             vm.allusers = [];
+            // vm.userid = [];
+
+            // for (var k = 0; k < allusers.length; k++) {
+            //     vm.userid.push(allusers[k].id)
+            // }
+
+            // vm.rolelist = [];
+            // for (var z = 0; z < allusers.length; z++) {
+            //     user.getRole(vm.userid[z]).then(function(role) {
+            //         if (role[0] === undefined) {
+            //             vm.rolelist.push('None');
+            //         } else {
+            //             user.getRoletype(role[0].roleId).then(function(roletype) {
+            //                 console.log(roletype[0].name);
+            //                 vm.rolelist.push(roletype[0].name);
+            //             }).then(function(){
+            //             }).catch(function(error) {
+            //                 throw error
+            //             })
+            //         }
+            //     }).catch(function(error) {
+            //         throw error
+            //     })
+            // }
+
             for (var i = 0; i < allusers.length; i++) {
                 var date = new Date(allusers[i].date);
                 allusers[i].date = vm.styledate(date);
-                vm.allusers.push(allusers[i])
             }
             vm.allusers = allusers;
             vm.pageloadingboolean = false;
             console.log(allusers);
+        }).then(function() {
+
         }).catch(function(error) {
             vm.pageloadingboolean = false;
             console.log(error);
@@ -294,6 +221,7 @@ module.exports = function(app) {
                     console.log(user)
                     vm.closepopup();
                     $rootScope.$broadcast('reloadusermanagement', null);
+                    vm.deleteconfirmation = "";
                 }).catch(function(error) {
                     throw error;
                 })
@@ -316,10 +244,9 @@ module.exports = function(app) {
 
         vm.loadusertomodify = function(index) {
             vm.pageloadingboolean = true;
-            user.loaduserByID(vm.allusers[index]).then(function(user) {
+            user.loaduserByID(vm.allusers[index].id).then(function(user) {
                 console.log(user);
-                vm.user = user;
-                vm.pageloadingboolean = false;
+                vm.user = user[0];
             }).catch(function(error) {
                 console.log(error);
                 vm.pageloadingboolean = false;
@@ -327,17 +254,76 @@ module.exports = function(app) {
             })
         }
 
+        vm.loadroleByIndex = function(index) {
+            user.getRole(vm.allusers[index].id).then(function(role) {
+                console.log(role)
+                if (role[0] === undefined) {
+                    vm.usertomodifytype = 'None';
+                } else {
+                    user.getRoletype(role[0].roleId).then(function(roletype) {
+                        console.log(roletype);
+                        vm.usertomodifytype = roletype[0].name;
+                        console.log(vm.usertomodifytype);
+                        return roletype[0].name
+                    }).catch(function(error) {
+                        throw error
+                    })
+                }
+
+                vm.pageloadingboolean = false;
+            }).catch(function(error) {
+                throw error
+            })
+        }
+
+        // $scope.$watch(function() {
+        //     console.log(vm.usertomodifytype);
+        // })
+
+        // user.getRole('589da27c7e0e4c04004a84e0').then(function(role) {
+        //     console.log(role)
+        //     user.getRoletype(role[0].roleId).then(function(roletype) {
+        //         console.log(roletype);
+        //         vm.usertomodifytype = roletype[0].name
+        //         console.log(vm.usertomodifytype);
+        //         vm.pageloadingboolean = false;
+        //     }).catch(function(error) {
+        //         throw error
+        //     })
+        // }).catch(function(error) {
+        //     throw error
+        // })
+
         vm.emailboolean = true;
+        vm.emailbooleancreation = true;
 
         vm.emailtest = function() {
             var regEmail = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
             vm.emailboolean = regEmail.test(vm.user.email);
         }
 
+        vm.emailtestcreation = function() {
+            var regEmail = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            vm.emailbooleancreation = regEmail.test(vm.newuser.email);
+        }
+
         vm.cancel = function() {
             if (vm.generalinformationboolean === true) {
                 vm.generalinformationboolean = false;
             }
+        }
+
+        //password generator
+
+        vm.setpassword = function() {
+            var symbols = ['a', 'z', 'e', 'r', 't', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'q', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'w', 'x', 'c', 'v', 'b', 'n', 'A', 'Z', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'Q', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'W', 'X', 'C', 'V', 'B', 'N', ',', ';', ':', '%', '$', '*', '€', '=', ':', '?', '=', '/', '&', 'é', ')', '(', '§', 'è', '!', 'ç', 'à', '-', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+            var L = symbols.length;
+            vm.password = "";
+            for (var i = 0; i < 20; i++) {
+                var x = Math.round(Math.random() * L);
+                vm.password = vm.password.concat(symbols[x]);
+            }
+            return vm.password
         }
 
         vm.submitForm = function(isValid) {
@@ -352,24 +338,32 @@ module.exports = function(app) {
                 console.log(id);
 
                 user.updateuserattributes(id, firstname, lastname, organization, username).then(function(user) {
-                    $rootScope.$broadcast('userupdatesuccess', null);
-                    $rootScope.$broadcast('reloadusermanagement', null);
-                    vm.modifyinformationf();
-                    vm.pageloadingboolean = false;
-                    vm.user.firstname = '';
-                    vm.user.lastname = '';
-                    vm.user.organization = '';
-                    vm.user.email = '';
-                    vm.user.id = '';
-                    var container = document.getElementById('usermanagementblock');
-                    // var scrollTo = document.getElementById('top');
-                    container.scrollTop = scrollTo.offsetTop;
-                    console.log(user)
+                    authentication.updateuserwithroles(id,vm.usertomodifytype).then(function(res) {
+                        console.log(res)
+                        $rootScope.$broadcast('userupdatesuccess', null);
+                        $rootScope.$broadcast('reloadusermanagement', null);
+                        vm.modifyinformationf();
+                        vm.pageloadingboolean = false;
+                        vm.user.firstname = '';
+                        vm.user.lastname = '';
+                        vm.user.organization = '';
+                        vm.user.email = '';
+                        vm.user.id = '';
+                        var container = document.getElementById('usermanagementblock');
+                        // var scrollTo = document.getElementById('top');
+                        container.scrollTop = scrollTo.offsetTop;
+                        console.log(user)
+                    }).catch(function(error) {
+                        vm.pageloadingboolean = false;
+                    });
+
                 }).catch(function(error) {
                     vm.pageloadingboolean = false;
                 });
             };
         };
+
+        vm.usertype = 'client';
 
         vm.submitusercreationForm = function(isValid) {
             if (isValid) {
@@ -379,11 +373,10 @@ module.exports = function(app) {
                 var lastname = vm.newuser.lastname;
                 var organization = vm.newuser.organization;
                 var username = vm.newuser.email;
-                var password = vm.newuser.password;
-                var usertype = vm.newuser.usertype;
-                console.log(id);
+                var password = vm.password;
+                var usertype = vm.usertype;
 
-                authentication.signUpwithroles(username,password, firstname, lastname, organization,username, usertype).then(function(user) {
+                authentication.signUpwithroles(username, password, firstname, lastname, organization, username, usertype).then(function(user) {
                     $rootScope.$broadcast('userupdatesuccess', null);
                     $rootScope.$broadcast('reloadusermanagement', null);
                     vm.createauseroc();
@@ -392,7 +385,7 @@ module.exports = function(app) {
                     vm.newuser.lastname = '';
                     vm.newuser.organization = '';
                     vm.newuser.email = '';
-                    vm.newuser.password = '';
+                    vm.password = '';
                     var container = document.getElementById('usermanagementblock');
                     container.scrollTop = scrollTo.offsetTop;
                     console.log(user)

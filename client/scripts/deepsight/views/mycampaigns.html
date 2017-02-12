@@ -18,7 +18,7 @@
     <div class="category-subtitle">Affichage de(s)
         <span style='color:#1580EF'>{{vm.audienceshown}}</span> campagnes que vous avez créées</div>
 
-    <div class="filter-btn-wrapper">
+<!--     <div class="filter-btn-wrapper">
         <div class="filter-btn" ng-click="vm.showfilter()">
             <div class="filter-btn-content">
                 <div class="filter-to-chose">Filtrer par
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="filter-list-bottom" ng-class="vm.filterbottom" ng-click="vm.showfilter()"></div>
-    </div>
+    </div> -->
     <a ui-sref="home.createcampaign">
         <div class="create-audience-btn">
             <div class="create-audience-btn-content">
@@ -48,7 +48,11 @@
         </div>
     </a>
 
-        <img ng-if="vm.noaudiencebool" src="images/pointer.png" class="pointer pointeranimation">
+    <div class="userfilter-wrapper ">
+        <input class="search-bar " type="text " name="query" placeholder="Entre ici un élément pour filtrer les campagnes" ng-model="vm.userquery">
+    </div>
+
+    <img ng-if="vm.noaudiencebool" src="images/pointer.png" class="pointer pointeranimation">
 
     <div ng-if="vm.noaudiencebool" class="no-audience">
         <div class="no-audience-content">Vous n'avez pas encore de campagne disponible</div>
@@ -69,7 +73,7 @@
                 <div class="column-content-features">DATE</div>
             </div>
         </div>
-        <div class="audience-block" ng-repeat="audience in vm.audiencesloaded | orderBy: vm.sortparameter ">
+        <div class="audience-block" ng-repeat="audience in vm.audiencesloaded | filter:vm.userquery">
             <div class="audience-container" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)">
                 <div class="column1">
                     <p class="column-content" ng-click="vm.viewmoreofcolumncontent($event,audience)">{{audience.name}}</p>
@@ -226,7 +230,7 @@
                         {{vm.campaigntodetail.compensation_budget}}
                     </div>
                 </div>
-<!--                 <div class="information-campaign-block">
+                <!--                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
                         utm_source
                     </div>
@@ -290,7 +294,7 @@
                         {{vm.campaigntodetail.information}}
                     </div>
                 </div>
-<!--                 <div class="information-campaign-block">
+                <!--                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
                         Disponible
                     </div>
@@ -339,12 +343,12 @@
                             {{urlgroup.Bopen}}
                         </div>
                     </div> -->
-                </div>
             </div>
-
         </div>
 
     </div>
+
+</div>
 </div>
 <!-- End of more information -->
 

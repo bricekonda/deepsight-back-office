@@ -51,11 +51,11 @@ module.exports = function(app) {
         var loadcampaigns = function(userId) {
             var campaigntoload = MarketingCampaign.find({
                 "filter": {
-                    limit: 5,
+                    limit: 30,
                     order: 'date DESC',
-                    where: {
-                        userId: userId
-                    },
+                    // where: {
+                    //     userId: userId
+                    // },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
 
@@ -67,10 +67,10 @@ module.exports = function(app) {
                 "filter": {
                     skip: skipnumber,
                     order: 'date DESC',
-                    limit: 5,
-                    where: {
-                        userId: userId
-                    },
+                    limit: 30,
+                    // where: {
+                    //     userId: userId
+                    // },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
 
@@ -82,9 +82,9 @@ module.exports = function(app) {
             var campaigntoload = MarketingCampaign.find({
                 "filter": {
                     order: 'date DESC',
-                    where: {
-                        userId: userId
-                    },
+                    // where: {
+                    //     userId: userId
+                    // },
                 }
             }, function(value, responseHeaders) {}, function(httpResponse) {}).$promise
 

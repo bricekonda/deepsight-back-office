@@ -210,7 +210,7 @@
                     <div class="analytics-sublock-subtitle">
                         Opens and Clicks
                     </div>
-                    <!--                     <div class="kpi-wrapper" ng-if="!vm.mainkpisboolean">
+                    <div class="kpi-wrapper" ng-if="!vm.mainkpisboolean">
                         <div class="kpi-block">
                             <div class="kpi-block-unique">
                                 <div class="kpi-number color1">{{vm.openstodisplay}}</div>
@@ -226,11 +226,11 @@
                             </div>
                             <div class="kpi-block-unique">
                                 <div class="kpi-number color2">{{vm.ctr}}%</div>
-                                <div class="kpi-title">RR</div>
+                                <div class="kpi-title">CTR</div>
                             </div>
                         </div>
-                    </div> -->
-                    <div class="kpi-wrapper" ng-if="!vm.mainkpisboolean">
+                    </div>
+                    <!--                     <div class="kpi-wrapper" ng-if="!vm.mainkpisboolean">
                         <div class="kpi-block">
                             <div class="kpi-block-unique">
                                 <div class="kpi-number color1">127000</div>
@@ -249,9 +249,9 @@
                                 <div class="kpi-title">CTR</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-<!--                     <loaderanalytics ng-if="vm.mainkpisboolean"></loaderanalytics> -->
+                    <!--                     <loaderanalytics ng-if="vm.mainkpisboolean"></loaderanalytics> -->
 
                 </div>
                 <div class="analytics-sublock-graph">
@@ -264,7 +264,7 @@
                                 </div>
                             </div>
                         </div>
-<!--                         <div class="graph-wrapper" ng-if="!vm.clicksandopensboolean"> -->
+                        <!--                         <div class="graph-wrapper" ng-if="!vm.clicksandopensboolean"> -->
                         <div class="graph-wrapper" ng-if="true">
                             <canvas id="line" height="100" class="chart chart-line" chart-data="vm.data1" chart-labels="vm.label1" chart-series="vm.series1" chart-options="vm.options1" chart-dataset-override="vm.datasetOverride1" chart-colors="vm.chartcolor1" chart-click="vm.onClick1">
                             </canvas>
@@ -279,29 +279,29 @@
                             Registrations and Sales
                         </div>
                         <div class="kpi-wrapper" ng-if="!vm.mainkpisboolean">
-                            <!--                         <div class="kpi-block">
-                            <div class="kpi-block-unique">
-                                <div class="kpi-number color3">${{vm.totalsales}}</div>
-                                <div class="kpi-title">Ventes</div>
-                            </div>
-                            <div class="kpi-block-unique">
-                                <div class="kpi-number color3">{{vm.salestodisplay}}</div>
-                                <div class="kpi-title">Nb Ventes</div>
-                            </div>
-                            <div class="kpi-block-unique">
-                                <div class="kpi-number color3">${{vm.averagebasket}}</div>
-                                <div class="kpi-title">Av Basket</div>
-                            </div>
-                            <div class="kpi-block-unique">
-                                <div class="kpi-number color3">${{vm.cac}}</div>
-                                <div class="kpi-title">CAC</div>
-                            </div>
-                            <div class="kpi-block-unique">
-                                <div class="kpi-number color3">{{vm.cr}}%</div>
-                                <div class="kpi-title">CR</div>
-                            </div>
-                        </div> -->
                             <div class="kpi-block">
+                                <div class="kpi-block-unique">
+                                    <div class="kpi-number color3">${{vm.totalsales}}</div>
+                                    <div class="kpi-title">Ventes</div>
+                                </div>
+                                <div class="kpi-block-unique">
+                                    <div class="kpi-number color3">{{vm.salestodisplay}}</div>
+                                    <div class="kpi-title">Nb Ventes</div>
+                                </div>
+                                <div class="kpi-block-unique">
+                                    <div class="kpi-number color3">${{vm.averagebasket}}</div>
+                                    <div class="kpi-title">Av Basket</div>
+                                </div>
+                                <div class="kpi-block-unique">
+                                    <div class="kpi-number color3">${{vm.cac}}</div>
+                                    <div class="kpi-title">CAC</div>
+                                </div>
+                                <div class="kpi-block-unique">
+                                    <div class="kpi-number color3">{{vm.cr}}%</div>
+                                    <div class="kpi-title">CR</div>
+                                </div>
+                            </div>
+                            <!--                             <div class="kpi-block">
                                 <div class="kpi-block-unique">
                                     <div class="kpi-number color3">€26370</div>
                                     <div class="kpi-title">Ventes</div>
@@ -322,8 +322,9 @@
                                     <div class="kpi-number color3">2.54%</div>
                                     <div class="kpi-title">CR</div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
+
                         <!-- <loaderanalytics ng-if="vm.mainkpisboolean"></loaderanalytics> -->
                     </div>
 
@@ -331,7 +332,7 @@
                         <div class="analytics-sublock-subtitle">
                             Main KPI - Registration
                         </div>
-                        <!--                         <div class="kpi-wrapper" ng-if="!vm.mainkpisboolean">
+                        <div class="kpi-wrapper" ng-if="!vm.mainkpisboolean">
                             <div class="kpi-block">
                                 <div class="kpi-block-unique">
                                     <div class="kpi-number color4">{{vm.registrationstodisplay}}</div>
@@ -346,9 +347,9 @@
                                     <div class="kpi-title">TR</div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
 
-                        <div class="kpi-wrapper" ng-if="!vm.mainkpisboolean">
+                        <!--                         <div class="kpi-wrapper" ng-if="!vm.mainkpisboolean">
                             <div class="kpi-block">
                                 <div class="kpi-block-unique">
                                     <div class="kpi-number color4">1936</div>
@@ -363,10 +364,10 @@
                                     <div class="kpi-title">TR</div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- <loaderanalytics ng-if="vm.mainkpisboolean"></loaderanalytics> -->
                     </div>
-<!--                     <div class="analytics-sublock-graph">
+                    <div class="analytics-sublock-graph">
                         <div class="analytics-sublock-kpi">
                             <div class="analytics-sublock-subtitle">
                                 <div class="performance" ng-click="vm.choseperiod2()">First {{vm.selectedperiod2}} performance</div>
@@ -377,18 +378,19 @@
                                 </div>
                             </div>
                             <div class="graph-wrapper" ng-if="!vm.registrationsandsalesboolean">
-                            <div class="graph-wrapper" ng-if="">
-                                <canvas id="line" height="100" class="chart chart-line" chart-data="vm.data2" chart-labels="vm.label2" chart-series="vm.series2" chart-options="vm.options2" chart-dataset-override="vm.datasetOverride2" chart-colors="vm.chartcolor2" chart-click="vm.onClick2">
-                                </canvas>
+                                <div class="graph-wrapper" ng-if="true">
+                                    <canvas id="line" height="100" class="chart chart-line" chart-data="vm.data2" chart-labels="vm.label2" chart-series="vm.series2" chart-options="vm.options2" chart-dataset-override="vm.datasetOverride2" chart-colors="vm.chartcolor2" chart-click="vm.onClick2">
+                                    </canvas>
+                                </div>
                             </div>
+<!-- 
+                            <loaderanalytics ng-if="vm.registrationsandsalesboolean"></loaderanalytics> -->
                         </div>
-                        <loaderanalytics ng-if="vm.registrationsandsalesboolean"></loaderanalytics>
-                    </div> -->
+                    </div>
                 </div>
+
             </div>
-
         </div>
-    </div>
-    <!-- End of more information -->
+        <!-- End of more information -->
 
-    <ui-view></ui-view>
+        <ui-view></ui-view>

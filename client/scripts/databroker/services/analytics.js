@@ -14,7 +14,7 @@ module.exports = function(app) {
             var opens = LogCampaign.count({
                 where: {
                     id_campaign: id_campaign,
-                    open: 1,
+                    e: 'open',
                 }
             }).$promise
 
@@ -25,7 +25,7 @@ module.exports = function(app) {
             var opens = LogCampaign.count({
                 where: {
                     id_campaign: id_campaign,
-                    open: 1,
+                    e: 'open',
                     ABtest_segment: AB,
                 }
             }).$promise
@@ -34,10 +34,11 @@ module.exports = function(app) {
         };
 
         var getClicks = function(id_campaign) {
+            console.log()
             var clicks = LogCampaign.count({
                 where: {
                     id_campaign: id_campaign,
-                    click: 1,
+                    e: 'click',
                 },
             }).$promise
 
@@ -48,7 +49,7 @@ module.exports = function(app) {
             var clicks = LogCampaign.count({
                 where: {
                     id_campaign: id_campaign,
-                    click: 1,
+                    e: 'click',
                     ABtest_segment: AB,
                 },
             }).$promise

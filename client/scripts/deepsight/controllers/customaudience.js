@@ -20,6 +20,7 @@ module.exports = function(app) {
         vm.loadindextodelete = function($index) {
             vm.indextodelete = $index;
         }
+
         vm.deleteaudience = function() {
 
             vm.closeopenbool = false;
@@ -91,65 +92,65 @@ module.exports = function(app) {
 
         // filter
 
-        vm.filterclass = "rotateCounterwise";
-        vm.filtershown = "filterslideup";
-        vm.filterbottom = "filterbottomanimationup";
+        // vm.filterclass = "rotateCounterwise";
+        // vm.filtershown = "filterslideup";
+        // vm.filterbottom = "filterbottomanimationup";
 
-        vm.showfilter = function() {
-            if (vm.filterclass === "rotateCounterwise") {
-                vm.filtershown = "filterslidedown";
-                vm.filterclass = "rotate";
-                vm.filterbottom = "filterbottomanimationdown";
-            } else if (vm.filterclass === "rotate") {
-                vm.filtershown = "filterslideup";
-                vm.filterclass = "rotateCounterwise";
-                vm.filterbottom = "filterbottomanimationup";
-            }
-        };
+        // vm.showfilter = function() {
+        //     if (vm.filterclass === "rotateCounterwise") {
+        //         vm.filtershown = "filterslidedown";
+        //         vm.filterclass = "rotate";
+        //         vm.filterbottom = "filterbottomanimationdown";
+        //     } else if (vm.filterclass === "rotate") {
+        //         vm.filtershown = "filterslideup";
+        //         vm.filterclass = "rotateCounterwise";
+        //         vm.filterbottom = "filterbottomanimationup";
+        //     }
+        // };
 
-        vm.activefilter = "Aucun";
-        vm.sortparameter = '';
+        // vm.activefilter = "Aucun";
+        // vm.sortparameter = '';
 
-        vm.filter = [{
-            'name': 'Aucun',
-            'kinveyname': '',
-        }, {
-            'name': '- + Nom',
-            'kinveyname': '+name',
-        }, {
-            'name': '+ - Nom',
-            'kinveyname': '-name',
-        }, {
-            'name': '- + Taille',
-            'kinveyname': '+size',
-        }, {
-            'name': '+ - Taille',
-            'kinveyname': '-size',
-        }, {
-            'name': '- +  NB Éd.',
-            'kinveyname': '+nb_publishers',
-        }, {
-            'name': '+ - NB Éd.',
-            'kinveyname': '-nb_publishers',
-        }, {
-            'name': '- + Date',
-            'kinveyname': '+date',
-        }, {
-            'name': '+ - Date',
-            'kinveyname': '-date',
-        }];
+        // vm.filter = [{
+        //     'name': 'Aucun',
+        //     'kinveyname': '',
+        // }, {
+        //     'name': '- + Nom',
+        //     'kinveyname': '+name',
+        // }, {
+        //     'name': '+ - Nom',
+        //     'kinveyname': '-name',
+        // }, {
+        //     'name': '- + Taille',
+        //     'kinveyname': '+size',
+        // }, {
+        //     'name': '+ - Taille',
+        //     'kinveyname': '-size',
+        // }, {
+        //     'name': '- +  NB Éd.',
+        //     'kinveyname': '+nb_publishers',
+        // }, {
+        //     'name': '+ - NB Éd.',
+        //     'kinveyname': '-nb_publishers',
+        // }, {
+        //     'name': '- + Date',
+        //     'kinveyname': '+date',
+        // }, {
+        //     'name': '+ - Date',
+        //     'kinveyname': '-date',
+        // }];
 
-        vm.selectfilter = function(index) {
-            for (var i = 0; i < vm.filter.length; i++) {
-                if (vm.filter[index].name === vm.filter[i].name) {
-                    vm.sortparameter = vm.filter[i].kinveyname;
-                    vm.activefilter = vm.filter[i].name;
-                    vm.filtershown = "filterslideup";
-                    vm.filterclass = "rotateCounterwise";
-                    vm.filterbottom = "filterbottomanimationup";
-                }
-            }
-        };
+        // vm.selectfilter = function(index) {
+        //     for (var i = 0; i < vm.filter.length; i++) {
+        //         if (vm.filter[index].name === vm.filter[i].name) {
+        //             vm.sortparameter = vm.filter[i].kinveyname;
+        //             vm.activefilter = vm.filter[i].name;
+        //             vm.filtershown = "filterslideup";
+        //             vm.filterclass = "rotateCounterwise";
+        //             vm.filterbottom = "filterbottomanimationup";
+        //         }
+        //     }
+        // };
 
         //Load audience
 
@@ -189,8 +190,7 @@ module.exports = function(app) {
             }]
 
             user.getcurrentUser().then(function(user) {
-                customaudience.addaudienceLoop(user.id, name, nb_publishers, size, format, date, publishers_list).then(function(audience) {
-                }).catch(function(error) {
+                customaudience.addaudienceLoop(user.id, name, nb_publishers, size, format, date, publishers_list).then(function(audience) {}).catch(function(error) {
                     throw error;
                 });
             }).catch(function(error) {
@@ -238,7 +238,6 @@ module.exports = function(app) {
             return validdate
         };
 
-
         user.getcurrentUser().then(function(model) {
             vm.currentuser = model;
             vm.pageloadingboolean = false;
@@ -250,11 +249,11 @@ module.exports = function(app) {
                     model[i].date = vm.styledate(date);
                     vm.audiencesloaded.push(model[i])
                 }
-                    // vm.audiencesloaded = model;
+                // vm.audiencesloaded = model;
                 vm.audienceshown = vm.audiencesloaded.length;
-                vm.initialoffset = 5;
+                vm.initialoffset = 30;
                 vm.counter = 0;
-                if (vm.audiencesloaded.length === 0 ) {
+                if (vm.audiencesloaded.length === 0) {
                     vm.noaudiencebool = true;
                 } else if (vm.audiencesloaded.length !== 0) {
                     vm.noaudiencebool = false;
@@ -284,7 +283,7 @@ module.exports = function(app) {
                         vm.audiencesloaded.push(model[i])
                     }
                     vm.audienceshown = vm.audiencesloaded.length;
-                    vm.initialoffset = 5;
+                    vm.initialoffset = 30;
                     vm.counter = 0;
                     if (vm.audiencesloaded.length === 0) {
                         vm.noaudiencebool = true;
@@ -307,7 +306,7 @@ module.exports = function(app) {
 
         vm.loadmore = function() {
             vm.pageloadingboolean = true;
-            vm.counter = vm.counter + 5;
+            vm.counter = vm.counter + 30;
             customaudience.loadmoreaudienceLoop(vm.counter, vm.currentuser.id).then(function(model) {
                 vm.pageloadingboolean = false;
                 vm.audiencetoadd = [];
@@ -319,7 +318,7 @@ module.exports = function(app) {
                 vm.audiencesloaded = vm.audiencesloaded.concat(vm.audiencetoadd);
                 vm.audienceshown = vm.audiencesloaded.length;
 
-                customaudience.loadmoreaudienceLoop(vm.counter + 5, vm.currentuser.id).then(function(model) {
+                customaudience.loadmoreaudienceLoop(vm.counter + 30, vm.currentuser.id).then(function(model) {
                     if (model.length === 0) {
                         vm.loadmorebool = false;
                     }
@@ -343,12 +342,91 @@ module.exports = function(app) {
             }
         }
 
-        //Load more info about a Custom audience
+        //Modification de l'audience
 
         vm.audiencetodetail = {};
-        vm.loadmoreinfo = function(index) {
-            vm.audiencetodetail = vm.audiencesloaded[index];
 
+        vm.modifyaudience = false;
+
+        vm.loadaudience = function() {
+            if (vm.modifyaudience === true) {
+                vm.modifyaudience = false;
+            } else if (vm.modifyaudience === false) {
+                vm.modifyaudience = true
+            }
+        }
+
+        vm.loadaudiencedetail = function(index) {
+            vm.audiencetodetail = vm.audiencesloaded[index];
+            console.log(vm.audiencetodetail);
+
+        };
+
+        vm.emailboolean = true;
+
+        vm.emailtest = function() {
+            var regEmail = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            vm.emailboolean = regEmail.test(vm.audiencetodetail.creator);
+        }
+
+        vm.showmessage = 'information-block-success-campaign-up';
+
+        $rootScope.$on('customaudienceupdated', function(event, data) {
+            vm.showmessage = 'information-block-success-campaign-down';
+            $timeout(function() {
+                vm.showmessage = 'information-block-success-campaign-up';
+            }, 6000);
+        });
+
+        vm.submitForm = function(isValid) {
+            if (isValid) {
+                vm.pageloadingboolean = true;
+                console.log("kikoo")
+                var id = vm.audiencetodetail.id
+                var name = vm.audiencetodetail.name;
+                var size = vm.audiencetodetail.size;
+                var nb_publishers = vm.audiencetodetail.nb_publishers;
+                var creator = vm.audiencetodetail.creator;
+                console.log(id);
+
+                customaudience.updateallparametersAudience(id, name, size, nb_publishers, creator).then(function(audience) {
+                    $rootScope.$broadcast('customaudienceupdated', null);
+                    $rootScope.$broadcast('reloadcustomaudience', null);
+                    vm.loadaudience()
+                    var container = document.getElementById('customaudienceblock');
+                    container.scrollTop = scrollTo.offsetTop;
+                    console.log(audience);
+                    vm.audiencetodetail = {};
+                    vm.pageloadingboolean = false;
+                }).catch(function(error) {
+                    vm.pageloadingboolean = false;
+                    throw error
+                })
+
+                // user.updateuserattributes(id, firstname, lastname, organization, username).then(function(user) {
+                //     authentication.updateuserwithroles(id, vm.usertomodifytype).then(function(res) {
+                //         console.log(res)
+                //         $rootScope.$broadcast('userupdatesuccess', null);
+                //         $rootScope.$broadcast('reloadusermanagement', null);
+                //         vm.modifyinformationf();
+                //         vm.pageloadingboolean = false;
+                //         vm.user.firstname = '';
+                //         vm.user.lastname = '';
+                //         vm.user.organization = '';
+                //         vm.user.email = '';
+                //         vm.user.id = '';
+                //         var container = document.getElementById('usermanagementblock');
+                //         // var scrollTo = document.getElementById('top');
+                //         container.scrollTop = scrollTo.offsetTop;
+                //         console.log(user)
+                //     }).catch(function(error) {
+                //         vm.pageloadingboolean = false;
+                //     });
+
+                // }).catch(function(error) {
+                //     vm.pageloadingboolean = false;
+                // });
+            };
         };
 
     }

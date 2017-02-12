@@ -124,6 +124,17 @@ module.exports = function(app) {
         };
 
         vm.categorybis = [{
+            'name': 'Gestion',
+            'statename': '',
+            'class': 'slideup',
+            'classbis': 'rotateCounterwise',
+            'subcategoryname': [{
+                'name': 'Utilisateurs',
+                'statename': 'home.usermanagement',
+                'class': 'subcategory-link',
+                'picto': 'images/general-information-grey.svg'
+            }]
+        },{
             'name': 'Tags',
             'statename': '',
             'class': 'slideup',
@@ -134,7 +145,7 @@ module.exports = function(app) {
                 'class': 'subcategory-link',
                 'picto': 'images/tag-grey.svg',
             }]
-        }, {
+        },{
             'name': 'Audience',
             'statename': '',
             'class': 'slideup',
@@ -193,11 +204,6 @@ module.exports = function(app) {
             'class': 'slideup',
             'classbis': 'rotateCounterwise',
             'subcategoryname': [{
-                'name': 'Gestions des utilisateurs',
-                'statename': 'home.usermanagement',
-                'class': 'subcategory-link',
-                'picto': 'images/general-information-grey.svg'
-            },{
                 'name': 'Informations générales',
                 'statename': 'home.generalinformation',
                 'class': 'subcategory-link',

@@ -3,9 +3,9 @@ var servicename = 'user';
 
 module.exports = function(app) {
 
-    var dependencies = ['$kinvey', '$rootScope', '$q', '$state', '$timeout', 'Deepsightuser'];
+    var dependencies = ['$kinvey', '$rootScope', '$q', '$state', '$timeout', 'Deepsightuser', 'Deepsightrolemapping', 'Deepsightrole'];
 
-    function service($kinvey, $rootScope, $q, $state, $timeout, Deepsightuser) {
+    function service($kinvey, $rootScope, $q, $state, $timeout, Deepsightuser, Deepsightrolemapping, Deepsightrole) {
 
         var getcurrentUser = function() {
             var currentUser = Deepsightuser.getCurrent().$promise;
@@ -47,16 +47,32 @@ module.exports = function(app) {
         }
 
         var loadallusers = function() {
-            var allusers = Deepsightuser.find().$promise;
+            var allusers = Deepsightuser.find({
+                "filter": {
+                    order: 'date DESC',
+                }
+            }).$promise;
 
             return allusers;
         }
 
         var loaduserByID = function(id) {
-            var user = Deepsightuser.findById(id).$promise;
+            var allusers = Deepsightuser.find({
+                "filter": {
+                    where: {
+                        id: id
+                    },
+                }
+            }).$promise;
 
-            return user;
+            return allusers;
         }
+
+        // var loaduserByID = function(id) {
+        //     var user = Deepsightuser.findById(id).$promise;
+
+        //     return user;
+        // }
 
         var deleteuserById = function(id) {
 
@@ -80,6 +96,29 @@ module.exports = function(app) {
             return user;
         }
 
+        var getRole = function(id) {
+            var role = Deepsightrolemapping.find({
+                "filter": {
+                    where: {
+                        principalId: id
+                    },
+                }
+            }).$promise
+
+            return role
+        }
+
+        var getRoletype = function(id) {
+            var role = Deepsightrole.find({
+                "filter": {
+                    where: {
+                        id: id
+                    },
+                }
+            }).$promise
+            return role
+        }
+
         return {
             testoldPassword: testoldPassword,
             getcurrentUser: getcurrentUser,
@@ -90,6 +129,8 @@ module.exports = function(app) {
             loaduserByID: loaduserByID,
             deleteuserById: deleteuserById,
             updateuserattributes: updateuserattributes,
+            getRole: getRole,
+            getRoletype: getRoletype,
         };
 
     }

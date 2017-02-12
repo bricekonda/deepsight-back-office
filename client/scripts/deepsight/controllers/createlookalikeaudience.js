@@ -12,6 +12,75 @@ module.exports = function(app) {
         var vm = this;
         vm.controllername = fullname;
 
+        // Choix user;
+
+        vm.filterclassuser = "rotateCounterwise";
+        vm.filtershownuser = "filterslideup";
+        vm.filterbottomuser = "choicebottomanimationup";
+        vm.nofilebooleanuser = false;
+
+        // $rootScope.$on('loadcustomaudiencetoextend', function(event, args) {
+        //     vm.choice = args.name;
+        //     vm.customchosen = args.id;
+        //     vm.sizetodisplay = args.size;
+        //     vm.audienceselected = args;
+        //     vm.nofileboolean = true;
+
+        //     vm.lookalikeaudiencename = 'LA - '.concat(vm.styledate(new Date), ' ', vm.choice);
+
+        // });
+
+        vm.showfilteruser = function() {
+            if (vm.filterclassuser === "rotateCounterwise") {
+                vm.filtershownuser = "filterslidedown";
+                vm.filterclassuser = "rotate";
+                vm.filterbottomuser = "choicebottomanimationdown";
+            } else if (vm.filterclassuser === "rotate") {
+                vm.filtershownuser = "filterslideup";
+                vm.filterclassuser = "rotateCounterwise";
+                vm.filterbottomuser = "choicebottomanimationup";
+            }
+        };
+
+        vm.choiceuser = 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer une audience';
+        vm.sortparameteruser = '';
+
+        user.loadallusers().then(function(users) {
+            console.log(users);
+            vm.usertochoselist = [];
+            vm.usertochose = users;
+            for (var k = 0; k < users.length; k++) {
+                var company = users[k].organization;
+                var username = users[k].username;
+                var nametodisplay = company.concat(' ', '-', ' ', username);
+                vm.usertochoselist.push(nametodisplay)
+
+            }
+            console.log(vm.usertochoselist);
+        }).catch(function(error) {
+            console.log(error)
+            throw error
+        })
+
+        // vm.audiencetochose = [];
+
+        vm.selectfilteruser = function(index) {
+            vm.choiceuser = vm.usertochoselist[index];
+            vm.iduserchosentocreateaudience = vm.usertochose[index].id;
+            console.log(vm.usertochose[index]);
+            vm.usernameuserchosentocreateaudience = vm.usertochose[index].username;
+
+            // vm.customchosen = vm.audiencetochose[index].id;
+            // vm.audienceselected = vm.audiencetochose[index];
+            // vm.sizetodisplay = vm.audienceselected.size;
+            // vm.lookalikeaudiencename = 'LA - '.concat(vm.styledate(new Date), ' ', vm.choice);
+
+            vm.nofilebooleanuser = true;
+            vm.filtershownuser = "filterslideup";
+            vm.filterclassuser = "rotateCounterwise";
+            vm.filterbottomuser = "choicebottomanimationup";
+        };
+
         //popup cancel
         vm.closeopenbool = false;
 
@@ -71,18 +140,33 @@ module.exports = function(app) {
 
         vm.audiencetochose = [];
 
-        user.getcurrentUser().then(function(model) {
+        // user.getcurrentUser().then(function(model) {
 
-            vm.currentuser = model;
+        //     vm.currentuser = model;
 
-            customaudience.loadallaudienceLoop(vm.currentuser.id).then(function(entities) {
-                vm.audiencetochose = entities;
-            }).catch(function(error) {
-                throw error;
-            });
-        }).catch(function(error) {});
+        //     customaudience.loadallaudienceLoopById(vm.iduserchosentocreateaudience).then(function(entities) {
+        //         vm.audiencetochose = entities;
+        //         console.log(entities.length);
+        //     }).catch(function(error) {
+        //         throw error;
+        //     });
+        // }).catch(function(error) {});
 
-        //Date
+        vm.chosecustomaudienceboolean = false;
+
+        vm.loadallcustomaudienceByuserId = function() {
+                vm.chosecustomaudienceboolean = true;
+                console.log("hello")
+                customaudience.loadallaudienceLoopById(vm.iduserchosentocreateaudience).then(function(entities) {
+                    vm.audiencetochose = entities;
+                    console.log(entities.length);
+                }).catch(function(error) {
+                    throw error;
+                });
+            }
+
+            //Date
+
         vm.styledate = function(date) {
             var day = date.getDate();
             var month = date.getMonth() + 1;
@@ -143,6 +227,7 @@ module.exports = function(app) {
             vm.id = '';
             var name = vm.lookalikeaudiencename;
             var id_customaudience = vm.audienceselected.id;
+            var publishers_list = vm.audienceselected.publishers_list;
             var size = '_';
             var date = new Date();
             var nb_publishers = vm.audienceselected.nb_publishers;
@@ -151,8 +236,9 @@ module.exports = function(app) {
 
             user.getcurrentUser().then(function(model) {
                 var creator = model.username
-                var id = model.id
-                lookalikeaudience.addaudienceLoop(id, creator, name, id_customaudience, nb_publishers, size, date, waitboolean, makeadealboolean).then(function onSuccess(entity) {
+                var id = model.id;
+                console.log(vm.iduserchosentocreateaudience)
+                lookalikeaudience.addaudienceLoop(vm.iduserchosentocreateaudience, creator, name, id_customaudience, nb_publishers, size, date, waitboolean, makeadealboolean,publishers_list).then(function onSuccess(entity) {
                     vm.loaderon = false;
                     vm.nextstepfunction();
                 }).catch(function onError(error) {

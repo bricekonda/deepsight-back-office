@@ -427,7 +427,7 @@
 
 .audience-wrapper {
   position: absolute;
-  top: 130px;
+  top: 180px;
   width: calc(100% - 80px);
   height: auto;
   margin-left: 40px;
@@ -1670,6 +1670,9 @@
 
 .choicebottomanimationdown {
   top: 129px; }
+
+#chosetheuser {
+  z-index: 50; }
 
 .general-information-wrapper {
   position: absolute;
@@ -3051,6 +3054,31 @@ input[name=query]::-webkit-input-placeholder {
 
 .modify-icon:hover {
   background-image: url("../images/modify-hover.png"); }
+
+.check-box-wrapper {
+  position: relative;
+  width: calc(100%);
+  height: auto;
+  margin-top: 15px; }
+
+.check-box-block {
+  position: relative;
+  width: calc(100% - 120px);
+  margin-left: 60px;
+  height: 36px; }
+
+.check-box-form {
+  position: relative;
+  display: inline-block; }
+
+.box-name {
+  position: relative;
+  display: inline-block;
+  font-family: proximanovaregular;
+  font-size: 14px;
+  margin-top: 11px;
+  margin-left: 10px;
+  color: #23231C; }
 
 @font-face {
   font-family: 'proximanovalight';

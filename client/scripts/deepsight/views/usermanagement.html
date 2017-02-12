@@ -29,7 +29,7 @@
         </div>
 
     <div class="userfilter-wrapper ">
-        <input class="search-bar " type="text " name="query " placeholder="Entre ici le nom de l 'entreprise que tu recherche" ng-model="vm.userquery">
+        <input class="search-bar " type="text " name="query" placeholder="Entre ici le nom de l 'entreprise que tu recherche" ng-model="vm.userquery">
     </div>
 
     <img ng-if="vm.noaudiencebool" src="images/pointer.png" class="pointer pointeranimation">
@@ -72,7 +72,7 @@
                     <div class="column-user-content">{{user.lastname}}</div>
                 </div>
                 <div class="column-user-top">
-                    <div class="column-user-content">ADMIN</div>
+                    <div class="column-user-content">{{user.role}}</div>
                 </div>
                 <div class="column-user-top">
                     <div class="column-user-content">{{user.organization}}</div>
@@ -89,7 +89,7 @@
             </div>
             <div class="audience-action">
                 <div class="column7">
-                    <div class="modify-icon" ng-click="vm.modifyinformationf(); vm.loadusertomodify($index)"></div>
+                    <div class="modify-icon" ng-click="vm.modifyinformationf(); vm.loadusertomodify($index); vm.loadroleByIndex($index)"></div>
                 </div>
                 <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
                     <div class="delete-icon"></div>
@@ -123,7 +123,7 @@
 
             <div class="modify-information-wrapper">
                 <label class="modify-information-title">Email</label>
-                <input type="email" name="email" ng-model="vm.user.email" ng-change="vm.emailtest()" ng-class="!vm.emailboolean && signUpForm.email.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" required>
+                <input type="email" name="email" ng-model="vm.user.email" ng-change="vm.emailtest()" ng-class="!vm.emailboolean && modifyForm.email.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" required>
                 <p ng-if="!vm.emailboolean && modifyForm.email.$touched" class="help-block-modify">Un email valide est requis</p>
             </div>
 
@@ -133,7 +133,22 @@
                 <p ng-if="modifyForm.organization.$error.minlength && modifyForm.organization.$touched" class="help-block-modify">Le nom de votre entreprise doit au moins contenir 2 caractères</p>
             </div>
 
-            <button type="submit" ng-class="!vm.emailboolean || modifyForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled="modifyForm.$invalid || !vm.emailboolean">
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Type d'utilisateur</label>
+                <div class="check-box-wrapper">
+                    <div class="check-box-block">
+                        <input class="check-box-form" type="checkbox" ng-model="vm.usertomodifytype" ng-checked="vm.usertomodifytype =='admin'" ng-true-value="'admin'">
+                        <div class="box-name"> Admin</div>
+                    </div>
+                    <div class="check-box-block">
+                        <input class="check-box-form" type="checkbox" ng-model="vm.usertomodifytype" ng-checked="vm.usertomodifytype =='client'" ng-true-value="'client'">
+                        <div class="box-name"> Client</div>
+                    </div>
+                    <p ng-if="vm.usertype === false" class="help-block-modify">Le nom de votre entreprise doit au moins contenir 2 caractères</p>
+                </div>
+            </div>
+
+            <button type="submit" ng-class="vm.usertomodifytype === false ||vm.usertomodifytype === 'None' || !vm.emailboolean || modifyForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled="vm.usertomodifytype === false || vm.usertomodifytype === 'None'|| modifyForm.$invalid || !vm.emailboolean">
                 <div ng-class="modifyForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">SAVE</div>
             </button>
         </form>
@@ -143,8 +158,8 @@
 <!-- End of more information -->
 
 <!-- Create a user -->
-<!-- <div class="create-audience-background" ng-if="vm.usercreationboolean"> -->
-<div class="create-audience-background" ng-if="true">
+<div class="create-audience-background" ng-if="vm.usercreationboolean">
+    <!-- <div class="create-audience-background" ng-if="true"> -->
     <div class="create-audience-modal">
         <div class="create-audience-modal-title">
             <h1 class="create-audience-modal-title-content">Modifier vos informations</h1>
@@ -166,8 +181,8 @@
 
             <div class="modify-information-wrapper">
                 <label class="modify-information-title">Email</label>
-                <input type="email" name="email" ng-model="vm.newuser.email" ng-change="vm.emailtest()" ng-class="!vm.emailboolean && createuserForm.email.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" required>
-                <p ng-if="!vm.emailboolean && createuserForm.email.$touched" class="help-block-modify">Un email valide est requis</p>
+                <input type="text" name="email" ng-change="vm.emailtestcreation()" ng-model="vm.newuser.email" ng-class="!vm.emailbooleancreation && createuserForm.email.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" required>
+                <p ng-if="!vm.emailbooleancreation && createuserForm.email.$touched" class="help-block-modify">Un email valide est requis</p>
             </div>
 
             <div class="modify-information-wrapper">
@@ -178,15 +193,25 @@
 
             <div class="modify-information-wrapper">
                 <label class="modify-information-title">Mot de passe</label>
-                <input type="text" name="organization" ng-model="vm.newuser.organization" placeholder="" class="modify-information-disabled" autocomplete="off" ng-disabled="true" required>
+                <input type="text" name="organization" ng-model="vm.password" placeholder="" class="modify-information-disabled" autocomplete="off" ng-disabled="true" required>
             </div>
 
             <div class="modify-information-wrapper">
                 <label class="modify-information-title">Type d'utilisateur</label>
-                <input type="checkbox" ng-model="master">
+                <div class="check-box-wrapper">
+                    <div class="check-box-block">
+                        <input class="check-box-form" type="checkbox" ng-model="vm.usertype" ng-checked="vm.usertype =='admin'" ng-true-value="'admin'">
+                        <div class="box-name"> Admin</div>
+                    </div>
+                    <div class="check-box-block">
+                        <input class="check-box-form" type="checkbox" ng-model="vm.usertype" ng-checked="vm.usertype =='client'" ng-true-value="'client'">
+                        <div class="box-name"> Client</div>
+                    </div>
+                    <p ng-if="vm.usertype === false" class="help-block-modify">Le nom de votre entreprise doit au moins contenir 2 caractères</p>
+                </div>
             </div>
 
-            <button type="submit" ng-class="!vm.emailboolean || createuserForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled="!vm.emailboolean || createuserForm.$invalid">
+            <button type="submit" ng-class="vm.usertype === false || !vm.emailbooleancreation || createuserForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled=" vm.usertype === false ||!vm.emailbooleancreation || createuserForm.$invalid">
                 <div ng-class="createuserForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">SAVE</div>
             </button>
         </form>

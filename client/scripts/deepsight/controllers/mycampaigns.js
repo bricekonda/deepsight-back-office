@@ -174,7 +174,7 @@ module.exports = function(app) {
                     vm.audiencesloaded.push(audience[i])
                 }
                 vm.audienceshown = vm.audiencesloaded.length;
-                vm.initialoffset = 5;
+                vm.initialoffset = 30;
                 vm.counter = 0;
                 if (vm.audiencesloaded.length === 0) {
                     vm.noaudiencebool = true;
@@ -204,7 +204,7 @@ module.exports = function(app) {
                         vm.audiencesloaded.push(audience[i])
                     }
                     vm.audienceshown = vm.audiencesloaded.length;
-                    vm.initialoffset = 5;
+                    vm.initialoffset = 30;
                     vm.counter = 0;
                     if (vm.audiencesloaded.length === 0) {
                         vm.noaudiencebool = true;
@@ -225,7 +225,7 @@ module.exports = function(app) {
 
         vm.loadmore = function() {
             vm.pageloadingboolean = true;
-            vm.counter = vm.counter + 5;
+            vm.counter = vm.counter + 30;
             campaign.loadmorecampaigns(vm.counter, vm.currentuser.id).then(function(model) {
                 vm.pageloadingboolean = false;
                 vm.audiencetoadd = [];
@@ -237,7 +237,7 @@ module.exports = function(app) {
                 vm.audiencesloaded = vm.audiencesloaded.concat(vm.audiencetoadd);
                 vm.audienceshown = vm.audiencesloaded.length;
 
-                campaign.loadmorecampaigns(vm.counter + 5, vm.currentuser.id).then(function(model) {
+                campaign.loadmorecampaigns(vm.counter + 30, vm.currentuser.id).then(function(model) {
                     if (model.length === 0) {
                         vm.loadmorebool = false;
                     }

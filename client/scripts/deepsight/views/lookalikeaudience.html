@@ -10,14 +10,17 @@
     </div>
 </div>
 
-<div class="category-block">
+<div class="category-block" id="lookalikeaudienceblock">
+    <div class="information-block-success-campaign " ng-class="vm.showmessage">
+        <div class="information-block-success-campaign-content ">L'audience selectionnée a bien été mise à jour</div>
+    </div>
     <div class="category-title">
         <div ng-click="vm.addaudienceLoop()">Audience similaire</div>
     </div>
     <div class="category-subtitle">Affichage de(s)
         <span style='color:#1580EF'>{{vm.audienceshown}}</span> audience(s) commune(s) crée(s)</div>
 
-    <div class="filter-btn-wrapper">
+    <!--     <div class="filter-btn-wrapper">
         <div class="filter-btn" ng-click="vm.showfilter()">
             <div class="filter-btn-content">
                 <div class="filter-to-chose">Filtrer par
@@ -36,7 +39,7 @@
             </div>
         </div>
         <div class="filter-list-bottom" ng-class="vm.filterbottom" ng-click="vm.showfilter()"></div>
-    </div>
+    </div> -->
     <a ui-sref=".createlookalikeaudience">
         <div class="create-audience-btn">
 
@@ -50,58 +53,80 @@
 
     <img ng-if="vm.noaudiencebool" src="images/pointer.png" class="pointer pointeranimation">
 
+    <div class="userfilter-wrapper ">
+        <input class="search-bar " type="text " name="query" placeholder="Entre ici un élément pour filtrer les audiences similaires" ng-model="vm.userquery">
+    </div>
+
     <div ng-if="vm.noaudiencebool" class="no-audience">
         <div class="no-audience-content">Vous n'avez pas encore créé d'audience!</div>
     </div>
 
     <div class="audience-wrapper" ng-if="!vm.noaudiencebool">
         <div class="audience-features">
-            <div class="column1">
-                <p class="column-content-features">NOM</p>
+            <div class="column-user-top">
+                <p class="column-user-top-content">NOM</p>
             </div>
-            <div class="column2">
-                <div class="column-content-features">TAILLE</div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">TAILLE</div>
             </div>
-            <div class="column3">
-                <div class="column-content-features">NB EDITEURS</div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">NB ÉDITEUR</div>
             </div>
-            <div class="column4">
-                <div class="column-content-features">DATE</div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">DATE</div>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">CREATOR</div>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">STATUS</div>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">COMPANY</div>
             </div>
         </div>
 
-        <div ng-if="vm.readyboolean" class="audience-not-ready-block" id="notready">
+<!--         <div ng-if="vm.readyboolean" class="audience-not-ready-block" id="notready">
             <div class="detail-triangle-dark"></div>
             <div class="detail-triangle-light"></div>
             <div class="audience-not-ready-title">
                 <div class="audience-not-ready-title-text">L'audience n'est pas encore prête</div>
             </div>
-        </div>
-        <div class="audience-block" ng-repeat="audience in vm.audiencesloaded | orderBy: vm.sortparameter ">
+        </div> -->
+        <div class="audience-block" ng-repeat="audience in vm.audiencesloaded | filter:vm.userquery">
 
             <div class="audience-container" ng-click="vm.displaymoreinfo($index); vm.loadmoreinfo($index)" ng-mouseenter="vm.audiencenotreadyin($index)" ng-mouseleave="vm.audiencenotreadyout($index)">
-                <div class="column1">
-                    <p class="column-content" ng-click="vm.viewmoreofcolumncontent($event,audience)">{{audience.name}}</p>
+                <div class="column-user-top">
+                    <p class="column-user-content">{{audience.name}}</p>
                 </div>
-                <div class="column2">
-                    <div class="column-content">{{audience.size}}</div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.size}}</div>
                 </div>
-                <div class="column3">
-                    <div class="column-content">{{audience.nb_publishers}}</div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.nb_publishers}}</div>
                 </div>
-                <div class="column4">
-                    <div class="column-content">{{audience.date}}</div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.date}}</div>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.creator}}</div>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">admin</div>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">Deepsight</div>
                 </div>
             </div>
             <div class="audience-action">
 
                 <div class="column7">
-                    <div class="more-info-icon" ng-click="vm.displaymoreinfo($index);vm.loadindextodelete($index) ; vm.loadmoreinfo($index)" ng-mouseenter="vm.audiencenotreadyin($index)" ng-mouseleave="vm.audiencenotreadyout($index)"></div>
+                    <div class="modify-icon" ng-click="vm.loadaudience(); vm.loadaudiencedetail($index)"></div>
                 </div>
                 <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
                     <div class="delete-icon"></div>
                 </div>
-                <a ui-sref="home.lookalikeaudience" ng-if="audience.waitboolean">
+                <!-- <a ui-sref="home.lookalikeaudience" ng-if="audience.waitboolean">
                     <div class="column5">
                         <div class="audience-option-wait">
                             <p class="audience-option-wait-content">En cours de création</p>
@@ -114,7 +139,7 @@
                             <p class="audience-option-deal-content">Lancer une campagne</p>
                         </div>
                     </div>
-                </a>
+                </a> -->
             </div>
         </div>
         <div class="load-more" ng-click="vm.loadmore()" ng-if="vm.loadmorebool">
@@ -125,75 +150,70 @@
 </div>
 
 <!-- More information -->
-<div class="create-audience-background" ng-if="vm.moreinfoboolean">
+<div class="create-audience-background" ng-if="vm.modifyaudience">
     <div class="create-audience-modal">
         <div class="create-audience-modal-title">
             <h1 class="create-audience-modal-title-content"> {{vm.audiencetodetail.name}} </h1>
             <a ui-sref="home.lookalikeaudience">
-                <img class="close-modal" src="images/cross-close-modal-logo.png" ng-click="vm.closemodalmoreinfo()">
+                <img class="close-modal" src="images/cross-close-modal-logo.png" ng-click="vm.loadaudience()">
             </a>
         </div>
 
-        <div class="step-content">
-            <div class="information-block">
-                <div class="info-sub-block">
-                    <div class="info-sub-block-title">Audience</div>
-                    <div class="info-sub-block-content">{{vm.audiencetodetail.name}}</div>
-                </div>
-                <div class="info-sub-block">
-                    <div class="info-sub-block-title">Nombre d'éditeurs</div>
-                    <div class="info-sub-block-content">{{vm.audiencetodetail.nb_publishers}}</div>
-                </div>
-
-                <div class="info-sub-block-large">
-                    <div class="delete-icon-info-block" ng-click="vm.closepopup()"></div>
-                    <a ui-sref="home.createcampaign" class="link">
-                        <div class="audience-option-info-block-wrapper">
-                            <div class="audience-option-info-block-deal">
-                                <p class="audience-option-deal-content">Lancer une campagne</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="info-sub-block">
-                    <div class="info-sub-block-title">Taille</div>
-                    <div class="info-sub-block-content">{{vm.audiencetodetail.size}}</div>
-                </div>
-                <div class="info-sub-block">
-                    <div class="info-sub-block-title">Date de Création</div>
-                    <div class="info-sub-block-content">{{vm.audiencetodetail.date}}</div>
-                </div>
-
+                <form name="modifyForm" ng-submit="vm.submitForm(modifyForm.$valid)" class="formclass" novalidate>
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Nom</label>
+                <input type="text" name="name" ng-model="vm.audiencetodetail.name" placeholder="" ng-class="modifyForm.name.$error.minlength && modifyForm.name.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" ng-minlength="2" required>
+                <p ng-if=" modifyForm.name.$error.minlength && modifyForm.name.$touched" class="help-block-modify">Un nom de minimum 2 caractère est requis</p>
             </div>
 
-            <div class="publishers-wrapper">
-                <div class="publishers-features">
-                    <div class="column1bis-features">ÉDITEURS</div>
-                    <div class="column2bis-features">TAILLE</div>
-                    <div class="column3bis-features">%TOTAL</div>
-                </div>
-                <div class="publisher-row" ng-repeat="publisher in vm.audiencetodetail.publishers_list">
-                    <div class="column1bis">{{publisher.publisher_name}}</div>
-                    <div class="column2bis">
-                        <span style="color:#1580EF">{{publisher.size}}</span>
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Taille</label>
+                <input type="text" name="size" ng-model="vm.audiencetodetail.size" placeholder="" ng-class=" modifyForm.size.$invalid ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" required>
+                <p ng-if="modifyForm.size.$invalid" class="help-block-modify">Une élément est nécessaire pour la taille </p>
+            </div>
+
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Date</label>
+                <input type="text" name="date" ng-model="vm.audiencetodetail.date" placeholder="" class="modify-information-input disabled" autocomplete="off" ng-minlength="2" ng-disabled='true' required>
+            </div>
+
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Nombre d'éditeur</label>
+                <input type="text" name="nb_publisher" ng-model="vm.audiencetodetail.nb_publishers" placeholder="" ng-class="modifyForm.nb_publisher.$error.minlength && modifyForm.nb_publisher.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" ng-minlength="1" required>
+                <p ng-if="modifyForm.nb_publisher.$error.minlength && modifyForm.nb_publisher.$touched" class="help-block-modify">Un nombre d'édituer est requis</p>
+            </div>
+
+
+
+            <div class="modify-information-wrapper">
+                <label class="modify-information-title">Creator</label>
+                <input type="text" name="email" ng-model="vm.audiencetodetail.creator" ng-change="vm.emailtest()" ng-class="!vm.emailboolean && modifyForm.email.$touched ? 'modify-information-input-not-ok' : 'modify-information-input'" autocomplete="off" required>
+                <p ng-if="!vm.emailboolean && modifyForm.email.$touched" class="help-block-modify">Un email valide est requis</p>
+            </div>
+
+                        <div class="modify-information-wrapper">
+                <label class="modify-information-title">Status de l'audience</label>
+                <div class="check-box-wrapper">
+                    <div class="check-box-block">
+                        <input class="check-box-form" type="checkbox" ng-model="vm.audiencetomodifystatus" ng-checked="vm.audiencetomodifystatus =='makeadealboolean'" ng-true-value="'makeadealboolean'">
+                        <div class="box-name"> Prête</div>
                     </div>
-                    <div class="column3bis">{{publisher.pertotal}}</div>
-                </div>
-                <div class="total-match">
-                    <div class="total-match-content">
-                        <div class="total">{{vm.audiencetodetail.size}}</div>
-                        <div class="total-subtitle">persons matched</div>
+                    <div class="check-box-block">
+                        <input class="check-box-form" type="checkbox" ng-model="vm.audiencetomodifystatus" ng-checked="vm.audiencetomodifystatus =='waitboolean'" ng-true-value="'waitboolean'">
+                        <div class="box-name"> Pas prête</div>
                     </div>
+<!--                     <p ng-if="vm.usertype === false" class="help-block-modify">Le nom de votre entreprise doit au moins contenir 2 caractères</p> -->
                 </div>
             </div>
+<!-- 
+            <button type="submit" ng-class="vm.usertomodifytype === false ||vm.usertomodifytype === 'None' || !vm.emailboolean || modifyForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled="vm.usertomodifytype === false || vm.usertomodifytype === 'None'|| modifyForm.$invalid || !vm.emailboolean">
+                <div ng-class="modifyForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">SAVE</div>
+            </button> -->
 
-            <div class="bottom-option-cancel-next">
-                <div class="close-btn" ng-click="vm.closemodalmoreinfo()">
-                    <div class="close-btn-content">Close</div>
-                </div>
-            </div>
-
-        </div>
+            <button type="submit" ng-class="vm.audiencetomodifystatus === false || !vm.emailboolean || modifyForm.$invalid  ? 'submit-button-disabled':'submit-button' " class="submit-save" ng-disabled="modifyForm.$invalid">
+                <div ng-class="vm.audiencetomodifystatus === false || !vm.emailboolean || modifyForm.$invalid ?'submit-button-text-disabled': 'submit-button-text' ">SAVE</div>
+            </button>
+        </form>
 
     </div>
 </div>

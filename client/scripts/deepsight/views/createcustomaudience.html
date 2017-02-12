@@ -61,6 +61,28 @@
                     <div class="step-main-message" ng-click="vm.broadcastevent()">Choisissez un nom pour votre audience commune et téléchargez votre fichier de données</div>
                     <div class="step-sub-message">Ton fichier va être upload en préparation sur matching sur les bases éditeurs</div>
                 </div>
+
+                <div class="chose-audience-name">
+                    <div class="chose-audience-name-title">Nom de l'utilisateur</div>
+                    <div class="chose-btn-wrapper">
+                        <div class="chose-btn" ng-click="vm.showfilter()">
+                            <div class="chose-btn-content">
+                                <div ng-class=" vm.choice === 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer une audience' ? 'choice-to-chose-no' : 'choice-to-chose'">
+                                    {{vm.choice}}
+                                </div>
+                                <div class="choice-show-noshow" ng-class="vm.filterclass"></div>
+                            </div>
+                        </div>
+                        <div class="chose-list" ng-class="vm.filtershown">
+                            <div class="chose-spacer"></div>
+                            <div class="choice" ng-repeat="choice in vm.audiencetochose" ng-click="vm.selectfilter($index)">
+                                <div class="choice-content" ng-class="{activefilterclass : vm.activefilter === filter.name}">{{choice}}</div>
+                            </div>
+                        </div>
+                        <div class="chose-list-bottom" ng-class="vm.filterbottom"></div>
+                    </div>
+                </div>
+
                 <div class="chose-audience-name">
                     <div class="chose-audience-name-title">Nom de l'audience</div>
                     <input placeholder="exemple : clients janvier 2017" ng-class="vm.audiencename === '' ? 'chose-audience-name-input-temporary' : 'chose-audience-name-input'" name="name" ng-model="vm.audiencename" required></input>
@@ -95,7 +117,7 @@
                     <div class="cancel-btn" ng-click="vm.closepopup()">
                         <div class="cancel-btn-content">ANNULER</div>
                     </div>
-                    <div ng-class="nameForm.name.$invalid || !vm.nofileboolean ? 'next-btn-disabled' : 'next-btn'" ng-click="nameForm.name.$invalid || !vm.nofileboolean || vm.upload()">
+                    <div ng-class=" (vm.choice === 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer une audience')|| nameForm.name.$invalid || !vm.nofileboolean ? 'next-btn-disabled' : 'next-btn'" ng-click="(vm.choice === 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer une audience')||nameForm.name.$invalid || !vm.nofileboolean || vm.upload()">
                         <div class="next-btn-content">UPLOAD</div>
                     </div>
                 </div>
@@ -140,7 +162,7 @@
             <div class="publishers-wrapper">
                 <div class="publishers-features">
                     <div class="column1bis-features">ÉDITEURS</div>
-<!--                     <div class="column2bis-features">TAILLE</div>
+                    <!--                     <div class="column2bis-features">TAILLE</div>
                     <div class="column3bis-features">%TOTAL</div> -->
                 </div>
                 <div class="publisher-row" ng-repeat="publisher in vm.audiencetoshow.publishers_list">

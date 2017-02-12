@@ -191,7 +191,7 @@ module.exports = function(app) {
         /*********************************************
          *********************************************/
 
-        vm.campagnetest = '123456';
+        // vm.campagnetest = '123456';
 
         $rootScope.$on('loadanalytics', function() {
 
@@ -202,6 +202,8 @@ module.exports = function(app) {
             vm.campaignsubject = vm.campaignchoice.subject; // Commun à tous les affichages
             vm.campaigncompensationmode = vm.campaignchoice.compensation_mode; // Commun à tous les affichages
             vm.campaigncompensationprice = vm.campaignchoice.compensation_price; // Commun à tous les affichages
+            vm.campagnetest = vm.campaignchoice.id_audience;
+            console.log(vm.campagnetest);
 
             if (vm.campaignchoice.type_campaign === 'ab' && vm.choicecampaigntype === 'a') {
 
@@ -229,7 +231,7 @@ module.exports = function(app) {
                                 analytics.getTotalsalesAB(vm.campagnetest, 'A').then(function(totalsales) {
                                     vm.totalsales = totalsales.data.totalsales;
                                     vm.or = Math.round(vm.openstodisplay / vm.volumetotal * 100 * 100) / 100;
-                                    vm.ctr = Math.round(vm.openstodisplay / vm.clickstodisplay * 100 * 100) / 100;
+                                    vm.ctr = Math.round(vm.clickstodisplay / vm.volumetotal * 100 * 100) / 100;
                                     vm.averagebasket = Math.round(vm.totalsales / vm.salestodisplay);
                                     vm.cac = Math.round(vm.campaingbudget / vm.salestodisplay * 100) / 100;
                                     vm.cr = Math.round(vm.salestodisplay / vm.volumetotal * 100 * 100) / 100;
@@ -288,7 +290,7 @@ module.exports = function(app) {
                                 analytics.getTotalsalesAB(vm.campagnetest, 'B').then(function(totalsales) {
                                     vm.totalsales = totalsales.data.totalsales;
                                     vm.or = Math.round(vm.openstodisplay / vm.volumetotal * 100 * 100) / 100;
-                                    vm.ctr = Math.round(vm.openstodisplay / vm.clickstodisplay * 100 * 100) / 100;
+                                    vm.ctr = Math.round(vm.clickstodisplay / vm.volumetotal * 100 * 100) / 100;
                                     vm.averagebasket = Math.round(vm.totalsales / vm.salestodisplay);
                                     vm.cac = Math.round(vm.campaingbudget / vm.salestodisplay * 100) / 100;
                                     vm.cr = Math.round(vm.salestodisplay / vm.volumetotal * 100 * 100) / 100;
@@ -344,7 +346,7 @@ module.exports = function(app) {
                                 analytics.getTotalsalesAB(vm.campagnetest, 'A').then(function(totalsales) {
                                     vm.totalsalesA = totalsales.data.totalsales;
                                     vm.orA = Math.round(vm.openstodisplayA / vm.volumetotalA * 100 * 100) / 100;
-                                    vm.ctrA = Math.round(vm.openstodisplayA / vm.clickstodisplayA * 100 * 100) / 100;
+                                    vm.ctrA = Math.round(vm.clickstodisplayA / vm.volumetotalA * 100 * 100) / 100;
                                     vm.averagebasketA = Math.round(vm.totalsalesA / vm.salestodisplayA);
                                     vm.cacA = Math.round(vm.campaingbudgetA / vm.salestodisplayA * 100) / 100;
                                     vm.crA = Math.round(vm.salestodisplayA / vm.volumetotalA * 100 * 100) / 100;
@@ -380,7 +382,7 @@ module.exports = function(app) {
                                 analytics.getTotalsalesAB(vm.campagnetest, 'B').then(function(totalsales) {
                                     vm.totalsalesB = totalsales.data.totalsales;
                                     vm.orB = Math.round(vm.openstodisplayB / vm.volumetotalB * 100 * 100) / 100;
-                                    vm.ctrB = Math.round(vm.openstodisplayB / vm.clickstodisplayB * 100 * 100) / 100;
+                                    vm.ctrB = Math.round(vm.clickstodisplayB / vm.volumetotalB  * 100 * 100) / 100;
                                     vm.averagebasketB = Math.round(vm.totalsalesB / vm.salestodisplayB);
                                     vm.cacB = Math.round(vm.campaingbudgetB / vm.salestodisplayB * 100) / 100;
                                     vm.crB = Math.round(vm.salestodisplayB / vm.volumetotalB * 100 * 100) / 100;
@@ -427,7 +429,7 @@ module.exports = function(app) {
                                 analytics.getTotalsales(vm.campagnetest).then(function(totalsales) {
                                     vm.totalsales = totalsales.data.totalsales;
                                     vm.or = Math.round(vm.openstodisplay / vm.volumetotal * 100 * 100) / 100;
-                                    vm.ctr = Math.round(vm.openstodisplay / vm.clickstodisplay * 100 * 100) / 100;
+                                    vm.ctr = Math.round(vm.clickstodisplay / vm.volumetotal * 100 * 100) / 100;
                                     vm.averagebasket = Math.round(vm.totalsales / vm.salestodisplay);
                                     vm.cac = Math.round(vm.campaingbudget / vm.salestodisplay * 100) / 100;
                                     vm.cr = Math.round(vm.salestodisplay / vm.volumetotal * 100 * 100) / 100;
@@ -478,6 +480,7 @@ module.exports = function(app) {
                 analytics.getOpens(vm.campagnetest).then(function(opens) {
                     vm.openstodisplay = opens.count;
                     analytics.getClicks(vm.campagnetest).then(function(clicks) {
+                        console.log(clicks);
                         vm.clickstodisplay = clicks.count;
                         analytics.getSales(vm.campagnetest).then(function(sales) {
                             vm.salestodisplay = sales.count;
@@ -487,28 +490,28 @@ module.exports = function(app) {
                                     // console.log(registrations.count)
                                     vm.totalsales = totalsales.data.totalsales;
                                     vm.or = Math.round(vm.openstodisplay / vm.volumetotal * 100 * 100) / 100;
-                                    vm.ctr = Math.round(vm.openstodisplay / vm.clickstodisplay * 100 * 100) / 100;
+                                    vm.ctr = Math.round(vm.clickstodisplay / vm.volumetotal * 100 * 100) / 100;
                                     vm.averagebasket = Math.round(vm.totalsales / vm.salestodisplay);
                                     vm.cac = Math.round(vm.campaingbudget / vm.salestodisplay * 100) / 100;
                                     vm.cr = Math.round(vm.salestodisplay / vm.volumetotal * 100 * 100) / 100;
                                     vm.cpl = Math.round(vm.campaingbudget / vm.registrationstodisplay * 100) / 100;
                                     vm.tr = Math.round(vm.registrationstodisplay / vm.volumetotal * 100 * 100) / 100;
                                     vm.mainkpisboolean = false;
-                                    vm.data1 = [[10000,40000,20000,15000,10000,7000,5000,4000,3000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000],[1500,4400,2000,2500,1500,1200,800,1000,1400,900,700,600,500,500,500,500,500,500,500,500,500,500,500,500]];
-                                    vm.data2 = [[10000,40000,20000,15000,10000,7000,5000,4000,3000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000],[1500,4400,2000,2500,1500,1200,800,1000,1400,900,700,600,500,500,500,500,500,500,500,500,500,500,500,500]];
-                                    // analytics.getopensclicksData(vm.campagnetest, vm.period[0].code).then(function(dataset) {
-                                    //     vm.data1 = dataset.data.dataset;
-                                    //     console.log(vm.data1);
-                                    //     vm.clicksandopensboolean = false;
-                                    //     analytics.getregistrationssalesData(vm.campagnetest, vm.period[0].code).then(function(dataset) {
-                                    //         vm.data2 = dataset.data.dataset;
-                                    //         vm.registrationsandsalesboolean = false;
-                                    //     }).catch(function(error) {
-                                    //         throw error;
-                                    //     });
-                                    // }).catch(function(error) {
-                                    //     throw error;
-                                    // });
+                                    // vm.data1 = [[10000,40000,20000,15000,10000,7000,5000,4000,3000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000],[1500,4400,2000,2500,1500,1200,800,1000,1400,900,700,600,500,500,500,500,500,500,500,500,500,500,500,500]];
+                                    // vm.data2 = [[10000,40000,20000,15000,10000,7000,5000,4000,3000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000],[1500,4400,2000,2500,1500,1200,800,1000,1400,900,700,600,500,500,500,500,500,500,500,500,500,500,500,500]];
+                                    analytics.getopensclicksData(vm.campagnetest, vm.period[0].code).then(function(dataset) {
+                                        vm.data1 = dataset.data.dataset;
+                                        console.log(vm.data1);
+                                        vm.clicksandopensboolean = false;
+                                        analytics.getregistrationssalesData(vm.campagnetest, vm.period[0].code).then(function(dataset) {
+                                            vm.data2 = dataset.data.dataset;
+                                            vm.registrationsandsalesboolean = false;
+                                        }).catch(function(error) {
+                                            throw error;
+                                        });
+                                    }).catch(function(error) {
+                                        throw error;
+                                    });
                                 }).catch(function(error) {
                                     throw error;
                                 });

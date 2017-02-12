@@ -26,7 +26,6 @@ module.exports = function(app) {
         };
 
         var signUpwithroles = function(username, password, firstname, lastname, organization, email, usertype) {
-
             var usernamenew = encodeURIComponent(username);
             var passwordnew = encodeURIComponent(password);
             var firstnamenew = encodeURIComponent(firstname);
@@ -40,6 +39,20 @@ module.exports = function(app) {
 
             return newuser
         };
+
+        var updateuserwithroles = function(id, usertype) {
+            console.log("kikoo");
+
+            var userid = encodeURIComponent(id)
+            var usertypenew = encodeURIComponent(usertype);
+            // var urluser = apiConstant.uri.concat('/createuser').concat('?', 'username', '=', username).concat('&', 'password', '=', password).concat('&', 'firstname', '=', firstname).concat('&', 'lastname', '=', lastname).concat('&', 'organization', '=', organization).concat('&', 'email', '=', email).concat('&', 'usertype', '=', usertype);
+            // var urluser = 'https://deepsight-server.herokuapp.com/api'.concat('/updateuser').concat('?', 'id', '=', userid).concat('&', 'usertype', '=', usertypenew);
+            var urluser = 'http://0.0.0.0:3010/api'.concat('/updateuser').concat('?', 'id', '=', userid).concat('&', 'usertype', '=', usertypenew);
+            var user = $http.get(urluser);
+
+            return user
+
+        }
 
         var signIn = function(username, password) {
             var usertoconnect = Deepsightuser.login({
@@ -82,12 +95,12 @@ module.exports = function(app) {
             // return passwordtoreset;
         };
 
-        $rootScope.$on('resetPasswordRequest', function() {
-        });
+        $rootScope.$on('resetPasswordRequest', function() {});
 
         return {
             ping: ping,
             signUpwithroles: signUpwithroles,
+            updateuserwithroles: updateuserwithroles,
             signUp: signUp,
             signIn: signIn,
             logOut: logOut,
