@@ -47,7 +47,7 @@ module.exports = function(app) {
             var usertypenew = encodeURIComponent(usertype);
             // var urluser = apiConstant.uri.concat('/createuser').concat('?', 'username', '=', username).concat('&', 'password', '=', password).concat('&', 'firstname', '=', firstname).concat('&', 'lastname', '=', lastname).concat('&', 'organization', '=', organization).concat('&', 'email', '=', email).concat('&', 'usertype', '=', usertype);
             // var urluser = 'https://deepsight-server.herokuapp.com/api'.concat('/updateuser').concat('?', 'id', '=', userid).concat('&', 'usertype', '=', usertypenew);
-            var urluser = 'http://0.0.0.0:3010/api'.concat('/updateuser').concat('?', 'id', '=', userid).concat('&', 'usertype', '=', usertypenew);
+            var urluser = 'https://deepsight-server.herokuapp.com/api'.concat('/updateuser').concat('?', 'id', '=', userid).concat('&', 'usertype', '=', usertypenew);
             var user = $http.get(urluser);
 
             return user
