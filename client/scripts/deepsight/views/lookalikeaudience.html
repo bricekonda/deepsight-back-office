@@ -95,7 +95,7 @@
         </div> -->
         <div class="audience-block" ng-repeat="audience in vm.audiencesloaded | filter:vm.userquery">
 
-            <div class="audience-container" ng-click="vm.displaymoreinfo($index); vm.loadmoreinfo($index)" ng-mouseenter="vm.audiencenotreadyin($index)" ng-mouseleave="vm.audiencenotreadyout($index)">
+            <div class="audience-container" ng-click="vm.displaymoreinfo($index); vm.loadmoreinfo($index)">
                 <div class="column-user-top">
                     <p class="column-user-content">{{audience.name}}</p>
                 </div>

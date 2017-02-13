@@ -18,7 +18,7 @@
     <div class="category-subtitle">Affichage de(s)
         <span style='color:#1580EF'>{{vm.audienceshown}}</span> campagnes que vous avez créées</div>
 
-<!--     <div class="filter-btn-wrapper">
+    <!--     <div class="filter-btn-wrapper">
         <div class="filter-btn" ng-click="vm.showfilter()">
             <div class="filter-btn-content">
                 <div class="filter-to-chose">Filtrer par
@@ -60,50 +60,74 @@
 
     <div class="audience-wrapper" ng-if="!vm.noaudiencebool">
         <div class="audience-features">
-            <div class="column1">
-                <p class="column-content-features">NOM</p>
+            <div class="column-user-top">
+                <p class="column-user-top-content">NOM</p>
             </div>
-            <div class="column2">
-                <div class="column-content-features">BUDGET</div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">TAILLE</div>
             </div>
-            <div class="column3">
-                <div class="column-content-features">REACH</div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">TYPE</div>
             </div>
-            <div class="column4">
-                <div class="column-content-features">DATE</div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">FORMAT</div>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">MODE</div>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">PRIX</div>
+            </div>
+                        <div class="column-user-top">
+                <div class="column-user-top-content">VOLUME F</div>
+            </div>
+            <div class="column-user-top">
+                <div class="column-user-top-content">BUDGET</div>
             </div>
         </div>
         <div class="audience-block" ng-repeat="audience in vm.audiencesloaded | filter:vm.userquery">
             <div class="audience-container" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)">
-                <div class="column1">
-                    <p class="column-content" ng-click="vm.viewmoreofcolumncontent($event,audience)">{{audience.name}}</p>
+                <div class="column-user-top">
+                    <p class="column-user-content">{{audience.name}}</p>
                 </div>
-                <div class="column2">
-                    <div class="column-content">{{audience.compensation_budget}}</div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.reach}}</div>
                 </div>
-                <div class="column3">
-                    <div class="column-content">{{audience.reach}}</div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.type_campaign}}</div>
                 </div>
-                <div class="column4">
-                    <div class="column-content">{{audience.date}}</div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.format}}</div>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.compensation_mode}}</div>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.compensation_price}}</div>
+                </div>
+                                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.compensation_volume}}</div>
+                </div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.compensation_budget}}</div>
                 </div>
             </div>
             <div class="audience-action">
 
                 <div class="column7">
-                    <div class="more-info-icon" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)"></div>
+                    <div class="modify-icon" ng-click="vm.loadaudience(); vm.loadaudiencedetail($index)"></div>
                 </div>
                 <div class="column6" ng-click="vm.loadindextodelete($index) ; vm.closepopup()">
                     <div class="delete-icon"></div>
                 </div>
 
-                <a ng-if="true" ng-click="vm.gotoreporting($index)">
+                <!--                 <a ng-if="true" ng-click="vm.gotoreporting($index)">
                     <div class="column5">
                         <div class="audience-option-deal">
                             <p class="audience-option-deal-content">Rapport</p>
                         </div>
                     </div>
-                </a>
+                </a> -->
             </div>
         </div>
 
@@ -115,12 +139,12 @@
 </div>
 
 <!-- More information -->
-<div class="create-audience-background" ng-if="vm.moreinfoboolean">
+<div class="create-audience-background" ng-if="vm.modifyaudience">
     <div class="create-audience-modal campaign-modal">
         <div class="create-audience-modal-title">
             <h1 class="create-audience-modal-title-content"> {{vm.campaigntodetail.name}} </h1>
             <a ui-sref="home.mycampaigns">
-                <img class="close-modal" src="images/cross-close-modal-logo.png" ng-click="vm.closemoreinfo()">
+                <img class="close-modal" src="images/cross-close-modal-logo.png" ng-click="vm.loadaudience()">
             </a>
         </div>
 

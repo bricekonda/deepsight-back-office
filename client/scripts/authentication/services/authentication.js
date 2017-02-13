@@ -61,7 +61,12 @@ module.exports = function(app) {
             }).$promise
 
             return usertoconnect;
+        };
 
+        var signInadmin = function(username, password) {
+            var urluser = 'http://0.0.0.0:3010/api'.concat('/loginadmin').concat('?', 'username', '=', username).concat('&', 'password', '=', password);
+            var user = $http.get(urluser);
+            return user;
         };
 
         var logOut = function() {
@@ -103,6 +108,7 @@ module.exports = function(app) {
             updateuserwithroles: updateuserwithroles,
             signUp: signUp,
             signIn: signIn,
+            signInadmin:signInadmin,
             logOut: logOut,
             resetPwdreq: resetPwdreq,
             resetPwd: resetPwd

@@ -12,6 +12,32 @@ module.exports = function(app) {
         var vm = this;
         vm.controllername = fullname;
 
+        //load campaign
+
+        vm.audiencetodetail = {};
+
+        vm.modifyaudience = false;
+
+        vm.loadaudience = function() {
+            if (vm.modifyaudience === true) {
+                vm.modifyaudience = false;
+            } else if (vm.modifyaudience === false) {
+                vm.modifyaudience = true
+            }
+        }
+
+        vm.loadaudiencedetail = function(index) {
+            vm.audiencetodetail = vm.audiencesloaded[index];
+            console.log(vm.audiencetodetail);
+
+            if (vm.audiencetodetail.waitboolean === true) {
+                vm.audiencetomodifystatus = 'waitboolean'
+            } else {
+                vm.audiencetodetail.waitboolean === 'makeadealboolean'
+            }
+
+        };
+
         //popup cancel
         vm.closeopenbool = false;
 
