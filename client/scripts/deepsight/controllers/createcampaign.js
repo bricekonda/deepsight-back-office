@@ -386,7 +386,7 @@ vm.submitForm = function(isValid) {
 
         user.getcurrentUser().then(function(user) {
             var userId = user.id;
-            campaign.createcampaign(userId, name, audience, typecampaign, reachA, reachB, subject, date, format, urlfile, information, compensationmode, compensationprice, compensationvolume, compensationbudget, reach, utmsource, utmmedium, utmterm, utmcontent, utmcampaign, redirectionurl, trackingurl).then(function(campaign) {
+            campaign.createcampaign(vm.iduserchosentocreateaudience, name, audience, typecampaign, reachA, reachB, subject, date, format, urlfile, information, compensationmode, compensationprice, compensationvolume, compensationbudget, reach, utmsource, utmmedium, utmterm, utmcontent, utmcampaign, redirectionurl, trackingurl).then(function(campaign) {
                 $rootScope.$broadcast('campaigncreationsuccess', null);
                 var idcreator = '';
                 vm.campaignname = '';
