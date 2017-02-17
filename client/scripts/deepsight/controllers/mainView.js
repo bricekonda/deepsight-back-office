@@ -137,12 +137,12 @@ module.exports = function(app) {
                 'name': 'Informations éditeurs',
                 'statename': 'home.publishersinformation',
                 'class': 'subcategory-link',
-                'picto': 'images/general-information-grey.svg'
+                'picto': 'images/publishers-grey.svg'
             },{
                 'name': 'Information annonceurs',
                 'statename': 'home.advertisersinformation',
                 'class': 'subcategory-link',
-                'picto': 'images/general-information-grey.svg'
+                'picto': 'images/advertisers-grey.svg'
             }]
         },{
             'name': 'Tags',
@@ -152,6 +152,11 @@ module.exports = function(app) {
             'subcategoryname': [{
                 'name': 'Plan de taggage',
                 'statename': 'home.mytags',
+                'class': 'subcategory-link',
+                'picto': 'images/tag-grey.svg',
+            },{
+                'name': 'Creation Tag',
+                'statename': 'home.tagcreation',
                 'class': 'subcategory-link',
                 'picto': 'images/tag-grey.svg',
             }]

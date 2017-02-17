@@ -124,6 +124,21 @@ module.exports = function(app) {
 
         };
 
+        var findcampaignsbyDate = function(date) {
+            var audiencelist = MarketingCampaign.find({
+                "filter": {
+                    order: 'date DESC',
+                    where: {
+                        date: {
+                            gt: date
+                        },
+                    },
+                }
+            }).$promise
+
+            return audiencelist;
+        }
+
         return {
             createcampaign: createcampaign,
             updatecampaign: updatecampaign,
@@ -131,6 +146,7 @@ module.exports = function(app) {
             loadmorecampaigns: loadmorecampaigns,
             loadallcampaignbycreatorid: loadallcampaignbycreatorid,
             deletecampaignbyid: deletecampaignbyid,
+            findcampaignsbyDate:findcampaignsbyDate,
 
         };
 

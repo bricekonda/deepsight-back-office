@@ -47,14 +47,14 @@ module.exports = function(app) {
             return validdate
         };
 
-        datasummary.findAllData('advertiser').then(function(publishers) {
+        datasummary.findAllData('advertiser').then(function(advertisers) {
             vm.publisherslist = [];
-            for (var i = 0; i < publishers.length; i++) {
-                var date = new Date(publishers[i].date);
-                publishers[i].date = vm.styledate(date);
-                vm.publisherslist.push(publishers[i])
+            for (var i = 0; i < advertisers.length; i++) {
+                var date = new Date(advertisers[i].date);
+                advertisers[i].date = vm.styledate(date);
+                vm.publisherslist.push(advertisers[i])
             }
-            console.log(publishers);
+            console.log(advertisers);
             vm.pageloadingboolean = false;
         }).catch(function(error) {
             vm.pageloadingboolean = false;

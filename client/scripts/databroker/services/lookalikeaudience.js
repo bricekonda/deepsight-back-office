@@ -116,6 +116,20 @@ module.exports = function(app) {
             return audience;
         }
 
+        var findaudiencesbyDate = function(date) {
+            var audiencelist = Lookalikeaudience.find({
+                "filter": {
+                    order: 'date DESC',
+                    where: {
+                        date: {
+                            gt: date
+                        },
+                    },
+                }
+            }).$promise
+
+            return audiencelist;
+        }
         //Fin de mes fonctions Loopback
 
         return {
@@ -127,6 +141,7 @@ module.exports = function(app) {
             loadallaudiencebycreatorid: loadallaudiencebycreatorid,
             findaudiencebyID: findaudiencebyID,
             updateallparametersAudience: updateallparametersAudience,
+            findaudiencesbyDate:findaudiencesbyDate,
         };
 
     }

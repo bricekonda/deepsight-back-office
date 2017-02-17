@@ -146,6 +146,12 @@ require('./services')(app);
             controller: fullname + '.advertisersinformation',
             controllerAs: 'vm',
             authenticate: true
+        }).state('home.tagcreation', {
+            url: '/tagging/creation',
+            template: require('./views/creationtag.html'),
+            controller: fullname + '.tagcreation',
+            controllerAs: 'vm',
+            authenticate: true
         });
     };
     configRoutes.$inject = configRoutesDeps;

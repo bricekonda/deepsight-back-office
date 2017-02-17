@@ -1,11 +1,75 @@
+<loader ng-if="vm.pageloadingboolean"></loader>
 <div class="category-block">
     <div class="category-title">Accueil</div>
-    <div class="category-subtitle">Résumé de vos dernières actions marketing</div>
+    <div class="category-subtitle">Résumé de l'activité de Deepsight</div>
 
-    <div ng-if="true" class="no-audience">
+    <!--     <div ng-if="true" class="no-audience">
         <div class="building-wrapper">
-<!--             <img class="building-icon" src="images/building.png"> -->
+            <img class="building-icon" src="images/building.png">
             <div class="no-audience-content">En construction</div>
         </div>
+    </div> -->
+
+    <div class="summary-information-wrapper">
+        <div class="summary-main-information-wrapper">
+            <div class="summary-main-information-block">
+                <div class="summary-main-information-block-number">
+                    <div class="summary-main-information-block-number-copy">
+                        <span style='color:#EB4A4C; font-size:32px'>{{vm.customaudience}}</span> audiences commmunes crées au cours du dernier mois</div>
+                </div>
+                <div class="summary-main-information-block-number-graph">
+                    <div class="summary-main-information-block-number-graph-displayed">
+                        <canvas id="line" height="120" class="chart chart-bar" chart-data="vm.data1" chart-labels="vm.label1" chart-series="vm.series1" chart-options="vm.options1" chart-dataset-override="vm.datasetOverride1" chart-colors="vm.chartcolor1" chart-click="vm.onClick1">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="summary-main-information-block">
+                <div class="summary-main-information-block-number">
+                    <div class="summary-main-information-block-number-copy">
+                        <span style='color:#F5A623; font-size:32px'>{{vm.lookalikeaudience}}</span> audiences similaires crées au cours du dernier mois</div>
+                </div>
+                <div class="summary-main-information-block-number-graph">
+                    <div class="summary-main-information-block-number-graph-displayed">
+                        <canvas id="line" height="120" class="chart chart-bar" chart-data="vm.data2" chart-labels="vm.label2" chart-series="vm.series2" chart-options="vm.options2" chart-dataset-override="vm.datasetOverride2" chart-colors="vm.chartcolor2" chart-click="vm.onClick2">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="summary-main-information-block">
+                <div class="summary-main-information-block-number">
+                    <div class="summary-main-information-block-number-copy">
+                        <span style='color:#50E3C2; font-size:32px'>{{vm.marketingcampaigns}}</span> campagnes marketing crées au cours du dernier mois</div>
+                </div>
+                <div class="summary-main-information-block-number-graph">
+                    <div class="summary-main-information-block-number-graph-displayed">
+                        <canvas id="line" height="120" class="chart chart-bar" chart-data="vm.data3" chart-labels="vm.label3" chart-series="vm.series3" chart-options="vm.options3" chart-dataset-override="vm.datasetOverride3" chart-colors="vm.chartcolor3" chart-click="vm.onClick3">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="financials-information-wrapper">
+            <div class="financials-information-graph">
+                <div class="financials-information-graph-title">
+                    <div class="financials-information-graph-title-copy">
+                        Évolution des revenus au cours des 30 derniers jours</div>
+                </div>
+                <div class="financials-information-graph-wrapper">
+                    <canvas id="line" height="80" class="chart chart-line" chart-data="vm.data4" chart-labels="vm.label4" chart-series="vm.series4" chart-options="vm.options4" chart-dataset-override="vm.datasetOverride4" chart-colors="vm.chartcolor4" chart-click="vm.onClick4">
+                    </canvas>
+                </div>
+<!--                 <div class="financials-information-graph-graph-displayed"></div> -->
+            </div>
+            <div class="summary-main-information-block center-amount">
+            		<div class="total-amount-last-month-wrapper">
+            			<div class="total-amount-last-month-number">84827€</div>
+            			<div class="total-amount-last-month-copy">Chiffre d'affaire depuis le début du mois</div>
+            		</div>
+            </div>
+        </div>
+
     </div>
+
 </div>

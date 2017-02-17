@@ -195,6 +195,21 @@ module.exports = function(app) {
             return audiencetofind;
         }
 
+        var findaudiencesbyDate = function(date) {
+            var audiencelist = Customaudience.find({
+                "filter": {
+                    order: 'date DESC',
+                    where: {
+                        date: {
+                            gt: date
+                        },
+                    },
+                }
+            }).$promise
+
+            return audiencelist;
+        }
+
         return {
             addaudienceLoop: addaudienceLoop,
             loadaudienceLoop: loadaudienceLoop,
@@ -207,6 +222,7 @@ module.exports = function(app) {
             updateallparametersAudience: updateallparametersAudience,
             match: match,
             findaudiencebyID: findaudiencebyID,
+            findaudiencesbyDate: findaudiencesbyDate,
         };
 
     }

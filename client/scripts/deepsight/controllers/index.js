@@ -22,6 +22,7 @@ module.exports = function(app) {
     require('./signin')(app);
     require('./signup')(app);
     require('./summary')(app);
+    require('./tagcreation')(app);
     require('./tandcs')(app);
     require('./usermanagement')(app);
     // inject:end

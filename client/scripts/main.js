@@ -193,7 +193,7 @@ var run = function($window, $timeout, $kinvey, $state, $rootScope, Deepsightuser
     });
 
     $rootScope.$on('signinSuccess', function() {
-        $state.go('home.customaudience');
+        $state.go('home.summary');
     });
 
     $rootScope.$on('signupSuccess', function() {
