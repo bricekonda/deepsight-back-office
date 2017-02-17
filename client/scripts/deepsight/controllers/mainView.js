@@ -158,7 +158,7 @@ module.exports = function(app) {
                 'name': 'Creation Tag',
                 'statename': 'home.tagcreation',
                 'class': 'subcategory-link',
-                'picto': 'images/tag-grey.svg',
+                'picto': 'images/creation-grey.svg',
             }]
         },{
             'name': 'Audience',

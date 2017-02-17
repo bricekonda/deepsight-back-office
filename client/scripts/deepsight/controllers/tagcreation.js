@@ -151,9 +151,9 @@ module.exports = function(app) {
                         }, {
                             'variable': ''
                         }];
-                        var description = '';
-                        var urlpage = '';
-                        var title = '';
+                        vm.description = '';
+                        vm.url = '';
+                        vm.title = '';
                         vm.choiceuser = 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer un tag';
                         var container = document.getElementById('tagcreationblock');
                         var scrollTo = document.getElementById('top');

@@ -1,6 +1,23 @@
 <loader ng-if="vm.pageloadingboolean"></loader>
 
-<div class="category-block">
+<div class="popup-background" ng-if="vm.closeopenbool">
+    <div class="popup-wrapper">
+        <img class="close-popup" src="images/cross-close-modal-logo.png" ng-click="vm.deletepopup()">
+        <div class="popup-message">Es-tu sûr de vouloir supprimer l'audience ?</div>
+        <div class="popup-btn" ng-click="vm.deletetagbyId()">
+            <div class="popup-btn-content">SUPPRIMER</div>
+        </div>
+    </div>
+</div>
+
+<div class="category-block" id="tagblock">
+    <div class="information-block-success-campaign-red" ng-class="vm.showmessage">
+        <div class="information-block-success-campaign-content">Le tag a été supprimé avec succès</div>
+    </div>
+        <div class="information-block-success-campaign" ng-class="vm.showmessagemodification">
+        <div class="information-block-success-campaign-content">Le tag a été modifié avec succès</div>
+    </div>
+
     <div class="category-title" ng-click="vm.createtag()">My tags</div>
     <div class="category-subtitle"> Consulte ici les tags des clients Deepsight</div>
 
@@ -28,6 +45,15 @@
         </div>
 
         <div class="tag-block" ng-repeat="tag in vm.tagstodisplay">
+            <!--         <div class="tag-block"> -->
+            <div class="delete-modify-wrapper">
+                <div class="tag-delete-wrapper">
+                    <div class="delete-icon" ng-click="vm.deletepopup($index)"></div>
+                </div>
+                <div class="tag-modify-wrapper">
+                    <div class="modify-icon" ng-click="vm.modify(); vm.loadtag($index)"></div>
+                </div>
+            </div>
             <div class="information-copy-title-tag">
                 {{tag.title}}
             </div>
@@ -86,6 +112,82 @@
         </div>
 
     </div>
+</div>
+
+<!-- More information -->
+<div class="create-audience-background" ng-if="vm.modifyaudience">
+    <div class="create-audience-modal campaign-modal">
+        <div class="create-audience-modal-title">
+            <h1 class="create-audience-modal-title-content"> {{vm.title}} </h1>
+                <img class="close-modal" src="images/cross-close-modal-logo.png" ng-click="vm.modify()">
+        </div>
+
+        <div class="step-content">
+            <div class="information-campaign-wrapper">
+                <form name="createtafForm" ng-submit="vm.submitForm(createtafForm.$valid)">
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Nom du tag</div>
+                        <input type="text" name="name" placeholder="Réactivation prospects janvier 2017" ng-class="createtafForm.name.$invalid && createtafForm.name.$touched ? 'chose-campaign-name-input-not-ok' : 'chose-campaign-name-input'" ng-model="vm.title" autocomplete="off" ng-minlength="2" required></input>
+                        <p ng-if="createtafForm.name.$invalid && createtafForm.name.$touched" class="help-block-modify-campaign">Un nom de minimum 2 caractère est requis</p>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Nom du createur</div>
+                        <input type="text" name="nameuser" class="chose-campaign-name-input disabled" ng-model="vm.creator" autocomplete="off" ng-disabled="true"></input>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Variable</div>
+
+                        <div class="subchoice-wrapper">
+                            <div class="subchoice-campaign">
+                                <input type="text" name="price" class="number-variables disabled" ng-model="vm.numberofvariable" ng-disabled="true"></input>
+                                <div class="add-variable-btn" ng-click="vm.addvariable()">
+                                    <img class="add-cross" src="images/cross.png">
+                                </div>
+                            </div>
+                        </div>
+                        <p ng-if="vm.numberofvariable === 0" class="help-block-modify-campaign">Enregistrez au moins une variable</p>
+
+                        <div class="subchoice-wrapper" ng-repeat="variable in vm.variablelist">
+                            <div class="subchoice-campaign">
+                                <input type="text" name="variable" class="variables" ng-model="vm.variablelist[$index].variable"></input>
+                                <div class="remove-variable-btn" ng-click="vm.removevariable($index)">
+                                    <img class="remove-cross" src="images/remove.png">
+                                </div>
+                            </div>
+                            <p ng-if="vm.variablelist[$index].variable === ''" class="help-block-modify-campaign">Entrez un nom pour cette variable</p>
+                        </div>
+
+                        <!--             <input type="text" name="variables" ng-repeat="variable in vm.variablelist" class="input-settings" ng-class="createtafForm.name.$invalid && createtafForm.name.$touched ? 'chose-campaign-name-input-not-ok' : 'chose-campaign-name-input'" ng-model="variable.variable" autocomplete="off" ng-minlength="2" required></input> -->
+
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">URL sur lequel déposer le tag</div>
+                        <!--    input -->
+                        <input type="text" name="urlredirection" ng-class="createtafForm.urlredirection.$invalid && createtafForm.urlredirection.$touched ? 'chose-campaign-name-input-not-ok' : 'chose-campaign-name-input'" ng-model="vm.url" required></input>
+                        <p ng-if="createtafForm.urlredirection.$invalid && createtafForm.urlredirection.$touched" class="help-block-modify-campaign">Un url de redirection est requis</p>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Description du tag </div>
+                        <textarea type="text" name="complementaryinformation" ng-class="createtafForm.complementaryinformation.$invalid && createtafForm.complementaryinformation.$touched ? 'chose-campaign-name-input-large-not-ok' : 'chose-campaign-name-input-large'" ng-model="vm.description" required></textarea>
+                        <p ng-if="createtafForm.complementaryinformation.$invalid && createtafForm.complementaryinformation.$touched" class="help-block-modify-campaign">Renseignez une petite descritpion de la campagne svp</p>
+                    </div>
+
+                    <div class="save-btn-wrapper">
+                        <button type="submit" ng-class="!vm.allvariablessetboolean || vm.numberofvariable === 0 || createtafForm.$invalid  ? 'format-btn-disabled':'format-btn' " class="submit-save" ng-disabled="!vm.allvariablessetboolean || vm.numberofvariable === 0 || createtafForm.$invalid">
+                            <div class="format-btn-content">SAVE</div>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 
 <!-- End of more information -->

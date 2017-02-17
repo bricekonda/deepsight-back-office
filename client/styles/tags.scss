@@ -170,3 +170,29 @@
 .input-settings {
     margin-top: 20px;
 }
+
+.delete-modify-wrapper{
+position: absolute;
+top: 40px;
+right: 30px;
+width: auto;
+height: 40px;
+// background-color: blue;
+}
+
+.tag-delete-wrapper{
+position: relative;
+display: inline-block;
+height: 24px;
+width: 24px;
+cursor: pointer;
+}
+
+.tag-modify-wrapper{
+position: relative;
+display: inline-block;
+margin-left: 20px;
+height: 24px;
+width: 40px;
+cursor: pointer;
+}

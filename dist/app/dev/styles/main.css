@@ -911,7 +911,7 @@
       justify-content: center;
   width: 100%;
   background-color: rgba(98, 100, 102, 0.45);
-  z-index: 30;
+  z-index: 50;
   min-width: 1261px; }
 
 .create-audience-modal {
@@ -2550,17 +2550,22 @@
   opacity: 0.3;
   cursor: default; }
 
-.information-block-success-campaign {
+.information-block-success-campaign, .information-block-success-campaign-red {
   position: absolute;
   width: 100%;
   height: 20px;
-  background-color: #22B577;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
       align-items: center;
   -ms-flex-pack: center;
       justify-content: center; }
+
+.information-block-success-campaign {
+  background-color: #22B577; }
+
+.information-block-success-campaign-red {
+  background-color: #EF2B2D; }
 
 .information-block-success-campaign-content {
   font-family: proximanovaregular;
@@ -3059,6 +3064,28 @@
 
 .input-settings {
   margin-top: 20px; }
+
+.delete-modify-wrapper {
+  position: absolute;
+  top: 40px;
+  right: 30px;
+  width: auto;
+  height: 40px; }
+
+.tag-delete-wrapper {
+  position: relative;
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+  cursor: pointer; }
+
+.tag-modify-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-left: 20px;
+  height: 24px;
+  width: 40px;
+  cursor: pointer; }
 
 .userfilter-wrapper {
   position: absolute;

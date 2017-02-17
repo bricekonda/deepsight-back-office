@@ -45,11 +45,26 @@ module.exports = function(app) {
             return tags;
         }
 
-        var deletetagById = function() {
+        var deletetagById = function(id) {
+            var tagtodelete = Tags.deleteById({
+                'id': id,
+            }).$promise;
+
+            return tagtodelete;
 
         }
 
-        var updatetagByID = function() {
+        var updatetagByID = function(tagid, variables, description, urlpage, title) {
+            var tag = Tags.prototype$updateAttributes({
+                id: tagid
+            }, {
+                variables: variables,
+                url: urlpage,
+                description: description,
+                title: title,
+            }).$promise;
+
+            return tag;
 
         }
 
