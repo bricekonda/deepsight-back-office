@@ -10,9 +10,10 @@ module.exports = function(app) {
 
     function service($kinvey, $rootScope, $q, $state, $timeout, MarketingCampaign, user, apiConstant) {
 
-        var createcampaign = function(userId, name, audience, typecampaign, reachA, reachB, subject, date, format, urlfile, information, compensationmode, compensationprice, compensationvolume, compensationbudget, reach, utmsource, utmmedium, utmterm, utmcontent, utmcampaign, redirectionurl, trackingurl) {
+        var createcampaign = function(userId, creator, name, audience, typecampaign, reachA, reachB, subject, date, format, urlfile, information, compensationmode, compensationprice, compensationvolume, compensationbudget, reach, utmsource, utmmedium, utmterm, utmcontent, utmcampaign, redirectionurl, trackingurl) {
             var newcampaign = MarketingCampaign.create({
                 'userId': userId,
+                'creator': creator,
                 'name': name,
                 'id_audience': audience,
                 'reach': reach,
@@ -41,10 +42,32 @@ module.exports = function(app) {
             return newcampaign
         };
 
-        var updateutmcampaign = function(id) {
-        };
+        var updatecampaign = function(id, name, typecampaign, reachA, reachB, subject, format, information, compensationmode, compensationprice, compensationvolume, compensationbudget, utmsource, utmmedium, utmterm, utmcontent, utmcampaign, redirectionurl, trackingurl) {
+            console.log('hello')
+            var campaign = MarketingCampaign.prototype$updateAttributes({
+                id: id
+            }, {
+                'name': name,
+                'type_campaign': typecampaign,
+                'reach_A': reachA,
+                'reach_B': reachB,
+                'subject': subject,
+                'format': format,
+                'information': information,
+                'compensation_mode': compensationmode,
+                'compensation_price': compensationprice,
+                'compensation_volume': compensationvolume,
+                'compensation_budget': compensationbudget,
+                'utm_source': utmsource,
+                'utm_medium': utmmedium,
+                'utm_term': utmterm,
+                'utm_content': utmcontent,
+                'utm_campaign': utmcampaign,
+                'url_tracking_raw': trackingurl,
+                'url_campaign': redirectionurl
+            }).$promise;
 
-        var updatecampaign = function() {
+            return campaign;
 
         };
 
@@ -103,7 +126,6 @@ module.exports = function(app) {
 
         return {
             createcampaign: createcampaign,
-            updateutmcampaign: updateutmcampaign,
             updatecampaign: updatecampaign,
             loadcampaigns: loadcampaigns,
             loadmorecampaigns: loadmorecampaigns,

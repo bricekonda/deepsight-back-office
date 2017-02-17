@@ -1,0 +1,55 @@
+<loader ng-if="vm.pageloadingboolean"></loader>
+<div class="category-block">
+    <div class="category-title">Informations de nos éditeurs partenaires</div>
+    <div class="category-subtitle">Lorem Ipsum</div>
+
+
+    <div class="userfilter-wrapper ">
+        <input class="search-bar" type="text" name="query" placeholder="Entre ici un élément pour filtrer les audiences communes" ng-model="vm.userquery">
+    </div>
+
+    <div class="pubadvinformation-wrapper">
+        <div class="analytics-block">
+            <div class="ab-test-comparison-block">
+                <div class="audience-features">
+                    <div class="column1-information">
+                        <p class="column-content-features-information">Éditeurs</p>
+                    </div>
+                    <div class="features-wrapper">
+                        <div class="column2-information">
+                            <div class="column-content-features-information">Last MAJ</div>
+                        </div>
+                        <div class="column2-information">
+                            <div class="column-content-features-information">Volume</div>
+                        </div>
+                        <div class="column2-information">
+                            <div class="column-content-features-information">Nom</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="information-container">
+                    <div class="information-segment" ng-repeat="publisher in vm.publisherslist | filter:vm.userquery">
+                        <div class="column1-information">
+                            <p class="column-content-report">{{publisher.name_master}}</p>
+                        </div>
+                        <div class="information-details-wrapper">
+                            <div class="column2-information">
+                                <div class="column-content-information">{{publisher.lastmaj}}</div>
+                            </div>
+                            <div class="column2-information">
+                                <div class="column-content-information">{{publisher.unique_count}}</div>
+                            </div>
+                            <div class="column2-information">
+                                <div class="column-content-information">{{publisher.name}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End of more information -->
+
+<ui-view></ui-view>

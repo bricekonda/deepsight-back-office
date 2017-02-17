@@ -2,6 +2,7 @@
 
 module.exports = function(app) {
     // inject:start
+    require('./advertisersinformation')(app);
     require('./billing')(app);
     require('./createcampaign')(app);
     require('./createcustomaudience')(app);
@@ -14,6 +15,7 @@ module.exports = function(app) {
     require('./mycampaigns')(app);
     require('./mytags')(app);
     require('./payment')(app);
+    require('./publishersinformation')(app);
     require('./reports')(app);
     require('./resetpwd')(app);
     require('./resetpwdfinal')(app);

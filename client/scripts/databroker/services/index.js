@@ -5,6 +5,7 @@ module.exports = function(app) {
     require('./analytics')(app);
     require('./campaign')(app);
     require('./customaudience')(app);
+    require('./datasummary')(app);
     require('./files')(app);
     require('./lookalikeaudience')(app);
     require('./tags')(app);

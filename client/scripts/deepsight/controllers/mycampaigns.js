@@ -30,11 +30,62 @@ module.exports = function(app) {
             vm.audiencetodetail = vm.audiencesloaded[index];
             console.log(vm.audiencetodetail);
 
-            if (vm.audiencetodetail.waitboolean === true) {
-                vm.audiencetomodifystatus = 'waitboolean'
-            } else {
-                vm.audiencetodetail.waitboolean === 'makeadealboolean'
+            vm.campaignname = vm.audiencetodetail.name;
+            // vm.ownername = vm.audiencetodetail.userId;
+            vm.creatorname = vm.audiencetodetail.creator;
+            // vm.audienceused = vm.audiencetodetail.id_audience;
+            vm.reach = vm.audiencetodetail.reach;
+            vm.perreachA = vm.audiencetodetail.reach_A;
+            vm.perreachB = vm.audiencetodetail.reach_B;
+            vm.campaignsubject = vm.audiencetodetail.subject;
+            vm.campaignurlredirection = vm.audiencetodetail.url_campaign;
+            vm.campaignurltracking = vm.audiencetodetail.url_tracking_raw;
+            vm.complementaryinformation = vm.audiencetodetail.information;
+            vm.price = vm.audiencetodetail.compensation_price;
+            vm.volumeremuneration = vm.audiencetodetail.compensation_volume;
+            vm.budget = vm.audiencetodetail.compensation_price * vm.audiencetodetail.compensation_volume;
+            vm.utmsource = vm.audiencetodetail.utm_source;
+            vm.utmmedium = vm.audiencetodetail.utm_medium;
+            vm.utmterm = vm.audiencetodetail.utm_term;
+            vm.utmcontent = vm.audiencetodetail.utm_content;
+            vm.utmcampaign = vm.audiencetodetail.utm_campaign;
+
+            user.loaduserByID(vm.audiencetodetail.userId).then(function(user) {
+                console.log(user);
+                vm.ownername = user[0].username;
+                customaudience.findaudiencebyID(vm.audiencetodetail.id_audience).then(function(audience) {
+                    vm.audienceused = audience.name
+                }).catch(function() {
+
+                })
+
+                lookalikeaudience.findaudiencebyID(vm.audiencetodetail.id_audience).then(function(lookalikeaudience) {
+                    vm.audienceused = lookalikeaudience.name
+                }).catch(function(error) {
+                    throw error
+                })
+            }).catch(function(error) {
+                throw error
+            })
+
+            for (var i = 0; i < vm.format.length; i++) {
+                if (vm.format[i].id === vm.audiencetodetail.format) {
+                    vm.index = i;
+                }
             }
+
+            for (var k = 0; k < vm.remuneration.length; k++) {
+                if (vm.remuneration[k].id === vm.audiencetodetail.compensation_mode) {
+                    vm.indexrem = k;
+                }
+
+            }
+
+            // if (vm.audiencetodetail.waitboolean === true) {
+            //     vm.audiencetomodifystatus = 'waitboolean'
+            // } else {
+            //     vm.audiencetodetail.waitboolean === 'makeadealboolean'
+            // }
 
         };
 
@@ -331,6 +382,202 @@ module.exports = function(app) {
             });
 
         };
+
+        /*********************************************
+        CAMPAIGN MODIFICATION
+        *********************************************/
+
+        vm.ABtestboolean = false;
+
+        //Choisir votre type de campagne
+
+        vm.filterclasscampaigntype = "rotateCounterwise";
+        vm.filtershowncampaigntype = "filterslideup";
+        vm.filterbottomcampaigntype = "choicebottomanimationup-campaign";
+
+        vm.showfiltercampaigntype = function() {
+            if (vm.filterclasscampaigntype === "rotateCounterwise") {
+                vm.filtershowncampaigntype = "filterslidedown";
+                vm.filterclasscampaigntype = "rotate";
+                vm.filterbottomcampaigntype = "choicebottomanimationdown-campaign";
+            } else if (vm.filterclasscampaigntype === "rotate") {
+                vm.filtershowncampaigntype = "filterslideup";
+                vm.filterclasscampaigntype = "rotateCounterwise";
+                vm.filterbottomcampaigntype = "choicebottomanimationup-campaign";
+            }
+        };
+
+        vm.campaigntype = [{
+            'type': 'regular',
+            'name': 'Regular'
+        }, {
+            'type': 'ab',
+            'name': 'AB'
+
+        }]
+
+        vm.choicecampaigntype = vm.campaigntype[0].type;
+
+        vm.choicecampaignname = vm.campaigntype[0].name;
+
+        vm.selectfiltercampaigntype = function(index) {
+            vm.campaigntypetochoseobject = vm.campaigntype[index];
+            vm.choicecampaignname = vm.campaigntype[index].name;
+            vm.choicecampaigntype = vm.campaigntype[index].type;
+
+            if (vm.choicecampaigntype === 'ab') {
+                vm.ABtestboolean = true;
+                vm.perreachA = 100;
+                vm.perreachB = 0;
+            } else if (vm.choicecampaigntype === 'regular') {
+                vm.ABtestboolean = false;
+                vm.perreachA = '';
+                vm.perreachB = '';
+            }
+
+            vm.filtershowncampaigntype = "filterslideup";
+            vm.filterclasscampaigntype = "rotateCounterwise";
+            vm.filterbottomcampaigntype = "choicebottomanimationup-campaign";
+        };
+
+        //Choisir votre type de format
+
+        vm.format = [{
+            'format': 'VIDEO',
+            'id': 'video'
+        }, {
+            'format': 'NATIVE',
+            'id': 'native'
+        }, {
+            'format': 'EMAIL',
+            'id': 'email'
+        }, {
+            'format': 'DISPLAY',
+            'id': 'display'
+        }];
+
+        vm.formatchosen = "";
+
+        vm.choseformat = function(index) {
+            vm.formatchosen = vm.format[index].id;
+            vm.index = index;
+
+        }
+
+        //Choisir votre type de rémunération
+
+        vm.remuneration = [{
+            'rem': 'CPM',
+            'id': 'cpm'
+        }, {
+            'rem': 'CPC',
+            'id': 'cpc'
+        }, {
+            'rem': 'CPL',
+            'id': 'cpl'
+        }, {
+            'rem': 'CPA',
+            'id': 'cpa'
+        }];
+
+        vm.remunerationchosen = "";
+
+        vm.choseremuneration = function(index) {
+            vm.remunerationchosen = vm.remuneration[index].id;
+            vm.indexrem = index;
+
+        }
+
+        console.log(vm.indexrem)
+
+        $scope.$watch(function() {
+            vm.budget = vm.volumeremuneration * vm.price;
+        });
+
+        $scope.$watch(function() {
+            vm.utmsource = 'deepsight';
+            vm.utmmedium = vm.formatchosen.concat(vm.remunerationchosen);
+        });
+
+        vm.utmterm = "";
+        vm.utmcontent = "";
+        vm.budget = '';
+        vm.volumeremuneration = '';
+
+        vm.showmessage = 'information-block-success-campaign-up';
+
+        $rootScope.$on('marketingcampaignupdated', function(event, data) {
+            vm.showmessage = 'information-block-success-campaign-down';
+            $timeout(function() {
+                vm.showmessage = 'information-block-success-campaign-up';
+            }, 6000);
+        });
+
+        vm.submitForm = function(isValid) {
+            if (isValid) {
+                console.log('go')
+                vm.loaderon = true;
+
+                var name = vm.campaignname;
+                var typecampaign = vm.choicecampaigntype;
+                if (vm.choicecampaigntype === 'ab') {
+                    var reachA = vm.perreachA;
+                    var reachB = vm.perreachB;
+                } else {
+                    var reachA = 100;
+                    var reachB = 0;
+                }
+                var subject = vm.campaignsubject;
+                var format = vm.formatchosen;
+                var information = vm.complementaryinformation;
+                var compensationmode = vm.remunerationchosen;
+                var compensationprice = vm.price;
+                var compensationvolume = vm.volumeremuneration;
+                var compensationbudget = vm.budget;
+                var utmsource = vm.utmsource;
+                var utmmedium = vm.utmmedium;
+                var utmterm = vm.utmterm;
+                var utmcontent = vm.utmcontent;
+                var utmcampaign = '';
+                var redirectionurl = vm.campaignurlredirection;
+                var trackingurl = vm.campaignurltracking;
+
+                campaign.updatecampaign(vm.audiencetodetail.id, name, typecampaign, reachA, reachB, subject, format, information, compensationmode, compensationprice, compensationvolume, compensationbudget, utmsource, utmmedium, utmterm, utmcontent, utmcampaign, redirectionurl, trackingurl).then(function(campaign) {
+                    vm.loadaudience();
+                    $rootScope.$broadcast('marketingcampaignupdated', null);
+                    $rootScope.$broadcast('reloadcampaigns', null);
+                    // $rootScope.$broadcast('campaigncreationsuccess', null);
+                    vm.campaignname = '';
+                    vm.ownername = '';
+                    vm.creatorname = '';
+                    vm.audienceused = '';
+                    vm.reach = '';
+                    vm.perreachA = '';
+                    vm.perreachB = '';
+                    vm.campaignsubject = '';
+                    vm.campaignurlredirection = '';
+                    vm.campaignurltracking = '';
+                    vm.complementaryinformation = '';
+                    vm.price = '';
+                    vm.volumeremuneration = '';
+                    vm.budget = '';
+                    vm.utmsource = '';
+                    vm.utmmedium = '';
+                    vm.utmterm = '';
+                    vm.utmcontent = '';
+                    vm.utmcampaign = '';
+                    // var container = document.getElementById('block');
+                    // var scrollTo = document.getElementById('top');
+                    // container.scrollTop = scrollTo.offsetTop;
+                    vm.loaderon = false;
+                }).catch(function(error) {
+                    vm.loaderon = false;
+                    throw error;
+                });
+
+            };
+
+        }
 
     }
 

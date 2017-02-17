@@ -11,6 +11,9 @@
 </div>
 
 <div class="category-block">
+    <div class="information-block-success-campaign " ng-class="vm.showmessage">
+        <div class="information-block-success-campaign-content ">La campagne selectionnée a bien été mise à jour</div>
+    </div>
 
     <div class="category-title">
         <div ng-click="vm.addaudienceLoop()">Campagnes</div>
@@ -33,7 +36,7 @@
         <div class="filter-list" ng-class="vm.filtershown">
             <div class="filter-spacer"></div>
             <div class="filters" ng-repeat="filter in vm.filter" ng-click="vm.selectfilter($index)">
-                <div class="filters-content" ng-class="{activefilterclass : vm.activefilter === filter.name}">{{filter.name}}</div>
+                <div class="filters-content" ng-class="{activefilterclass : vm.activefilter ===     filter.name}">{{filter.name}}</div>
             </div>
         </div>
         <div class="filter-list-bottom" ng-class="vm.filterbottom" ng-click="vm.showfilter()"></div>
@@ -78,7 +81,7 @@
             <div class="column-user-top">
                 <div class="column-user-top-content">PRIX</div>
             </div>
-                        <div class="column-user-top">
+            <div class="column-user-top">
                 <div class="column-user-top-content">VOLUME F</div>
             </div>
             <div class="column-user-top">
@@ -86,7 +89,7 @@
             </div>
         </div>
         <div class="audience-block" ng-repeat="audience in vm.audiencesloaded | filter:vm.userquery">
-            <div class="audience-container" ng-click="vm.closemoreinfo(); vm.loadmoreinfo($index)">
+            <div class="audience-container" ng-click="vm.loadaudience(); vm.loadaudiencedetail($index)">
                 <div class="column-user-top">
                     <p class="column-user-content">{{audience.name}}</p>
                 </div>
@@ -105,8 +108,8 @@
                 <div class="column-user-top">
                     <div class="column-user-content">{{audience.compensation_price}}</div>
                 </div>
-                                <div class="column-user-top">
-                    <div class="column-user-content">{{audience.compensation_volume}}</div>
+                <div class="column-user-top">
+                    <div class="column-user-content">{{audience.compensation_budget}}</div>
                 </div>
                 <div class="column-user-top">
                     <div class="column-user-content">{{audience.compensation_budget}}</div>
@@ -142,7 +145,7 @@
 <div class="create-audience-background" ng-if="vm.modifyaudience">
     <div class="create-audience-modal campaign-modal">
         <div class="create-audience-modal-title">
-            <h1 class="create-audience-modal-title-content"> {{vm.campaigntodetail.name}} </h1>
+            <h1 class="create-audience-modal-title-content"> {{vm.audiencetodetail.name}} </h1>
             <a ui-sref="home.mycampaigns">
                 <img class="close-modal" src="images/cross-close-modal-logo.png" ng-click="vm.loadaudience()">
             </a>
@@ -150,7 +153,169 @@
 
         <div class="step-content">
             <div class="information-campaign-wrapper">
-                <div class="information-campaign-block">
+                <form name="createcampaignForm" ng-submit="vm.submitForm(createcampaignForm.$valid)">
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Nom de la campagne</div>
+                        <input type="text" name="name" ng-class="createcampaignForm.name.$invalid && createcampaignForm.name.$touched ? 'chose-campaign-name-input-not-ok' : 'chose-campaign-name-input'" ng-model="vm.campaignname" autocomplete="off" ng-minlength="2" required></input>
+                        <p ng-if=" createcampaignForm.name.$invalid && createcampaignForm.name.$touched" class="help-block-modify-campaign">Un nom de minimum 2 caractère est requis</p>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Nom de l'owner</div>
+                        <input type="text" name="owner" placeholder="" class="chose-campaign-name-input disabled" ng-model="vm.ownername" autocomplete="off" ng-disabled="true"></input>
+                    </div>
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Nom du créateur</div>
+                        <input type="text" name="creator" placeholder="" class="chose-campaign-name-input disabled" ng-model="vm.creatorname" autocomplete="off" ng-disabled="true"></input>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Nom de l'audience de base</div>
+                        <input type="text" name="audience" placeholder="" class="chose-campaign-name-input disabled" ng-model="vm.audienceused" autocomplete="off" ng-disabled="true"></input>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Volume</div>
+                        <input type="text" name="reach" class="chose-campaign-name-input disabled" ng-model="vm.reach" ng-disabled="true"></input>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Type de campagne</div>
+                        <div class="chose-btn-wrapper-campaign">
+                            <div class="chose-btn-campaign" ng-click="vm.showfiltercampaigntype()">
+                                <div class="chose-btn-content-campaign">
+                                    <div class="choice-to-chose-campaign">
+                                        {{vm.choicecampaignname}}
+                                    </div>
+                                    <div class="choice-show-noshow-campaign" ng-class="vm.filterclasscampaigntype"></div>
+                                </div>
+                            </div>
+                            <div class="chose-list-campaign" ng-class="vm.filtershowncampaigntype">
+                                <div class="chose-spacer-campaign"></div>
+                                <div class="choice-campaign" ng-repeat="choice in vm.campaigntype" ng-click="vm.selectfiltercampaigntype($index)">
+                                    <div class="choice-content-campaign" ng-class="{activefilterclass : vm.activefilter === filter.name}">{{choice.name}}</div>
+                                </div>
+                            </div>
+                            <div class="chose-list-bottom-campaign" ng-class="vm.filterbottomcampaigntype"></div>
+                        </div>
+                    </div>
+
+                    <div class="chose-campaign-name" ng-if="vm.ABtestboolean">
+                        <div class="chose-campaign-name-title">Volume des segments d'audience</div>
+                        <div class="subchoice-wrapper">
+                            <div class="subchoice-campaign">
+                                <div class="chose-campaign-name-subtitle">Segment A
+                                    <br> En % du volume total de l'audience</div>
+                                <input type="text" name="perreachA" class="chose-campaign-name-input-subchoice disabled" ng-model="vm.perreachA" ng-disabled="true"></input>
+                            </div>
+                            <div class="subchoice-campaign">
+                                <div class="chose-campaign-name-subtitle">Segment B
+                                    <br> En % du volume total de l'audience</div>
+                                <input type="text" name="perreachB" class="chose-campaign-name-input-subchoice" ng-model="vm.perreachB"></input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Objet</div>
+                        <input type="text" name="subject" ng-class="createcampaignForm.subject.$invalid && createcampaignForm.subject.$touched ? 'chose-campaign-name-input-not-ok' : 'chose-campaign-name-input'" ng-model="vm.campaignsubject" autocomplete="off" required></input>
+                        <p ng-if="createcampaignForm.subject.$invalid && createcampaignForm.subject.$touched" class="help-block-modify-campaign">Un objet est requis</p>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">URL de redirection</div>
+                        <input type="text" name="urlredirection" ng-class="createcampaignForm.urlredirection.$invalid && createcampaignForm.urlredirection.$touched ? 'chose-campaign-name-input-not-ok' : 'chose-campaign-name-input'" ng-model="vm.campaignurlredirection" required></input>
+                        <p ng-if="createcampaignForm.urlredirection.$invalid && createcampaignForm.urlredirection.$touched" class="help-block-modify-campaign">Un url de redirection est requis</p>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">URL tracking</div>
+                        <input type="text" name="urltr" ng-class="createcampaignForm.urltr.$invalid && createcampaignForm.urltr.$touched ? 'chose-campaign-name-input-not-ok' : 'chose-campaign-name-input'" ng-model="vm.campaignurltracking" required></input>
+                        <p ng-if="createcampaignForm.urltr.$invalid && createcampaignForm.urltr.$touched" class="help-block-modify-campaign">Un url de tracking est requis</p>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Information complémentaire sur la campagne </div>
+                        <textarea type="text" name="complementaryinformation" ng-class="createcampaignForm.complementaryinformation.$invalid && createcampaignForm.complementaryinformation.$touched ? 'chose-campaign-name-input-large-not-ok' : 'chose-campaign-name-input-large'" ng-model="vm.complementaryinformation" required></textarea>
+                        <p ng-if="createcampaignForm.complementaryinformation.$invalid && createcampaignForm.complementaryinformation.$touched" class="help-block-modify-campaign">Renseignez une petite descritpion de la campagne svp</p>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Format désiré </div>
+                        <div class="format-choice-wrapper">
+                            <div class="format-btn-wrapper" ng-repeat="format in vm.format">
+                                <div ng-click="vm.choseformat($index)" ng-class="$index === vm.index ? 'format-btn' : 'format-btn-unselected'">
+                                    <div class="format-btn-content">{{format.format}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p ng-if="(vm.index === undefined)" class="help-block-modify-campaign">Un format désiré est requis</p>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Rémunération</div>
+
+                        <div class="format-choice-wrapper">
+                            <div class="format-btn-wrapper" ng-repeat="remuneration in vm.remuneration">
+                                <div ng-click="vm.choseremuneration($index)" ng-class="$index === vm.indexrem ? 'format-btn' : 'format-btn-unselected'">
+                                    <div class="format-btn-content">{{remuneration.rem}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p ng-if="(vm.indexrem === undefined)" class="help-block-modify-campaign">Un format désiré est requis</p>
+
+                        <div class="subchoice-wrapper">
+                            <div class="subchoice-campaign">
+                                <div class="chose-campaign-name-subtitle">Prix</div>
+                                <input type="text" name="price" class="chose-campaign-name-input-subchoice-price" ng-model="vm.price">€</input>
+                            </div>
+
+                            <div class="subchoice-campaign">
+                                <div class="chose-campaign-name-subtitle">Volume</div>
+                                <input type="text" name="moderemuneration" class="chose-campaign-name-input-subchoice" ng-model="vm.volumeremuneration"></input>
+                            </div>
+                            <div class="subchoice-campaign">
+                                <div class="chose-campaign-name-subtitle">Budget</div>
+                                <input type="text" name="price" class="chose-campaign-name-input-subchoice-budget" ng-model="vm.budget">€</input>
+                            </div>
+                        </div>
+                        <p ng-if="vm.budget === '' || vm.volumeremuneration === ''" class="help-block-modify-campaign">Renseignez un pric et un volume, des chiffes bien sûr!</p>
+                    </div>
+
+                    <div class="chose-campaign-name">
+                        <div class="chose-campaign-name-title">Paramètres campagne</div>
+                        <div class="subchoice-wrapper">
+                            <div class="subchoice-campaign">
+                                <div class="chose-campaign-name-subtitle">utm_source</div>
+                                <input type="text" name="utmsource" class="chose-campaign-name-input-subchoice disabled" ng-model="vm.utmsource" ng-disabled="true"></input>
+                            </div>
+                            <div class="subchoice-campaign">
+                                <div class="chose-campaign-name-subtitle">utm_medium</div>
+                                <input type="text" name="utmmedium" class="chose-campaign-name-input-subchoice disabled" ng-model="vm.utmmedium" ng-disabled="true"></input>
+                            </div>
+                            <div class="subchoice-campaign">
+                                <div class="chose-campaign-name-subtitle">utm_term</div>
+                                <input type="text" name="utmterm" class="chose-campaign-name-input-subchoice" ng-model="vm.utmterm"></input>
+                            </div>
+                            <div class="subchoice-campaign">
+                                <div class="chose-campaign-name-subtitle">utm_content</div>
+                                <input type="text" name="utmcontent" class="chose-campaign-name-input-subchoice" ng-model="vm.utmcontent"></input>
+                            </div>
+                            <div class="subchoice-campaign">
+                                <div class="chose-campaign-name-subtitle">utm_campaign</div>
+                                <input type="text" name="utmcampaign" class="chose-campaign-name-input-subchoice" ng-model="vm.utmcampaign"></input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="save-btn-wrapper">
+                        <button type="submit" ng-class="vm.budget === '' || vm.volumeremuneration === '' || (vm.index === undefined)||(vm.indexrem === undefined) || createcampaignForm.$invalid  ? 'format-btn-disabled':'format-btn' " class="submit-save" ng-disabled="vm.budget === '' || vm.volumeremuneration === '' || (vm.index === undefined)||(vm.indexrem === undefined) || createcampaignForm.$invalid">
+                            <div class="format-btn-content">SAVE</div>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- <div class="information-campaign-block">
                     <div class="information-campaign-title">
                         Nom de la campagne
                     </div>
@@ -253,7 +418,7 @@
                     <div class="information-campaign-content">
                         {{vm.campaigntodetail.compensation_budget}}
                     </div>
-                </div>
+                </div> -->
                 <!--                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
                         utm_source
@@ -302,7 +467,7 @@
                         {{vm.campaigntodetail.url_tracking_raw}}
                     </div>
                 </div> -->
-                <div class="information-campaign-block">
+                <!--                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
                         URL redirection
                     </div>
@@ -317,7 +482,7 @@
                     <div class="information-campaign-content">
                         {{vm.campaigntodetail.information}}
                     </div>
-                </div>
+                </div> -->
                 <!--                 <div class="information-campaign-block">
                     <div class="information-campaign-title">
                         Disponible
@@ -373,7 +538,7 @@
     </div>
 
 </div>
-</div>
+
 <!-- End of more information -->
 
 <ui-view></ui-view>

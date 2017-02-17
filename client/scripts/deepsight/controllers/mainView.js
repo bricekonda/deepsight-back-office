@@ -133,6 +133,16 @@ module.exports = function(app) {
                 'statename': 'home.usermanagement',
                 'class': 'subcategory-link',
                 'picto': 'images/general-information-grey.svg'
+            },{
+                'name': 'Informations éditeurs',
+                'statename': 'home.publishersinformation',
+                'class': 'subcategory-link',
+                'picto': 'images/general-information-grey.svg'
+            },{
+                'name': 'Information annonceurs',
+                'statename': 'home.advertisersinformation',
+                'class': 'subcategory-link',
+                'picto': 'images/general-information-grey.svg'
             }]
         },{
             'name': 'Tags',

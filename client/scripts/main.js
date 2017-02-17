@@ -157,6 +157,10 @@ var run = function($window, $timeout, $kinvey, $state, $rootScope, Deepsightuser
                 $state.go('home.lookalikeaudience.createlookalikeaudience');
             } else if ($state.current.name === 'home.usermanagement') {
                 $state.go('home.usermanagement');
+            }else if ($state.current.name === 'home.advertisersinformation') {
+                $state.go('home.advertisersinformation');
+            } else if ($state.current.name === 'home.publishersinformation') {
+                $state.go('home.publishersinformation');
             } else {
                 $state.go('home');
             }

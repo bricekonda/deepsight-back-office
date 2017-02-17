@@ -117,21 +117,33 @@ require('./services')(app);
             controllerAs: 'vm',
             authenticate: true
         }).state('home.usermanagement', {
-            url: '/settings/usermanagement',
+            url: '/gestion/usermanagement',
             template: require('./views/usermanagement.html'),
             controller: fullname + '.usermanagement',
             controllerAs: 'vm',
             authenticate: true
         }).state('home.customaudience.createcustomaudience', {
-            url: '/creation',
+            url: '/creation/createcustomaudience',
             template: require('./views/createcustomaudience.html'),
             controller: fullname + '.createcustomaudience',
             controllerAs: 'vm',
             authenticate: true
         }).state('home.lookalikeaudience.createlookalikeaudience', {
-            url: '/creation',
+            url: '/creation/createlookalikeaudience',
             template: require('./views/createlookalikeaudience.html'),
             controller: fullname + '.createlookalikeaudience',
+            controllerAs: 'vm',
+            authenticate: true
+        }).state('home.publishersinformation', {
+            url: '/gestion/publishersinformation',
+            template: require('./views/publishersinformation.html'),
+            controller: fullname + '.publishersinformation',
+            controllerAs: 'vm',
+            authenticate: true
+        }).state('home.advertisersinformation', {
+            url: '/gestion/advertisersinformation',
+            template: require('./views/advertisersinformation.html'),
+            controller: fullname + '.advertisersinformation',
             controllerAs: 'vm',
             authenticate: true
         });
