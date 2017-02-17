@@ -2911,7 +2911,7 @@
   color: #1580EF; }
 
 /*********************************************
-    COLORS
+    Visualisation tags
 *********************************************/
 .tags-wrapper {
   position: absolute;
@@ -2990,6 +2990,75 @@
   font-family: proximanovaregular;
   font-size: 14px;
   line-height: 22px; }
+
+/*********************************************
+    Creation tags
+*********************************************/
+.number-variables, .variables {
+  border: 1px solid #D8D8D8;
+  font-family: proximanovaregular;
+  font-size: 14px;
+  border-radius: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 40px;
+  line-height: 40px;
+  width: 60px;
+  margin-right: 10px; }
+
+.number-variables {
+  width: 60px; }
+
+.variables {
+  width: 300px; }
+
+.add-variable-btn, .remove-variable-btn {
+  position: relative;
+  float: right;
+  font-family: proximanovaregular;
+  border-radius: 3px;
+  height: 28px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 40px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center; }
+
+.add-variable-btn {
+  background-color: #88BEF7;
+  border: 1px solid #1580EF; }
+
+.remove-variable-btn {
+  border: 1px solid #EF2B2D;
+  background-color: #F6DADA; }
+
+.add-variable-btn:hover {
+  background-color: #1580EF;
+  border: 1px solid #88BEF7;
+  cursor: pointer; }
+
+.remove-variable-btn:hover {
+  border: 1px solid #F6DADA;
+  background-color: #EF2B2D;
+  cursor: pointer; }
+
+.add-cross, .remove-cross {
+  position: relative;
+  display: inline-block;
+  float: left; }
+
+.add-cross {
+  height: 12px; }
+
+.remove-cross {
+  height: 3px; }
+
+.input-settings {
+  margin-top: 20px; }
 
 .userfilter-wrapper {
   position: absolute;

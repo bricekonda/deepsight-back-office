@@ -1,6 +1,88 @@
-<div class="category-block">
-    <div class="category-title">Informations de nos éditeurs partenaires</div>
-    <div class="category-subtitle">Lorem Ipsum</div>
+<loader ng-if="vm.loaderon"></loader>
+<div class="category-block" id="tagcreationblock">
+    <div class="information-block-success-campaign" ng-class="vm.showmessage">
+        <div class="information-block-success-campaign-content">Votre campagne a bien été crée</div>
+    </div>
+
+    <div class="category-title">Création des Tags</div>
+    <div class="category-subtitle">Crée ici les tags pour les annonceurs partenaires DEEPSIGHT</div>
+
+    <form name="createtafForm" class="create-campaign-form" ng-submit="vm.submitForm(createtafForm.$valid)">
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Nom du tag</div>
+            <input type="text" name="name" placeholder="Réactivation prospects janvier 2017" ng-class="createtafForm.name.$invalid && createtafForm.name.$touched ? 'chose-campaign-name-input-not-ok' : 'chose-campaign-name-input'" ng-model="vm.title" autocomplete="off" ng-minlength="2" required></input>
+            <p ng-if="createtafForm.name.$invalid && createtafForm.name.$touched" class="help-block-modify-campaign">Un nom de minimum 2 caractère est requis</p>
+        </div>
+
+        <div class="chose-audience-name">
+            <div class="chose-campaign-name-title">Nom de l'utilisateur</div>
+            <div class="chose-btn-wrapper-campaign" id="chosetheuser">
+                <div class="chose-btn-campaign" ng-click="vm.showfilteruser()">
+                    <div class="chose-btn-content-campaign">
+                        <div ng-class=" vm.choiceuser === 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer un tag' ? 'choice-to-chose-no-campaign' : 'choice-to-chose-campaign'">
+                            {{vm.choiceuser}}
+                        </div>
+                        <div class="choice-show-noshow-campaign" ng-class="vm.filterclassuser"></div>
+                    </div>
+                </div>
+                <div class="chose-list-campaign" ng-class="vm.filtershownuser">
+                    <div class="chose-spacer-campaign"></div>
+                    <div class="choice-campaign" ng-repeat="choice in vm.usertochoselist" ng-click="vm.selectfilteruser($index); vm.loadallcustomaudienceByuserId()">
+                        <div class="choice-content-campaign" ng-class="{activefilterclass : vm.activefilter === filter.name}">{{choice}}</div>
+                    </div>
+                </div>
+                <div class="chose-list-bottom-campaign" ng-class="vm.filterbottomuser"></div>
+            </div>
+            <p ng-if="(vm.choiceuser === 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer un tag')" class="help-block-modify-campaign">Choisissez un utilisateur</p>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Variable</div>
+
+            <div class="subchoice-wrapper">
+                <div class="subchoice-campaign">
+                    <input type="text" name="price" class="number-variables disabled" ng-model="vm.numberofvariable" ng-disabled="true"></input>
+                    <div class="add-variable-btn" ng-click="vm.addvariable()">
+                        <img class="add-cross" src="images/cross.png">
+                    </div>
+                </div>
+            </div>
+            <p ng-if="vm.numberofvariable === 0" class="help-block-modify-campaign">Enregistrez au moins une variable</p>
+
+            <div class="subchoice-wrapper" ng-repeat="variable in vm.variablelist">
+                <div class="subchoice-campaign">
+                    <input type="text" name="variable" class="variables" ng-model="vm.variablelist[$index].variable"></input>
+                    <div class="remove-variable-btn" ng-click="vm.removevariable($index)">
+                        <img class="remove-cross" src="images/remove.png">
+                    </div>
+                </div>
+                <p ng-if="vm.variablelist[$index].variable === ''" class="help-block-modify-campaign">Entrez un nom pour cette variable</p>
+            </div>
+
+            <!--             <input type="text" name="variables" ng-repeat="variable in vm.variablelist" class="input-settings" ng-class="createtafForm.name.$invalid && createtafForm.name.$touched ? 'chose-campaign-name-input-not-ok' : 'chose-campaign-name-input'" ng-model="variable.variable" autocomplete="off" ng-minlength="2" required></input> -->
+
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">URL sur lequel déposer le tag</div>
+            <!--    input -->
+            <input type="text" name="urlredirection" ng-class="createtafForm.urlredirection.$invalid && createtafForm.urlredirection.$touched ? 'chose-campaign-name-input-not-ok' : 'chose-campaign-name-input'" ng-model="vm.url" required></input>
+            <p ng-if="createtafForm.urlredirection.$invalid && createtafForm.urlredirection.$touched" class="help-block-modify-campaign">Un url de redirection est requis</p>
+        </div>
+
+        <div class="chose-campaign-name">
+            <div class="chose-campaign-name-title">Description du tag </div>
+            <textarea type="text" name="complementaryinformation" ng-class="createtafForm.complementaryinformation.$invalid && createtafForm.complementaryinformation.$touched ? 'chose-campaign-name-input-large-not-ok' : 'chose-campaign-name-input-large'" ng-model="vm.description" required></textarea>
+            <p ng-if="createtafForm.complementaryinformation.$invalid && createtafForm.complementaryinformation.$touched" class="help-block-modify-campaign">Renseignez une petite descritpion de la campagne svp</p>
+        </div>
+
+        <div class="save-btn-wrapper">
+            <button type="submit" ng-class="!vm.allvariablessetboolean || vm.numberofvariable === 0 || (vm.choiceuser === 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer un tag') || createtafForm.$invalid  ? 'format-btn-disabled':'format-btn' " class="submit-save" ng-disabled="!vm.allvariablessetboolean || vm.numberofvariable === 0 || (vm.choiceuser === 'Liste des utilisateurs disponibles pour lesquels vous pouvez créer un tag') || createtafForm.$invalid">
+                <div class="format-btn-content">SAVE</div>
+            </button>
+        </div>
+
+    </form>
 
 </div>
 

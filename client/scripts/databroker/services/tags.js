@@ -10,14 +10,16 @@ module.exports = function(app) {
 
     function service($kinvey, $rootScope, $q, $state, $timeout, $http, Tags, Customaudience, user, apiConstant) {
 
-        var createtag = function() {
+        var createtag = function(userId, creator, date, variables, description, urlpage, title) {
             var newtag = Tags.create({
-                'title': 'bloblo',
-                'description': 'blabla',
-                'url': 'http//blabla',
-                'variables': [{
-                    'variable': 'id_client'
-                }],
+                'userId': userId,
+                'creator': creator,
+                'date': date,
+                'variables': variables,
+                'description': description,
+                'url': urlpage,
+                'title': title
+
             }).$promise
 
             return newtag
@@ -29,9 +31,34 @@ module.exports = function(app) {
             return taglist
         };
 
+        var loadAdlltagsByUserId = function(userId) {
+
+            var tags = Tags.find({
+                "filter": {
+                    order: 'date DESC',
+                    where: {
+                        userId: userId
+                    },
+                }
+            }).$promise
+
+            return tags;
+        }
+
+        var deletetagById = function() {
+
+        }
+
+        var updatetagByID = function() {
+
+        }
+
         return {
             createtag: createtag,
-            findtag: findtag
+            findtag: findtag,
+            loadAdlltagsByUserId: loadAdlltagsByUserId,
+            deletetagById: deletetagById,
+            updatetagByID: updatetagByID
         };
 
     }
